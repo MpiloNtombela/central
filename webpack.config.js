@@ -6,11 +6,11 @@ module.exports = (env, argv) => {
   return {
     devtool: devtool,
     entry: {
-      main: "./src/js/index.js",
+      main: "./src/index.js",
     },
     output: {
       filename: "main.js",
-      path: path.resolve(__dirname, "./wwwroot/dist"),
+      path: path.resolve(__dirname, "./public/dist"),
     },
     module: {
       rules: [
@@ -21,14 +21,6 @@ module.exports = (env, argv) => {
             loader: "babel-loader",
           },
         },
-        // {
-        //     test: /\.s[ac]ss$/,
-        //     use: [
-        //       "style-loader",
-        //       "css-loader",
-        //       "sass-loader",
-        //     ],
-        // },
       ],
     },
   };
