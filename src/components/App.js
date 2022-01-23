@@ -19,7 +19,6 @@ const App = () => {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
-          <Route path="/test" element={<Loader/>}/>
         </Routes>
       </HashRouter>
     </Theme>
