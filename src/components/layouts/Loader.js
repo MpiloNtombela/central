@@ -63,11 +63,11 @@ const styledLoader = (theme) => css`
 const Loader = () => {
     return (
         <div css={styledLoader}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span/>
+            <span/>
+            <span/>
+            <span/>
+            <span/>
         </div>
     )
 }

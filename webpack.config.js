@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 module.exports = (env, argv) => {
   let devMode = argv.mode === "development";
   let devtool = devMode ? "source-map" : "nosources-source-map";
-  console.log(argv.mode)
   return {
     devtool: devtool,
     mode: argv.mode,

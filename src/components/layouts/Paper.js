@@ -3,9 +3,9 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 
 const PaperStyled = styled.div(
-  (props) => `
-  color: ${props.theme.color.main};
-  background: ${props.theme.background.main}
+  ({theme}) => `
+  color: ${theme.color.main};
+  background: ${theme.background.main}
 `
 );
 

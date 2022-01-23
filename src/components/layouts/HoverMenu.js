@@ -1,5 +1,5 @@
-/** @jsxImport @emotion/react */
 import styled from '@emotion/styled'
+import PropTypes from "prop-types";
 import React from 'react'
 export const StyledHoverMenu = styled.div(({ theme, frost }) => `
     cursor: pointer;
@@ -70,6 +70,11 @@ const HoverMenu = ({ frost, children }) => {
             </div>
         </StyledHoverMenu>
     )
+}
+
+HoverMenu.propTypes = {
+    frost: PropTypes.bool,
+    children: PropTypes.node,
 }
 
 export default HoverMenu

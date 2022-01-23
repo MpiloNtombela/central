@@ -1,18 +1,25 @@
-import {HashRouter, Link, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
+import Button from "./elements/Button";
 import Loader from "./layouts/Loader";
-import {SkeletonContent} from "./layouts/Skeletons";
 import Theme from "./Theme";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 const App = () => {
+  const [isDark, setMode] = useState(true)
+  useEffect(() => {
+    setMode(localStorage.getItem('mode') === 'dark')
+  }, [])
+
+  const handleMode = () => {
+    setMode(!isDark)
+    localStorage.setItem('mode', isDark ? 'light' : 'dark')
+  }
   return (
-    <Theme>
+    <Theme isDark={isDark}>
       <HashRouter>
-        <Link to={"/"}>prev</Link>
-        <Link to={"/m"}>next</Link>
         <Routes>
-          <Route path="/" element={<SkeletonContent/>}/>
-          <Route path="/m" element={<Loader/>}/>
+          <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
+          <Route path="/test" element={<Loader/>}/>
         </Routes>
       </HashRouter>
     </Theme>

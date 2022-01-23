@@ -60,12 +60,12 @@ const SkeletonAnimator = styled.div(
 );
 
 export const StyledSkeleton = styled.div(
-  ({ theme, wRect, hRect, skeletonType, skeletonSize }) => {
+  ({ theme, rectWidth, rectHeight, skeletonType, skeletonSize }) => {
     const size = skeletonSizes(skeletonSize);
     return `
     background: ${theme.background.main};
-    width: ${skeletonType === "rect" ? wRect : size[skeletonType]["width"]};
-    height: ${skeletonType === "rect" ? hRect : size[skeletonType]["height"]};
+    width: ${skeletonType === "rect" ? rectWidth : size[skeletonType]["width"]};
+    height: ${skeletonType === "rect" ? rectHeight : size[skeletonType]["height"]};
     margin-bottom: ${theme.sizes.gutters[2]};
     border-radius: ${skeletonType === "avatar" ? "50%" : theme.sizes.radius.sm};
     overflow: hidden;
@@ -76,16 +76,16 @@ export const StyledSkeleton = styled.div(
 const Skeleton = ({
   skeletonType = "text",
   skeletonSize = 1,
-  wRect,
-  hRect,
+  rectWidth,
+  rectHeight,
   style,
 }) => {
   return (
     <StyledSkeleton
       skeletonType={skeletonType}
       skeletonSize={skeletonSize}
-      wRect={wRect}
-      hRect={hRect}
+      rectWidth={rectWidth}
+      rectHeight={rectHeight}
       style={style}>
       <SkeletonAnimationContainer>
         <SkeletonAnimator />
@@ -103,7 +103,7 @@ export const SkeletonContent = () => {
       <Grid>
         <GridCell colsSm={8} />
         <GridCell colsSm={4}>
-          <Skeleton skeletonType="rect" wRect="100%" hRect=".5rem" />
+          <Skeleton skeletonType="rect" rectWidth="100%" rectHeight=".5rem" />
         </GridCell>
       </Grid>
     </Card>
@@ -114,14 +114,14 @@ export const SkeletonForm = () => {
   return (
     <Card>
       <Skeleton style={{ width: "65%" }} />
-      <Skeleton skeletonType="rect" wRect="100%" hRect="3.75rem" />
+      <Skeleton skeletonType="rect" rectWidth="100%" rectHeight="3.75rem" />
       <Grid>
         <GridCell colsSm={9} />
         <GridCell colsSm={3}>
           <Skeleton
             skeletonType="rect"
-            wRect="100%"
-            hRect="2rem"
+            rectWidth="100%"
+            rectHeight="2rem"
             style={{ borderRadius: "9999rem" }}
           />
         </GridCell>
@@ -129,10 +129,10 @@ export const SkeletonForm = () => {
       <Grid style={{ marginTop: "1.5rem" }}>
         <GridCell colsSm={1} />
         <GridCell colsSm={1}>
-          <Skeleton skeletonType="rect" wRect=".75rem" hRect=".75rem" />
-          <Skeleton skeletonType="rect" wRect=".75rem" hRect=".75rem" />
-          <Skeleton skeletonType="rect" wRect=".75rem" hRect=".75rem" />
-          <Skeleton skeletonType="rect" wRect=".75rem" hRect=".75rem" />
+          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
+          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
+          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
+          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
         </GridCell>
         <GridCell colsSm={8}>
           <Skeleton />
@@ -148,8 +148,8 @@ export const SkeletonForm = () => {
 Skeleton.propTypes = {
   skeletonType: PropTypes.oneOf(["text", "header", "img", "avatar", "rect"]),
   skeletonSize: PropTypes.number,
-  wRect: PropTypes.string,
-  hRect: PropTypes.string,
+  rectWidth: PropTypes.string,
+  rectHeight: PropTypes.string,
   style: PropTypes.object,
 };
 export default Skeleton;

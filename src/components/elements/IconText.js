@@ -4,11 +4,11 @@ import styled from '@emotion/styled';
 import { constrastColor } from '../../utils/colors';
 
 const StyledIconTextCont = styled.div(
-    ({ onClick, textFisrt, stack }) => `
+    ({ onClick, textFirst, stack, center }) => `
     display: flex;
-    flex-direction: ${stack ? 'column' : 'row'};
-    justify-content: center;
-    align-items: center;
+    flex-direction: ${stack ? textFirst ? 'column-reverse': 'column' : textFirst ? 'row-reverse' :'row'};
+    justify-content: ${center? 'center': 'flex-start'};
+    align-items: ${center? 'center': 'flex-start'};
     cursor: ${onClick ? 'pointer' : 'inherit'}
   `
 )
@@ -28,9 +28,9 @@ const StyledIconText = styled.span(({ theme, textSize }) => `
   color: ${theme.color.main}
 `)
 
-const IconText = ({ icon, text, outlined, bgColor, rounded, style, shadow, onClick, textFisrt, stack, textSize = "small" }) => {
+const IconText = ({ icon, text, outlined, bgColor, rounded, style, shadow, onClick, textFirst, stack, center, textSize = "small" }) => {
     return (
-        <StyledIconTextCont textFisrt={ textFisrt } stack={ stack } onClick={ onClick }>
+        <StyledIconTextCont textFirst={ textFirst } stack={ stack } center={center} onClick={ onClick }>
             <StyledIconCont style={ style } rounded={ rounded } outlined={ outlined } shadow={ shadow } bgColor={ bgColor }>{ icon }</StyledIconCont>
             <StyledIconText textSize={ textSize }>{ text }</StyledIconText>
         </StyledIconTextCont>
@@ -42,12 +42,14 @@ IconText.propTypes = {
     text: PropTypes.string.isRequired,
     outlined: PropTypes.bool,
     stack: PropTypes.bool,
-    textFisrt: PropTypes.bool,
+    center: PropTypes.bool,
+    textFirst: PropTypes.bool,
     bgColor: PropTypes.string,
     rounded: PropTypes.bool,
     shadow: PropTypes.bool,
     onClick: PropTypes.func,
     textSize: PropTypes.string,
+    style: PropTypes.object,
 };
 
 export default IconText;

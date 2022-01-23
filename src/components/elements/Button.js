@@ -94,6 +94,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   gradient: PropTypes.bool,
   outlined: PropTypes.bool,
+  disabled: PropTypes.bool,
   rounded: PropTypes.bool,
   block: PropTypes.bool,
   style: PropTypes.object,

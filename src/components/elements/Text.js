@@ -33,6 +33,7 @@ Text.propTypes = {
     dInline: PropTypes.bool,
     style: PropTypes.object,
     tAlign: PropTypes.string,
+    children: PropTypes.node,
 }
 
 export default Text
