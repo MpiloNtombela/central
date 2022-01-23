@@ -1,16 +1,9 @@
-const presets = [
-  [
+module.exports = {
+  presets: [
     "@babel/preset-env",
-    {
-      "targets": {
-        "node": "14"
-      }
-    }
-  ], "@babel/preset-react"
-]
-
-const plugins = [
-  "@emotion"
-]
-
-module.exports = {presets, plugins};
+    "@babel/preset-react",
+    '@emotion/babel-preset-css-prop'
+  ], plugins: [
+    "@emotion"
+  ]
+};
