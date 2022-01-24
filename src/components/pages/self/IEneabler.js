@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
+import {useImmer} from "use-immer";
 import Container from '../../layouts/Container'
 import Text from '../../elements/Text'
 import Drawer from '../../layouts/Drawer'
 import Button from '../../elements/Button'
 
 const IEnabler = props => {
-  const [test, setTest] = useState({
+  const [test, setTest] = useImmer({
     width: 200,
     anchor: 'left',
     num: 0,
@@ -19,13 +20,13 @@ const IEnabler = props => {
     setTest(draft => {
       draft.anchor = anchors[draft.num]
     })
-    setTest(prevState => {
-      return {...prevState, num: prevState.num === 3 ? prevState.num = 0 : prevState.num++}
+    setTest(draft => {
+      draft.num === 3 ? draft.num = 0 : draft.num++
     })
   }
   const handleClose = () => {
-    setTest(prevState => {
-      return {...prevState, open: false}
+    setTest(draft => {
+      draft.open = false
     })
   }
   return (
@@ -42,13 +43,12 @@ const IEnabler = props => {
                 onClick={handleAnchor}
         >anchor</Button>
         <Button color='danger'
-                onClick={() => setTest(prevState => {
-                  return {...prevState, open: !prevState.open}
-                })}
-        >toggle</Button>
+                onClick={() => setTest(draft => {
+                  draft.open = !test.open
+                })}>toggle</Button>
         <Button
-          onClick={() => setTest(prevState => {
-            return {...prevState, fixed: !prevState.fixed}
+          onClick={() => setTest(draft => {
+            draft.fixed = !test.fixed
           })}
         >fixed</Button>
       </div>
