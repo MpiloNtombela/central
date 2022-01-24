@@ -18,7 +18,6 @@ const styles = (theme) => ({
     "@media(min-width: 1441px)": {
       maxWidth: "1440px",
       margin: "auto",
-      boxShadow: "0 0 1rem 0 hsl(0, 0%, 20%, 20%)",
     },
   },
 
