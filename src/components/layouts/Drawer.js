@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-// const StyledDrawerContainer = styled.div((props) => `
-//     width: 100%;
-//     height: 100%;
-//     margin-left: ${props.anchor === 'left' && props.open ? `${props.width + 5}px` : props.theme.sizes.gutters[2]};
-//     margin-right: ${props.anchor === 'right' && props.open ? `${props.width + 5}px` : props.theme.sizes.gutters[2]};
-//     box-sizing: border-box;
-//     transition: all .55s ease-in-out;
-// `)
+const DrawerContainer = styled.div(({anchor, open, theme, width}) => `
+    width: 100%;
+    height: 100%;
+    margin-left: ${anchor === 'left' && open ? `${width + 5}px` : theme.sizes.gutters[2]};
+    margin-right: ${anchor === 'right' && open ? `${width + 5}px` : theme.sizes.gutters[2]};
+    box-sizing: border-box;
+    transition: all .55s ease-in-out;
+`)
 
 const StyledDrawerOverlay = styled.div(({theme, anchor, open, fixed}) => `
     position: fixed;
@@ -25,7 +25,7 @@ const StyledDrawerOverlay = styled.div(({theme, anchor, open, fixed}) => `
     z-index: ${fixed ? theme.sizes.zIndex.nav - 1 : theme.sizes.zIndex.modal - 1};
     transition: all .55s ease-in-out;
 `)
-const StyledDrawer = styled.div(({ theme, anchor, open, width, height, fixed, clipNav, elevation, rounded }) => `
+const StyledDrawer = styled.div(({ theme, anchor, open, width, height, fixed, elevation, rounded }) => `
     position: ${fixed ? 'fixed' : 'absolute'};
     left: ${anchor !== 'right' ? open ? '0' : anchor !== "left" ? "0" : '-100%' : 'unset'};
     right: ${anchor !== 'left' ? open ? '0' : anchor !== "right" ? "0" : '-100%' : 'unset'};
