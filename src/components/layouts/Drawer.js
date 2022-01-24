@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const DrawerContainer = styled.div(({anchor, open, theme, width}) => `
+export const DrawerContainer = styled.div(({drawerAnchor, drawerOpen, theme, drawerWidth}) => `
     width: 100%;
     height: 100%;
-    margin-left: ${anchor === 'left' && open ? `${width + 5}px` : theme.sizes.gutters[2]};
-    margin-right: ${anchor === 'right' && open ? `${width + 5}px` : theme.sizes.gutters[2]};
+    margin-left: ${drawerAnchor === 'left' && drawerOpen ? `calc(${drawerWidth}px + ${theme.sizes.gutters[2]})` : theme.sizes.gutters[2]};
+    margin-right: ${drawerAnchor === 'right' && drawerOpen ? `calc(${drawerWidth}px + ${theme.sizes.gutters[2]})` : theme.sizes.gutters[2]};
     box-sizing: border-box;
     transition: all .55s ease-in-out;
 `)
@@ -25,7 +25,7 @@ const StyledDrawerOverlay = styled.div(({theme, anchor, open, fixed}) => `
     z-index: ${fixed ? theme.sizes.zIndex.nav - 1 : theme.sizes.zIndex.modal - 1};
     transition: all .55s ease-in-out;
 `)
-const StyledDrawer = styled.div(({ theme, anchor, open, width, height, fixed, elevation, rounded }) => `
+const StyledDrawer = styled.div(({theme, anchor, open, width, height, fixed, elevation, rounded}) => `
     position: ${fixed ? 'fixed' : 'absolute'};
     left: ${anchor !== 'right' ? open ? '0' : anchor !== "left" ? "0" : '-100%' : 'unset'};
     right: ${anchor !== 'left' ? open ? '0' : anchor !== "right" ? "0" : '-100%' : 'unset'};
@@ -43,50 +43,56 @@ const StyledDrawer = styled.div(({ theme, anchor, open, width, height, fixed, el
     transition: all .5s ease-in-out;
 `)
 
-const Drawer = ({ open, fixed, width, height, rounded, onClose, elevation = 0, anchor = "left", children }) => {
+const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, anchor = "left", children}) => {
 
-    const handleClick = (e) => {
-        if (fixed) return;
-        const cont = e.currentTarget;
-        const drawer = cont.querySelector('.jsx-drawer')
-        if (drawer !== e.target && !drawer.contains(e.target)) {
-            onClose()
-        }
+  const handleClick = (e) => {
+    if (fixed) return;
+    const cont = e.currentTarget;
+    const drawer = cont.querySelector('.jsx-drawer')
+    if (drawer !== e.target && !drawer.contains(e.target)) {
+      onClose()
     }
+  }
 
-    return (
-        <StyledDrawerOverlay
-            onClick={ e => handleClick(e) }
-            anchor={ anchor }
-            open={ open }
-            fixed={ fixed }
-            width={ width }
-            height={ height }>
-            <StyledDrawer
-                className='jsx-drawer'
-                fixed={ fixed }
-                open={ open }
-                anchor={ anchor }
-                width={ width }
-                height={ height }
-                rounded={ rounded }
-                elevation={ elevation }>
-                { children }
-            </StyledDrawer>
-        </StyledDrawerOverlay>
-    )
+  return (
+    <StyledDrawerOverlay
+      onClick={e => handleClick(e)}
+      anchor={anchor}
+      open={open}
+      fixed={fixed}
+      width={width}
+      height={height}>
+      <StyledDrawer
+        className='jsx-drawer'
+        fixed={fixed}
+        open={open}
+        anchor={anchor}
+        width={width}
+        height={height}
+        rounded={rounded}
+        elevation={elevation}>
+        {children}
+      </StyledDrawer>
+    </StyledDrawerOverlay>
+  )
+}
+
+DrawerContainer.propTypes = {
+  drawerAnchor: PropTypes.oneOf(["top", "right", "bottom", "left"]),
+  drawerWidth: PropTypes.number,
+  drawerOpen: PropTypes.bool.isRequired,
 }
 
 Drawer.propTypes = {
-    anchor: PropTypes.oneOf(["top", "right", "bottom", "left"]),
-    elevation: PropTypes.oneOf([1, 2, 3, 4]),
-    fixed: PropTypes.bool,
-    open: PropTypes.bool.isRequired,
-    rounded: PropTypes.bool,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node,
+  anchor: PropTypes.oneOf(["top", "right", "bottom", "left"]),
+  elevation: PropTypes.oneOf([1, 2, 3, 4]),
+  fixed: PropTypes.bool,
+  open: PropTypes.bool.isRequired,
+  rounded: PropTypes.bool,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node,
 }
 
 export default Drawer
