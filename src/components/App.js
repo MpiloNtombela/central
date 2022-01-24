@@ -7,8 +7,10 @@ import React, {useEffect, useState} from "react";
 
 const App = () => {
   const [isDark, setMode] = useState(true)
+  const [isLoading, setLoading] = useState(true)
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
+    setLoading(false)
   }, [])
 
   const handleMode = () => {
@@ -16,7 +18,7 @@ const App = () => {
     localStorage.setItem('mode', isDark ? 'light' : 'dark')
   }
   return (
-    <Theme isDark={isDark}>
+    <Theme isDark={!isLoading && isDark}>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
