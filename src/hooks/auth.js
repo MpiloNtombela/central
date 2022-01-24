@@ -9,6 +9,7 @@ export const useAuth = () => {
   const { user } = useDataContext();
   const dispatch = useDataDispatch()
 
+  // adds user's student number (dummy login)
   const setUser = (stuNum) => {
     if(!stuNum) return;
     if (isNaN(stuNum) || stuNum.length !== 9 || stuNum.substring(0, 2) !== '21') {
