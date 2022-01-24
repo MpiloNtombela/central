@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-export const DrawerContainer = styled.div(({drawerAnchor, drawerOpen, drawerWidth}) => `
+export const DrawerContainer = styled.div(({drawerAnchor, drawerOpen, drawerWidth, drawerFixed}) => `
     width: 100%;
     height: 100%;
-    padding-left: ${drawerAnchor === 'left' && drawerOpen ? `${drawerWidth}px` : 0};
-    padding-right: ${drawerAnchor === 'right' && drawerOpen ? `${drawerWidth}px` : 0};
+    padding-left: ${drawerAnchor === 'left' && drawerOpen && drawerFixed ? `${drawerWidth}px` : 0};
+    padding-right: ${drawerAnchor === 'right' && drawerOpen && drawerFixed ? `${drawerWidth}px` : 0};
     box-sizing: border-box;
     transition: all .55s ease-in-out;
 `)
@@ -81,6 +81,7 @@ DrawerContainer.propTypes = {
   drawerAnchor: PropTypes.oneOf(["top", "right", "bottom", "left"]).isRequired,
   drawerWidth: PropTypes.number.isRequired,
   drawerOpen: PropTypes.bool.isRequired,
+  drawerFixed: PropTypes.bool,
 }
 
 Drawer.propTypes = {
