@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {useImmer} from "use-immer";
+import Card from "../../layouts/Card";
 import Container from '../../layouts/Container'
 import Text from '../../elements/Text'
 import Drawer, {DrawerContainer} from '../../layouts/Drawer'
 import Button from '../../elements/Button'
+import Grid, {GridCell} from "../../layouts/Grid";
 
 const IEnabler = props => {
   const [test, setTest] = useImmer({
-    width: 200,
+    width: 250,
     anchor: 'left',
     num: 0,
     open: true,
@@ -30,14 +32,25 @@ const IEnabler = props => {
     })
   }
   return (
-    <DrawerContainer drawerOpen={test.open} drawerWidth={test.width} drawerAnchor={test.anchor}>
+    <DrawerContainer drawerOpen={test.open} drawerFixed={test.fixed} drawerWidth={test.width}
+                     drawerAnchor={test.anchor}>
       <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width} open={test.open}
               fixed={test.fixed} onClose={handleClose}>
         <Text fSize='medium' fWeight='bold'>Mpilo</Text>
       </Drawer>
       <Container maxWidth="xl">
-        <Text fSize='x-large' fWeight='bold'>iEnabler System iEnabler System iEnabler System iEnabler System iEnabler
-          System</Text>
+        <Grid spacing={2}>
+          <GridCell colsMd={7}>
+            <Card>
+              <Text fSize="large" fWeight="bold">Main Info</Text>
+            </Card>
+          </GridCell>
+          <GridCell colsMd={5}>
+            <Card>
+              <Text fSize="large" fWeight="bold">Side Info</Text>
+            </Card>
+          </GridCell>
+        </Grid>
 
         <div style={{position: 'fixed', bottom: '1rem', right: '1rem', zIndex: 9999}}>
           <Button color='warning'

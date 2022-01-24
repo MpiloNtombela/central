@@ -1,4 +1,5 @@
 import {HashRouter, Route, Routes} from "react-router-dom";
+import DataProvider from "./DataContext";
 import Button from "./elements/Button";
 import Loader from "./layouts/Loader";
 import IEnabler from "./pages/self/IEneabler";
@@ -18,14 +19,16 @@ const App = () => {
     localStorage.setItem('mode', isDark ? 'light' : 'dark')
   }
   return (
-    <Theme isDark={!isLoading && isDark}>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
-          <Route path="/e" element={<IEnabler/>}/>
-        </Routes>
-      </HashRouter>
-    </Theme>
+    <DataProvider>
+      <Theme isDark={!isLoading && isDark}>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
+            <Route path="/e" element={<IEnabler/>}/>
+          </Routes>
+        </HashRouter>
+      </Theme>
+    </DataProvider>
   );
 }
 
