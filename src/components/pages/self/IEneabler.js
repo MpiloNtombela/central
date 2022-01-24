@@ -30,15 +30,15 @@ const IEnabler = props => {
     })
   }
   return (
-    <Container>
-      <DrawerContainer drawerOpen={test.open} drawerWidth={test.width} drawerAnchor={test.anchor}>
-        <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width} open={test.open}
-                fixed={test.fixed} onClose={handleClose}>
-          <Text fSize='medium' fWeight='bold'>Mpilo</Text>
-        </Drawer>
+    <DrawerContainer drawerOpen={test.open} drawerWidth={test.width} drawerAnchor={test.anchor}>
+      <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width} open={test.open}
+              fixed={test.fixed} onClose={handleClose}>
+        <Text fSize='medium' fWeight='bold'>Mpilo</Text>
+      </Drawer>
+      <Container maxWidth="xl">
         <Text fSize='x-large' fWeight='bold'>iEnabler System iEnabler System iEnabler System iEnabler System iEnabler
           System</Text>
-        <br/>
+
         <div style={{position: 'fixed', bottom: '1rem', right: '1rem', zIndex: 9999}}>
           <Button color='warning'
                   onClick={handleAnchor}
@@ -53,8 +53,8 @@ const IEnabler = props => {
             })}
           >fixed</Button>
         </div>
-      </DrawerContainer>
-    </Container>
+      </Container>
+    </DrawerContainer>
   )
 }
 
