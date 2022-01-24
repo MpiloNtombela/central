@@ -1,6 +1,7 @@
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Button from "./elements/Button";
 import Loader from "./layouts/Loader";
+import IEnabler from "./pages/self/IEneabler";
 import Theme from "./Theme";
 import React, {useEffect, useState} from "react";
 
@@ -19,6 +20,7 @@ const App = () => {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
+          <Route path="/e" element={<IEnabler/>}/>
         </Routes>
       </HashRouter>
     </Theme>
