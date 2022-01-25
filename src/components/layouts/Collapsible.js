@@ -58,7 +58,7 @@ const StyledCollapsibleContent = styled.div`
   }
 `
 
-const Collapsible = ({children, collapsed, header, bgColor, tColor}) => {
+const Collapsible = ({children, collapsed, header, bgColor, tColor, isHighlighted}) => {
   const [open, setOpen] = useState(collapsed)
 
   const handleToggle = () => {
@@ -66,8 +66,8 @@ const Collapsible = ({children, collapsed, header, bgColor, tColor}) => {
   }
 
   return (
-    <StyledCollapsible bColor={bgColor} tColor={tColor}>
-      <StyledCollapsibleHeader isOpen={open} isHighlighted={true} onClick={handleToggle}>
+    <StyledCollapsible bgColor={bgColor} tColor={tColor}>
+      <StyledCollapsibleHeader isOpen={open} isHighlighted={isHighlighted} onClick={handleToggle}>
         <Grid alignGrid={'center'}>
           <GridCell colsSm={11}>
             {header}
@@ -86,7 +86,8 @@ const Collapsible = ({children, collapsed, header, bgColor, tColor}) => {
 
 Collapsible.defaultProps = {
   isOpen: false,
-  header: ''
+  header: '',
+  isHighlighted: true,
 };
 
 Collapsible.propTypes = {
@@ -95,6 +96,7 @@ Collapsible.propTypes = {
   header: PropTypes.node,
   bgColor: PropTypes.string,
   tColor: PropTypes.string,
+  isHighlighted: PropTypes.bool,
 };
 
 export default Collapsible;
