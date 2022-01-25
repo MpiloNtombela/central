@@ -2,6 +2,7 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import DataProvider from "./DataContext";
 import Button from "./elements/Button";
 import Loader from "./layouts/Loader";
+import IEnablerLoader from "./pages/self/IEnablerLoader";
 import IEnabler from "./pages/self/IEneabler";
 import Theme from "./Theme";
 import React, {useEffect, useState} from "react";
@@ -24,7 +25,7 @@ const App = () => {
         <HashRouter>
           <Routes>
             <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
-            <Route path="/e" element={<IEnabler/>}/>
+            <Route path="/e" element={<IEnablerLoader/>}/>
           </Routes>
         </HashRouter>
       </Theme>
