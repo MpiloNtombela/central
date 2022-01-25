@@ -53,7 +53,7 @@ const StyledCollapsibleContent = styled.div`
     max-height: 100vh;
     opacity: 1;
     overflow: auto;
-    margin: .25rem .5rem;
+    margin: .25rem .25rem .25rem .75rem;
 
   }
 `
