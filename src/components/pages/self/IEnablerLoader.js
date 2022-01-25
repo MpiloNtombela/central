@@ -1,5 +1,8 @@
 import {useTheme} from "@emotion/react";
+import PropTypes from "prop-types";
 import React from 'react';
+import {useMediaQuery} from "react-responsive";
+import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Container from "../../layouts/Container";
@@ -7,12 +10,13 @@ import Drawer, {DrawerContainer} from "../../layouts/Drawer";
 import Grid, {GridCell} from "../../layouts/Grid";
 import Skeleton from "../../layouts/Skeletons";
 
-const IEnablerLoader = () => {
+const IEnablerLoader = ({drawerOpen = false}) => {
   const theme = useTheme()
+
   return (
-    <DrawerContainer drawerFixed drawerAnchor={"left"} drawerWidth={200} drawerOpen={true}>
+    <DrawerContainer drawerFixed drawerAnchor={"left"} drawerWidth={210} drawerOpen={drawerOpen}>
       <Drawer onClose={() => {
-      }} open={true} width={200} elevation={2}>
+      }} open={drawerOpen} width={210} elevation={2}>
         <Box marginTop={'1rem'}>
           {[1, 2, 3, 4, 5, 6, 7].map((num) => (
             <Box key={num} padding={'.2rem .5rem'}>
@@ -60,8 +64,16 @@ const IEnablerLoader = () => {
                   ))}
                 </Grid>
               </Box>
-              <Box width={"65%"}>
-                <Skeleton skeletonType={'header'} style={{borderRadius: '9999rem', height: '2.25rem'}}/>
+              <Box display={'flex'} justifyContent={'flex-end'}>
+                <Skeleton skeletonType={'header'} style={{borderRadius: '9999rem', height: '2.25rem', width: '150px'}}/>
+              </Box>
+            </Card>
+            <Card>
+              <Box padding={`${theme.sizes.gutters[2]} 0`}>
+                <Skeleton skeletonType={'header'}/>
+                <Box marginTop={theme.sizes.gutters[2]} display="flex" justifyContent="flex-end">
+                  <Skeleton skeletonType='text' style={{width: "100px"}}/>
+                </Box>
               </Box>
             </Card>
           </GridCell>
@@ -70,5 +82,9 @@ const IEnablerLoader = () => {
     </DrawerContainer>
   );
 };
+
+IEnablerLoader.propTypes = {
+  drawerOpen: PropTypes.bool
+}
 
 export default IEnablerLoader;
