@@ -13,7 +13,7 @@ const StyledImage = styled.img`
 
 const Image = ({alt, height, radius, src, width, isThumb}) => {
   return (
-    <StyledImage src={src} alt={alt} width={width} height={height} radius={radius} isTumb={isThumb}/>
+    <StyledImage src={src} alt={alt} width={width} height={height} radius={radius} isThumb={isThumb}/>
   );
 };
 
