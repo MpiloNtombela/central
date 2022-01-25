@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { constrastColor } from '../../utils/colors';
+import { contrastColor } from '../../utils/colors';
 
 const StyledIconTextCont = styled.div(
     ({ onClick, textFirst, stack, center }) => `
@@ -19,7 +19,7 @@ const StyledIconCont = styled.div(({ theme, rounded, outlined, shadow, bgColor }
   border: ${outlined ? `2px solid ${bgColor}` : 0};
   padding: ${bgColor ? theme.sizes.gutters[1] : 0};
   box-shadow: ${shadow ? '0px 0px 7px' : 'none'};
-  color: ${outlined ? bgColor : bgColor ? constrastColor(bgColor).color : "inherit"}
+  color: ${outlined ? bgColor : bgColor ? contrastColor(bgColor).color : "inherit"}
 `)
 
 const StyledIconText = styled.span(({ theme, textSize }) => `

@@ -63,15 +63,15 @@ export const stringToColor = (value) => {
 }
 
 /**
- * @description a util func that calc a suitable b/w constrast for a given hex color (e.g #FFFFFF => #000000)
+ * @description a util func that calc a suitable b/w contrast for a given hex color (e.g #FFFFFF => #000000)
  * @param {string} hex - hex color (e.g #00FF00)
- * @returns {{constrast: number, color: string}} object
+ * @returns {{contrast: number, color: string}} object
  */
-export const constrastColor = (hex) => {
+export const contrastColor = (hex) => {
     let { r, g, b } = hex2rgb(hex)
-    let constrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
+    let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
     return {
-        constrast,
-        color: constrast > 150 ? "#000000" : "#FFFFFF"
+        contrast: contrast,
+        color: contrast > 150 ? "#000000" : "#FFFFFF"
     }
 }
