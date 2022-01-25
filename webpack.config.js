@@ -24,8 +24,9 @@ module.exports = (env, argv) => {
 
     ],
     output: {
-      filename: "[hash].main.js",
+      filename: devMode ? "main.js" : "[contenthash].main.js",
       path: path.resolve(__dirname, "dist"),
+      assetModuleFilename: "assets/[contenthash][ext][query]",
       clean: true,
     },
     module: {
@@ -39,12 +40,7 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|jpe?g|svg|gif)$/i,
-          use: {
-            loader: "file-loader",
-            options: {
-              publicPath: 'assets'
-            }
-          }
+          type: "asset/resource",
         }
       ],
     },
