@@ -38,7 +38,7 @@ const StyledCollapsableIcon = styled.i`
 
 const StyledCollapsibleContent = styled.div`
   max-height: 0;
-  background: ${({theme}) => theme.background.secondary};
+  background: inherit;
   overflow: hidden;
   position: relative;
   opacity: 0;
@@ -53,7 +53,7 @@ const StyledCollapsibleContent = styled.div`
     max-height: 100vh;
     opacity: 1;
     overflow: auto;
-    margin: .75rem;
+    margin: .25rem .25rem .25rem .75rem;
 
   }
 `
