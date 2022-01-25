@@ -86,7 +86,7 @@ const IEnabler = props => {
                 <Card shadow>
                   <Grid gridSpacing={2}>
                     <GridCell colsSm={4}>
-                      <Image src={Xe} alt={"profile"}/>
+                      <Image src={Xe} alt={"profile"} height="150px" width="150px"/>
                     </GridCell>
                     <GridCell colsSm={8}>
                       <Box margin={`${theme.sizes.gutters[1]} 0`}>
