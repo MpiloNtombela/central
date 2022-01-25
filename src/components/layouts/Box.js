@@ -16,7 +16,10 @@ export const BoxStyled = styled.div`
   height: ${props => props.height};
   max-width: ${props => props.maxWidth};
   max-height: ${props => props.maxHeight};
-  display: ${props => props.display};`
+  display: ${props => props.display};
+  justify-content: ${props => props.justifyContent};
+  align-items: ${props => props.alignItems};
+`
 
 
 // create a react custom box component to handle spacing and margins
@@ -34,6 +37,8 @@ const Box = ({
                maxWidth,
                maxHeight,
                display,
+               alignItems,
+               justifyContent,
                children
              }) => {
   return (
@@ -50,7 +55,9 @@ const Box = ({
       height={height}
       maxWidth={maxWidth}
       maxHeight={maxHeight}
-      display={display}>
+      display={display}
+      justifyContent={justifyContent}
+      alignItems={alignItems}>
       {children}
     </BoxStyled>
   )
@@ -70,6 +77,8 @@ Box.propTypes = {
   maxWidth: PropTypes.string,
   maxHeight: PropTypes.string,
   display: PropTypes.string,
+  justifyContent: PropTypes.string,
+  alignItems: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
