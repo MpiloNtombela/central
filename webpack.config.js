@@ -24,9 +24,9 @@ module.exports = (env, argv) => {
 
     ],
     output: {
-      filename: "main.js",
-      path: path.resolve(__dirname, "./public/dist"),
-      publicPath: "/"
+      filename: "[hash].main.js",
+      path: path.resolve(__dirname, "dist"),
+      clean: true,
     },
     module: {
       rules: [
@@ -37,6 +37,15 @@ module.exports = (env, argv) => {
             loader: "babel-loader",
           },
         },
+        {
+          test: /\.(png|jpe?g|svg|gif)$/i,
+          use: {
+            loader: "file-loader"
+          },
+          options: {
+            publicPath: 'assets'
+          }
+        }
       ],
     },
   };
