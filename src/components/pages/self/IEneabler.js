@@ -4,12 +4,14 @@ import React from 'react'
 import {useImmer} from "use-immer";
 import {useDataContext} from "../../../hooks/context";
 import Button from '../../elements/Button'
+import Image from "../../elements/Image";
 import Text from '../../elements/Text'
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Container from '../../layouts/Container'
 import Drawer, {DrawerContainer} from '../../layouts/Drawer'
 import Grid, {GridCell} from "../../layouts/Grid";
+import Xe from "../../../../public/Xe.png"
 
 const caseOut = (str) => {
   const r = /([a-z])([A-Z])/g
@@ -83,9 +85,9 @@ const IEnabler = props => {
               <Box marginBottom={theme.sizes.gutters[4]}>
                 <Card shadow>
                   <Grid gridSpacing={2}>
-                    {/*<GridCell colsSm={4}>*/}
-
-                    {/*</GridCell>*/}
+                    <GridCell colsSm={4}>
+                      <Image src={Xe} alt={"profile"}/>
+                    </GridCell>
                     <GridCell colsSm={8}>
                       <Box margin={`${theme.sizes.gutters[1]} 0`}>
                         <Text fSize="1.2em" fWeight="bold">{student.firstName} {student.lastName}</Text>

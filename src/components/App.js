@@ -25,7 +25,7 @@ const App = () => {
         <HashRouter>
           <Routes>
             <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
-            <Route path="/e" element={<IEnablerLoader/>}/>
+            <Route path="/e" element={<IEnabler/>}/>
           </Routes>
         </HashRouter>
       </Theme>
