@@ -40,10 +40,10 @@ module.exports = (env, argv) => {
         {
           test: /\.(png|jpe?g|svg|gif)$/i,
           use: {
-            loader: "file-loader"
-          },
-          options: {
-            publicPath: 'assets'
+            loader: "file-loader",
+            options: {
+              publicPath: 'assets'
+            }
           }
         }
       ],
