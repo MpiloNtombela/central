@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React, {useEffect} from 'react'
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
+import Xe from "../../../../public/Xe.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
 import {LOADED, LOADING} from "../../DataContext";
 import Button from '../../elements/Button'
@@ -10,10 +11,10 @@ import Image from "../../elements/Image";
 import Text from '../../elements/Text'
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
+import Collapsible from "../../layouts/Collapsible";
 import Container from '../../layouts/Container'
 import Drawer, {DrawerContainer} from '../../layouts/Drawer'
 import Grid, {GridCell} from "../../layouts/Grid";
-import Xe from "../../../../public/Xe.png"
 import IEnablerLoader from "./IEnablerLoader";
 
 const caseOut = (str) => {
@@ -89,7 +90,21 @@ const IEnabler = () => {
                        drawerAnchor={test.anchor}>
         <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width} open={isLg}
                 fixed={isLg} onClose={handleClose}>
-          <Text fSize='medium' fWeight='bold'>Mpilo</Text>
+          <Collapsible header={"More here"} bgColor={theme.background.main}>
+            <Text>link one</Text>
+            <Text>link two</Text>
+            <Text>link three</Text>
+          </Collapsible>
+          <Collapsible header={"More here"} bgColor={theme.background.main}>
+            <Text>link one</Text>
+            <Text>link two</Text>
+            <Text>link three</Text>
+          </Collapsible>
+          <Collapsible header={"More here"} bgColor={theme.background.main}>
+            <Text>link one</Text>
+            <Text>link two</Text>
+            <Text>link three</Text>
+          </Collapsible>
         </Drawer>
         <Container maxWidth="lg">
           <Grid gridSpacing={2}>
