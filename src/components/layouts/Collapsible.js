@@ -11,13 +11,13 @@ const StyledCollapsible = styled.div`
 `
 
 const StyledCollapsibleHeader = styled.div`
-  padding: ${({theme}) => theme.sizes.gutters[2]};
+  padding: ${({theme}) => `0 ${theme.sizes.gutters[2]}`};
   box-sizing: border-box;
   border-bottom: ${({
                       isHighlighted,
                       theme,
                       isOpen
-                    }) => isHighlighted && isOpen ? `2px solid ${theme.color.secondary}` : 0};
+                    }) => isHighlighted && isOpen ? `1px solid ${theme.palette.secondary.light}` : 0};
   cursor: pointer;
 `
 
@@ -43,7 +43,7 @@ const StyledCollapsibleContent = styled.div`
   position: relative;
   opacity: 0;
   scrollbar-width: thin;
-  transition: all .5s ease;
+  transition: all .5s ease-in-out;
 
   &::-webkit-scrollbar {
     width: .50rem
@@ -53,8 +53,7 @@ const StyledCollapsibleContent = styled.div`
     max-height: 100vh;
     opacity: 1;
     overflow: auto;
-    margin: .25rem .25rem .25rem .75rem;
-
+    padding: ${({theme}) => theme.sizes.gutters[2]};
   }
 `
 
@@ -72,7 +71,7 @@ const Collapsible = ({children, collapsed, header, bgColor, tColor, isHighlighte
           <GridCell colsSm={11}>
             {header}
           </GridCell>
-          <GridCell colsSm={1}>
+          <GridCell colsSm={1} style={{textAlign: 'center'}}>
             <StyledCollapsableIcon className={open ? 'arrow-up' : 'arrow-down'}/>
           </GridCell>
         </Grid>
