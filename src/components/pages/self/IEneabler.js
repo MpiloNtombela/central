@@ -7,6 +7,7 @@ import Xe from "../../../../public/Xe.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
 import {LOADED, LOADING} from "../../DataContext";
 import Button from '../../elements/Button'
+import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
 import Text from '../../elements/Text'
 import Box from "../../layouts/Box";
@@ -15,6 +16,7 @@ import Collapsible from "../../layouts/Collapsible";
 import Container from '../../layouts/Container'
 import Drawer, {DrawerContainer} from '../../layouts/Drawer'
 import Grid, {GridCell} from "../../layouts/Grid";
+import iRoutes from "../utils/ienablerRoutes";
 import IEnablerLoader from "./IEnablerLoader";
 
 const caseOut = (str) => {
@@ -45,6 +47,41 @@ KeyPairDetails.propTypes = {
   v: PropTypes.string.isRequired,
 }
 
+const SideNav = () => {
+  const theme = useTheme()
+  return (
+    <div style={{position: 'relative', height: '100%', paddingBottom: '3rem', boxSizing: 'border-box'}}>
+      <Box height={'100%'} maxHeight={'100%'} marginBottom={theme.sizes.gutters[4]} style={{overflow: 'auto'}}>
+        {iRoutes.map((route, idx) => {
+          if (route.subRoutes) {
+            return (
+              <Collapsible collapsed={idx === 0} key={idx} header={<IconText text={route.name} textSize={"medium"} icon={route.icon}/>}
+                           bgColor={theme.background.main}>
+                {route.subRoutes.map((sRoute, idx) => {
+                  return (
+                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`}>
+                      <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon}/>
+                    </Box>
+                  )
+                })}
+              </Collapsible>
+            )
+          } else {
+            return (
+              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`}>
+                <IconText text={route.name} textSize={"medium"} icon={route.icon}/>
+              </Box>
+            )
+          }
+        })}
+      </Box>
+      <div style={{position: 'absolute', bottom: 0, left: 0, right: 0, background: 'red'}}>
+        <Button>playing it</Button>
+      </div>
+    </div>
+  )
+}
+
 const IEnabler = () => {
 
   const {student, isLoading} = useDataContext()
@@ -54,10 +91,10 @@ const IEnabler = () => {
   const isLg = useMediaQuery({minWidth: theme.breakpoints.lg})
 
   const [test, setTest] = useImmer({
-    width: 210,
+    width: 230,
     anchor: 'left',
     num: 0,
-    open: false,
+    open: true,
     fixed: false
   })
 
@@ -88,23 +125,10 @@ const IEnabler = () => {
     return (
       <DrawerContainer drawerOpen={isLg} drawerFixed={isLg} drawerWidth={test.width}
                        drawerAnchor={test.anchor}>
-        <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width} open={isLg}
+        <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width}
+                open={test.open || isLg}
                 fixed={isLg} onClose={handleClose}>
-          <Collapsible header={"More here"} bgColor={theme.background.main}>
-            <Text>link one</Text>
-            <Text>link two</Text>
-            <Text>link three</Text>
-          </Collapsible>
-          <Collapsible header={"More here"} bgColor={theme.background.main}>
-            <Text>link one</Text>
-            <Text>link two</Text>
-            <Text>link three</Text>
-          </Collapsible>
-          <Collapsible header={"More here"} bgColor={theme.background.main}>
-            <Text>link one</Text>
-            <Text>link two</Text>
-            <Text>link three</Text>
-          </Collapsible>
+          <SideNav/>
         </Drawer>
         <Container maxWidth="lg">
           <Grid gridSpacing={2}>
@@ -165,21 +189,6 @@ const IEnabler = () => {
               </Card>
             </GridCell>
           </Grid>
-
-          <div style={{position: 'fixed', bottom: '1rem', right: '1rem', zIndex: 9999}}>
-            <Button color='warning'
-                    onClick={handleAnchor}
-            >anchor</Button>
-            <Button color='danger'
-                    onClick={() => setTest(draft => {
-                      draft.open = !test.open
-                    })}>toggle</Button>
-            <Button
-              onClick={() => setTest(draft => {
-                draft.fixed = !test.fixed
-              })}
-            >fixed</Button>
-          </div>
         </Container>
       </DrawerContainer>
     )
