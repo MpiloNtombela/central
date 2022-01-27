@@ -30,6 +30,7 @@ export const BoxStyled = styled.div`
             ? props.hoverColor
                     : props.theme.background.glass 
             : 'inherit'};
+    cursor: ${props => props.isHover ? 'pointer': 'default'};
   }
 `
 
