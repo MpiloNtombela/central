@@ -55,11 +55,13 @@ const SideNav = () => {
         {iRoutes.map((route, idx) => {
           if (route.subRoutes) {
             return (
-              <Collapsible collapsed={idx === 0} key={idx} header={<IconText text={route.name} textSize={"medium"} icon={route.icon}/>}
+              <Collapsible collapsed={idx === 0} key={idx}
+                           header={<IconText text={route.name} textSize={"medium"} icon={route.icon}/>}
                            bgColor={theme.background.main}>
                 {route.subRoutes.map((sRoute, idx) => {
                   return (
-                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`}>
+                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                         hoverColor={theme.background.glass}>
                       <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon}/>
                     </Box>
                   )
@@ -68,7 +70,8 @@ const SideNav = () => {
             )
           } else {
             return (
-              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`}>
+              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                   hoverColor={theme.background.glass}>
                 <IconText text={route.name} textSize={"medium"} icon={route.icon}/>
               </Box>
             )
