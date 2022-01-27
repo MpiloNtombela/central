@@ -2,9 +2,9 @@ import React from 'react';
 import {
   FaAward,
   FaBed,
-  FaCertificate, FaDonate, FaDoorOpen,
+  FaCertificate, FaDoorOpen,
   FaFileInvoice,
-  FaFileInvoiceDollar, FaFileSignature, FaHandHoldingUsd, FaMoneyCheck,
+  FaFileInvoiceDollar, FaFileSignature, FaGlobe, FaHandHoldingUsd, FaMoneyCheck,
   FaQuestionCircle,
   FaRegEdit,
   FaUniversity,
@@ -13,16 +13,15 @@ import {
 import {
   MdFactCheck,
   MdGavel, MdMedicalServices,
-  MdOutlineAppRegistration,
   MdOutlineHistoryEdu,
-  MdPaid, MdPriceCheck, MdSecurity
+  MdPriceCheck, MdSecurity
 } from "react-icons/md";
 import {stringToColor} from "../../../utils/colors";
 
 const iRoutes = [
   {
     name: 'Web Registration',
-    icon: <MdOutlineAppRegistration size={24} color={stringToColor("Web Registration").hex}/>,
+    icon: <FaGlobe size={24} color={stringToColor("Web Registration").hex}/>,
     link: null,
     subRoutes: [
       {

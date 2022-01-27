@@ -82,6 +82,9 @@ const SideNav = () => {
           }
         )}
       </Box>
+      <Box position={'absolute'} bottom={'.25rem'} left={'0'} right={'0'} display={'flex'} justifyContent={'center'}>
+        <Button size={'sm'} rounded color='danger'>central log out</Button>
+      </Box>
     </Box>
   )
 }
