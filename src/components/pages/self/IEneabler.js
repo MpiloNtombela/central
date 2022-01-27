@@ -50,38 +50,39 @@ KeyPairDetails.propTypes = {
 const SideNav = () => {
   const theme = useTheme()
   return (
-    <div style={{position: 'relative', height: '100%', paddingBottom: '3rem', boxSizing: 'border-box'}}>
-      <Box height={'100%'} maxHeight={'100%'} marginBottom={theme.sizes.gutters[4]} style={{overflow: 'auto'}}>
+    <Box position='relative' height='100%' paddingBottom='3rem' style={{boxSizing: 'border-box'}}>
+      <Box height={'100%'} maxHeight={'100%'} style={{overflowY: 'auto'}}>
         {iRoutes.map((route, idx) => {
-          if (route.subRoutes) {
-            return (
-              <Collapsible collapsed={idx === 0} key={idx}
-                           header={<IconText text={route.name} textSize={"medium"} icon={route.icon}/>}
-                           bgColor={theme.background.main}>
-                {route.subRoutes.map((sRoute, idx) => {
-                  return (
-                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                         hoverColor={theme.background.glass}>
-                      <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon}/>
-                    </Box>
-                  )
-                })}
-              </Collapsible>
-            )
-          } else {
-            return (
-              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                   hoverColor={theme.background.glass}>
-                <IconText text={route.name} textSize={"medium"} icon={route.icon}/>
-              </Box>
-            )
+            if (route.subRoutes) {
+              return (
+                <Collapsible collapsed={idx === 0} key={idx}
+                             header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                                               textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>}
+                             bgColor={theme.background.main}>
+                  {route.subRoutes.map((sRoute, idx) => {
+                    return (
+                      <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                           hoverColor={theme.background.glass}>
+                        <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
+                                  textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
+                      </Box>
+                    )
+                  })}
+                </Collapsible>
+              )
+            } else {
+              return (
+                <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                     hoverColor={theme.background.glass}>
+                  <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                            textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
+                </Box>
+              )
+            }
           }
-        })}
+        )}
       </Box>
-      <div style={{position: 'absolute', bottom: 0, left: 0, right: 0, background: 'red'}}>
-        <Button>playing it</Button>
-      </div>
-    </div>
+    </Box>
   )
 }
 
