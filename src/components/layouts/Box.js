@@ -82,7 +82,7 @@ const Box = ({
       right={right}
       bottom={bottom}
       left={left}
-      isHoverable={isHover}
+      isHover={isHover}
       hoverColor={hoverColor}>
       {children}
     </BoxStyled>
