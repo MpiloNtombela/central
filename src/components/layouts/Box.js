@@ -19,6 +19,11 @@ export const BoxStyled = styled.div`
   display: ${props => props.display};
   justify-content: ${props => props.justifyContent};
   align-items: ${props => props.alignItems};
+  position: ${props => props.position};
+  top: ${props => props.top};
+  right: ${props => props.right};
+  bottom: ${props => props.bottom};
+  left: ${props => props.left};
 `
 
 
@@ -39,6 +44,11 @@ const Box = ({
                display,
                alignItems,
                justifyContent,
+               position,
+               top,
+               right,
+               bottom,
+               left,
                children
              }) => {
   return (
@@ -57,7 +67,12 @@ const Box = ({
       maxHeight={maxHeight}
       display={display}
       justifyContent={justifyContent}
-      alignItems={alignItems}>
+      alignItems={alignItems}
+      position={position}
+      top={top}
+      right={right}
+      bottom={bottom}
+      left={left}>
       {children}
     </BoxStyled>
   )
@@ -79,6 +94,11 @@ Box.propTypes = {
   display: PropTypes.string,
   justifyContent: PropTypes.string,
   alignItems: PropTypes.string,
+  position: PropTypes.oneOf(["relative", "sticky", "absolute", "static", "fixed"]),
+  top: PropTypes.string,
+  right: PropTypes.string,
+  bottom: PropTypes.string,
+  left: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
