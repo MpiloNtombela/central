@@ -42,13 +42,8 @@ const StyledCollapsibleContent = styled.div`
   overflow: hidden;
   position: relative;
   opacity: 0;
-  scrollbar-width: thin;
   transition: all .5s ease-in-out;
-
-  &::-webkit-scrollbar {
-    width: .50rem
-  }
-
+  
   &.is-open {
     max-height: 100vh;
     opacity: 1;

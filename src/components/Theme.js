@@ -21,6 +21,23 @@ const styles = (theme) => ({
     },
   },
 
+  "*": {
+    scrollbarWidth: 'thin',
+
+    "&::-webkit-scrollbar": {
+      width: '.50rem'
+    },
+    "::-webkit-scrollbar-track": {
+      background: '#f1f1f1'
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: '#cecece'
+    },
+    "::-webkit-scrollbar-thumb:hover": {
+      background: '#b3b3b3'
+    }
+  },
+
   "input, textarea": {
     boxSizing: "border-box",
   },
