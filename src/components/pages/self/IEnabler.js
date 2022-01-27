@@ -97,7 +97,7 @@ const IEnabler = () => {
   const theme = useTheme()
   const isLg = useMediaQuery({minWidth: theme.breakpoints.lg})
 
-  const [test, setTest] = useImmer({
+  const [drawerOpt, setDrawerOpt] = useImmer({
     width: 250,
     anchor: 'left',
     num: 0,
@@ -111,29 +111,20 @@ const IEnabler = () => {
       dispatch({type: LOADED})
     }, 2500)
   }, [])
-  const anchors = ['left', 'top', 'right', 'bottom']
-
-  const handleAnchor = () => {
-    setTest(draft => {
-      draft.anchor = anchors[draft.num]
-    })
-    setTest(draft => {
-      draft.num === 3 ? draft.num = 0 : draft.num++
-    })
-  }
+  
   const handleClose = () => {
-    setTest(draft => {
+    setDrawerOpt(draft => {
       draft.open = false
     })
   }
   if (isLoading) {
-    return <IEnablerLoader drawerOpen={isLg}/>
+    return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg}/>
   } else {
     return (
-      <DrawerContainer drawerOpen={isLg} drawerFixed={isLg} drawerWidth={test.width}
-                       drawerAnchor={test.anchor}>
-        <Drawer elevation={3} rounded anchor={test.anchor} height={test.width} width={test.width}
-                open={test.open || isLg}
+      <DrawerContainer drawerOpen={drawerOpt.open || isLg} drawerFixed={isLg} drawerWidth={drawerOpt.width}
+                       drawerAnchor={drawerOpt.anchor}>
+        <Drawer elevation={3} rounded anchor={drawerOpt.anchor} height={drawerOpt.width} width={drawerOpt.width}
+                open={drawerOpt.open || isLg}
                 fixed={isLg} onClose={handleClose}>
           <SideNav/>
         </Drawer>
@@ -147,7 +138,7 @@ const IEnabler = () => {
                   <Card shadow>
                     <Grid gridSpacing={2} alignGrid="center">
                       <GridCell colsSm={4} colsLg={3} colsXg={2}>
-                        <Image src={Xe} alt={"profile"} height="70px" width="70px"/>
+                        <Image bordered src={Xe} alt={"profile"} radius="50%" height="70px" width="70px"/>
                       </GridCell>
                       <GridCell colsSm={8} colsLg={9} colsXg={10}>
                         <Box margin={`${theme.sizes.gutters[1]} 0`}>

@@ -1,9 +1,7 @@
 import {HashRouter, Route, Routes} from "react-router-dom";
 import DataProvider from "./DataContext";
 import Button from "./elements/Button";
-import Loader from "./layouts/Loader";
-import IEnablerLoader from "./pages/self/IEnablerLoader";
-import IEnabler from "./pages/self/IEneabler";
+import IEnabler from "./pages/self/IEnabler";
 import Theme from "./Theme";
 import React, {useEffect, useState} from "react";
 
