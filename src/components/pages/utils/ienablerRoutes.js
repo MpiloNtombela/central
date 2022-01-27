@@ -1,9 +1,10 @@
 import React from 'react';
 import {
+  FaAward,
   FaBed,
-  FaCertificate,
+  FaCertificate, FaDonate, FaDoorOpen,
   FaFileInvoice,
-  FaFileInvoiceDollar,
+  FaFileInvoiceDollar, FaFileSignature, FaHandHoldingUsd, FaMoneyCheck,
   FaQuestionCircle,
   FaRegEdit,
   FaUniversity,
@@ -11,10 +12,10 @@ import {
 } from "react-icons/fa";
 import {
   MdFactCheck,
-  MdGavel,
+  MdGavel, MdMedicalServices,
   MdOutlineAppRegistration,
   MdOutlineHistoryEdu,
-  MdPaid
+  MdPaid, MdPriceCheck, MdSecurity
 } from "react-icons/md";
 import {stringToColor} from "../../../utils/colors";
 
@@ -50,8 +51,8 @@ const iRoutes = [
         link: null,
       },
       {
-        name: "Statement",
-        icon: <FaFileInvoice size={24} color={stringToColor("Statement").hex}/>,
+        name: "Statement of Reg",
+        icon: <FaFileInvoice size={24} color={stringToColor("Statement of Reg").hex}/>,
         link: null
       }
     ]
@@ -63,12 +64,12 @@ const iRoutes = [
   },
   {
     name: "Financial Aid",
-    icon: <MdPaid size={24} color={stringToColor("Financial Aid").hex}/>,
+    icon: <FaHandHoldingUsd size={24} color={stringToColor("Financial Aid").hex}/>,
     link: null
   },
   {
-    name: "Res Application",
-    icon: <FaBed size={24} color={stringToColor("Res Application").hex}/>,
+    name: "Residence Application",
+    icon: <FaBed size={24} color={stringToColor("Residence Application").hex}/>,
     link: null
   },
   {
@@ -94,9 +95,43 @@ const iRoutes = [
     ]
   },
   {
-    name: "Student Admin",
-    icon: <FaUser size={24} color={stringToColor("Student Admin").hex}/>,
+    name: "Access Control",
+    icon: <MdSecurity size={24} color={stringToColor("Access Control").hex}/>,
     link: null
+  },
+  {
+    name: "Student Finance",
+    icon: <FaMoneyCheck size={24} color={stringToColor("Student Finance").hex}/>,
+    link: null,
+    subRoutes: [
+      {
+        name: "Acknowledge Debt",
+        icon: <FaFileSignature size={24} color={stringToColor("Acknowledge Debt").hex}/>,
+        link: null,
+      }
+    ]
+  },
+  {
+    name: "Medical Web",
+    icon: <MdMedicalServices size={24} color={stringToColor("Medical Web").hex}/>,
+    link: null
+  },
+  {
+    name: "Exemption",
+    icon: <FaDoorOpen size={24} color={stringToColor("Exemption").hex}/>,
+    link: null
+  },
+  {
+    name: "Bursary Awards",
+    icon: <FaAward size={24} color={stringToColor("Bursary Awards").hex}/>,
+    link: null,
+    subRoutes: [
+      {
+        name: "Accept Bursary",
+        icon: <MdPriceCheck size={24} color={stringToColor("Accept Bursary").hex}/>,
+        link: null
+      },
+    ]
   },
 ]
 

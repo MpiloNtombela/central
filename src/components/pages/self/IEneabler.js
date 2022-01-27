@@ -55,14 +55,14 @@ const SideNav = () => {
         {iRoutes.map((route, idx) => {
             if (route.subRoutes) {
               return (
-                <Collapsible collapsed={idx === 0} key={idx}
+                <Collapsible key={idx}
                              header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                                               textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>}
+                                               textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>}
                              bgColor={theme.background.main}>
                   {route.subRoutes.map((sRoute, idx) => {
                     return (
                       <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                           hoverColor={theme.background.glass}>
+                           hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
                         <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
                                   textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
                       </Box>
@@ -73,9 +73,9 @@ const SideNav = () => {
             } else {
               return (
                 <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                     hoverColor={theme.background.glass}>
+                     hoverColor={theme.background.glass} style={{borderRadius: '9999rem'}}>
                   <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                            textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
+                            textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
                 </Box>
               )
             }
@@ -95,7 +95,7 @@ const IEnabler = () => {
   const isLg = useMediaQuery({minWidth: theme.breakpoints.lg})
 
   const [test, setTest] = useImmer({
-    width: 230,
+    width: 250,
     anchor: 'left',
     num: 0,
     open: true,
