@@ -1,8 +1,7 @@
+import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Button from "./elements/Button";
-import Loader from "./layouts/Loader";
 import Theme from "./Theme";
-import React, {useEffect, useState} from "react";
 
 const App = () => {
   const [isDark, setMode] = useState(true)
