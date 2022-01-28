@@ -23,8 +23,16 @@ const tabReducer = (draft, action) => {
 
 const StyledTab = styled.li`
   padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[1]}`};
-  border-bottom: ${({isActive, theme}) => isActive ? `2px solid ${theme.palette.primary.main}` : 'none'};
-  color: ${({isActive, theme}) => isActive ? theme.palette.primary.main : theme.color.secondary};
+  border-bottom: ${({
+                      isActive,
+                      theme,
+                      indicatorColor
+                    }) => isActive ? `2px solid ${indicatorColor ? indicatorColor : theme.palette.primary.main}` : 'none'};
+  color: ${({
+              isActive,
+              theme,
+              textColor
+            }) => isActive ? textColor ? textColor : theme.palette.primary.main : theme.color.secondary};
   text-align: center;
   box-sizing: border-box;
   text-transform: uppercase;
@@ -50,6 +58,7 @@ const StyledTabs = styled.ul`
   scrollbar-width: none;
   box-sizing: border-box;
   box-shadow: ${({elevation}) => elevation ? `0px -5px 20px 0px rgba(0, 0, 0, .${elevation})` : 'none'};
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -66,6 +75,7 @@ const StyledTabContent = styled.div`
   overflow-x: hidden;
   display: ${props => props.isActive ? 'block' : 'none'};
   box-sizing: border-box;
+  height: 100%;
 `
 
 const TabContext = ({children}) => {
@@ -80,7 +90,7 @@ const TabContext = ({children}) => {
   );
 };
 
-export const Tabs = ({children, isFixed, selectedTab, center, elevation=0}) => {
+export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, indicatorColor, elevation = 0}) => {
   const dispatch = useContext(TabDispatch)
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
 
@@ -94,10 +104,16 @@ export const Tabs = ({children, isFixed, selectedTab, center, elevation=0}) => {
     }
   }, [])
   return (
-    <StyledTabs isFixed={isFixed} tabCount={childrenTabs?.length} center={center} elevation={elevation}>
+    <StyledTabs style={style} isFixed={isFixed}
+                tabCount={childrenTabs?.length} center={center} elevation={elevation}>
       {Children.map(children, (child, idx) => {
         if (child.type === Tab) {
-          return React.cloneElement(child, {value: child.props.value ? child.props.value : idx})
+          return React.cloneElement(child,
+            {
+              value: child.props.value ? child.props.value : idx,
+              textColor: textColor,
+              indicatorColor: indicatorColor
+            })
         } else {
           return child
         }
@@ -106,7 +122,7 @@ export const Tabs = ({children, isFixed, selectedTab, center, elevation=0}) => {
   )
 }
 
-export const Tab = ({value, children}) => {
+export const Tab = ({value, style, children, ...rest}) => {
   const dispatch = useContext(TabDispatch);
   const tabData = useContext(TabDataContext)
 
@@ -116,17 +132,17 @@ export const Tab = ({value, children}) => {
   }
 
   return (
-    <StyledTab onClick={handleTabChange} isActive={tabData.activeTab === value} tabCoun={tabData.tabCount}>
+    <StyledTab style={style} onClick={handleTabChange} isActive={tabData.activeTab === value} {...rest}>
       {children}
     </StyledTab>
   )
 
 }
-export const TabContent = ({value, children}) => {
+export const TabContent = ({value, style, children}) => {
   const tabData = useContext(TabDataContext)
 
   return (
-    <StyledTabContent isActive={tabData.activeTab === value}>
+    <StyledTabContent style={style} isActive={tabData.activeTab === value}>
       {children}
     </StyledTabContent>
   )
@@ -141,17 +157,20 @@ Tabs.propTypes = {
   isFixed: PropTypes.bool,
   selectedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   center: PropTypes.bool,
-  elevation: PropTypes.oneOf([0, 1, 2, 3, 4])
+  elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
+  style: PropTypes.object,
 }
 
 Tab.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  style: PropTypes.object,
 }
 
 TabContent.propTypes = {
   children: PropTypes.node.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: PropTypes.object,
 }
 
 export default TabContext;
