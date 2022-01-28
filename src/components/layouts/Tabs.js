@@ -49,7 +49,7 @@ const StyledTabs = styled.ul`
   overflow-x: auto;
   scrollbar-width: none;
   box-sizing: border-box;
-
+  box-shadow: ${({elevation}) => elevation ? `0px -5px 20px 0px rgba(0, 0, 0, .${elevation})` : 'none'};
   &::-webkit-scrollbar {
     display: none;
   }
@@ -61,10 +61,11 @@ const StyledTabs = styled.ul`
 `
 
 const StyledTabContent = styled.div`
-  padding: ${({theme}) => theme.sizes.gutters[2]};
+  padding: ${({theme}) => `${theme.sizes.gutters[4]} ${theme.sizes.gutters[2]}`};;
   overflow-y: auto;
   overflow-x: hidden;
   display: ${props => props.isActive ? 'block' : 'none'};
+  box-sizing: border-box;
 `
 
 const TabContext = ({children}) => {
@@ -79,7 +80,7 @@ const TabContext = ({children}) => {
   );
 };
 
-export const Tabs = ({children, isFixed, selectedTab, center}) => {
+export const Tabs = ({children, isFixed, selectedTab, center, elevation=0}) => {
   const dispatch = useContext(TabDispatch)
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
 
@@ -93,7 +94,7 @@ export const Tabs = ({children, isFixed, selectedTab, center}) => {
     }
   }, [])
   return (
-    <StyledTabs isFixed={isFixed} tabCount={childrenTabs?.length} center={center}>
+    <StyledTabs isFixed={isFixed} tabCount={childrenTabs?.length} center={center} elevation={elevation}>
       {Children.map(children, (child, idx) => {
         if (child.type === Tab) {
           return React.cloneElement(child, {value: child.props.value ? child.props.value : idx})
@@ -140,6 +141,7 @@ Tabs.propTypes = {
   isFixed: PropTypes.bool,
   selectedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   center: PropTypes.bool,
+  elevation: PropTypes.oneOf([0, 1, 2, 3, 4])
 }
 
 Tab.propTypes = {
