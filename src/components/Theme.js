@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import React, {useEffect, useState} from "react";
 import {Global, ThemeProvider} from "@emotion/react";
+import PropTypes from "prop-types";
+import React from "react";
 import {darkTheme, lightTheme} from "../utils/theme"
 
 const styles = (theme) => ({
@@ -25,7 +25,8 @@ const styles = (theme) => ({
     scrollbarWidth: 'thin',
 
     "&::-webkit-scrollbar": {
-      width: '.50rem'
+      width: '.5rem',
+      height: '.5rem'
     },
     "::-webkit-scrollbar-track": {
       background: '#f1f1f1'
