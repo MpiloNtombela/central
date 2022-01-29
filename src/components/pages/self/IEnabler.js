@@ -1,6 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from 'prop-types'
 import React from 'react'
+import {MdMoneyOff} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import Xe from "../../../../public/Xe.png"
@@ -138,7 +139,7 @@ const IEnabler = () => {
             <Tabs center isFixed selectedTab={"applications"}>
               <Tab value={"details"}>Details</Tab>
               <Tab value={"applications"}>Applications</Tab>
-              <Tab value={3}>Financial</Tab>
+              <Tab value={"financial"}>Financial</Tab>
             </Tabs>
             <TabContent value={"details"}>
               <Grid gridSpacing={2}>
@@ -244,7 +245,8 @@ const IEnabler = () => {
                     </Grid>
                     {application.status.toLowerCase().trim() === "firm offer" &&
                     <Box display={"flex"} justifyContent={"flex-end"}>
-                      <Button rounded size={"sm"} outlined color={"danger"} style={{marginRight: theme.sizes.gutters[1]}}>
+                      <Button rounded size={"sm"} outlined color={"danger"}
+                              style={{marginRight: theme.sizes.gutters[1]}}>
                         reject
                       </Button>
                       <Button rounded size={"sm"} color={"info"} style={{marginLeft: theme.sizes.gutters[1]}}>
@@ -254,6 +256,12 @@ const IEnabler = () => {
                   </Card>
                 )
               })}
+            </TabContent>
+            <TabContent value={"financial"}>
+              <Box display={"flex"} justifyContent={"center"} marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}>
+                <MdMoneyOff color={theme.color.secondary} size={172}/>
+              </Box>
+              <Text tColor={theme.color.secondary} fSize={"large"} fWeight={"700"} tAlign={"center"}>No Financial Record</Text>
             </TabContent>
           </TabContext>
         </Container>
