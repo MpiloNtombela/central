@@ -57,7 +57,7 @@ const dataState = {
       studyAddress: "7 Goat Avenue, Gothville 7777",
     },
   },
-  applications:[
+  applications: [
     {
       year: 2018,
       qualification: "BSCSIT",
@@ -96,21 +96,21 @@ const dataState = {
     },
     {
       year: 2022,
-      qualification: "BT-KING",
-      description: "Bachelor of Techno King😏",
-      preference: 1,
-      status: "Pending",
-      collage: "Collage of Gotham",
-      code: "cog"
-    },
-    {
-      year: 2022,
       qualification: "BH-IST",
       description: "Bachelor of Commerce Honours in IST",
       preference: 1,
       status: "Firm Offer",
-      collage: "Collage of Humanities",
-      code: "coh"
+      collage: "Collage of Law & Man Studies",
+      code: "clms"
+    },
+    {
+      year: 2022,
+      qualification: "MT-KING",
+      description: "Master of Techno King😏",
+      preference: 1,
+      status: "Pending",
+      collage: "Collage of Gotham",
+      code: "cog"
     },
   ],
   isLoading: true,
@@ -124,9 +124,9 @@ const DataProvider = ({children}) => {
   const [data, dispatch] = useImmerReducer(reducer, dataState)
 
   return (
-    <DataContext.Provider value={ data }>
-      <DispatchContext.Provider value={ dispatch }>
-        { children }
+    <DataContext.Provider value={data}>
+      <DispatchContext.Provider value={dispatch}>
+        {children}
       </DispatchContext.Provider>
     </DataContext.Provider>
   );

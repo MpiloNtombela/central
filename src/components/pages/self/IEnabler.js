@@ -1,11 +1,10 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from 'prop-types'
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import Xe from "../../../../public/Xe.png"
-import {useDataContext, useDataDispatch} from "../../../hooks/context";
-import {LOADED, LOADING} from "../../DataContext";
+import {useDataContext} from "../../../hooks/context";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
@@ -22,30 +21,25 @@ import IEnablerLoader from "./IEnablerLoader";
 
 const caseOut = (str) => {
   const r = /([a-z])([A-Z])/g
-  const s = str.replace(r, '$1 $2')
-  return s.toUpperCase()
+  return str.replace(r, '$1 $2')
 }
 
-const KeyPairDetails = ({k, v}) => {
+const KeyValuePair = ({k, v}) => {
   return (
     <>
       <GridCell colsSm={6}>
-        <Box margin={'.5rem 0'}>
-          <Text fWeight={'bold'} fSize={'.85em'} tColor={"grey"}>{caseOut(k)}</Text>
-        </Box>
+        {k}
       </GridCell>
       <GridCell colsSm={6}>
-        <Box margin={'.5rem 0'}>
-          <Text fSize={'.85em'}>{v}</Text>
-        </Box>
+        {v}
       </GridCell>
     </>
   )
 }
 
-KeyPairDetails.propTypes = {
-  k: PropTypes.string.isRequired,
-  v: PropTypes.string.isRequired,
+KeyValuePair.propTypes = {
+  k: PropTypes.node.isRequired,
+  v: PropTypes.node.isRequired,
 }
 
 const SideNav = ({anchor, changeAnchor}) => {
@@ -95,26 +89,26 @@ const SideNav = ({anchor, changeAnchor}) => {
 
 const IEnabler = () => {
 
-  const {student, isLoading} = useDataContext()
-  const dispatch = useDataDispatch()
+  const {student, isLoading, applications} = useDataContext()
+  // const dispatch = useDataDispatch()
   const {contacts} = student;
   const theme = useTheme()
   const isLg = useMediaQuery({minWidth: theme.breakpoints.lg})
 
   const [drawerOpt, setDrawerOpt] = useImmer({
     width: 250,
-    anchor: 'right',
+    anchor: 'left',
     num: 0,
     open: true,
     fixed: false
   })
 
-  useEffect(() => {
-    dispatch({type: LOADING})
-    setTimeout(() => {
-      dispatch({type: LOADED})
-    }, 2500)
-  }, [])
+  // useEffect(() => {
+  //   dispatch({type: LOADING})
+  //   setTimeout(() => {
+  //     dispatch({type: LOADED})
+  //   }, 2000)
+  // }, [])
 
   const handleClose = () => {
     setDrawerOpt(draft => {
@@ -128,7 +122,7 @@ const IEnabler = () => {
     })
   }
 
-  if (isLoading) {
+  if (!isLoading) {
     return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}/>
   } else {
     return (
@@ -141,12 +135,12 @@ const IEnabler = () => {
         </Drawer>
         <Container maxWidth="xl">
           <TabContext>
-            <Tabs center isFixed>
-              <Tab value={1}>Details</Tab>
-              <Tab value={2}>Applications</Tab>
+            <Tabs center isFixed selectedTab={"applications"}>
+              <Tab value={"details"}>Details</Tab>
+              <Tab value={"applications"}>Applications</Tab>
               <Tab value={3}>Financial</Tab>
             </Tabs>
-            <TabContent value={1}>
+            <TabContent value={"details"}>
               <Grid gridSpacing={2}>
                 <GridCell colsMd={6} colsLg={7}>
                   <Card>
@@ -173,7 +167,16 @@ const IEnabler = () => {
                         {Object.keys(student).map((key, idx) => {
                           if (key.toLowerCase() !== "firstname" && key.toLowerCase() !== "lastname" && key.toLowerCase() !== "contacts") {
                             return (
-                              <KeyPairDetails key={idx} k={key} v={student[key]}/>
+                              <KeyValuePair key={idx} k={
+                                <Box margin={'.5rem 0'}>
+                                  <Text fWeight={'bold'} fSize={'.85em'}
+                                        tColor={"grey"}>{caseOut(key).toUpperCase()}</Text>
+                                </Box>
+                              } v={
+                                <Box margin={'.5rem 0'}>
+                                  <Text fSize={'.85em'}>{student[key]}</Text>
+                                </Box>
+                              }/>
                             )
                           }
                         })}
@@ -189,7 +192,16 @@ const IEnabler = () => {
                       <Grid>
                         {Object.keys(contacts).map((key, idx) => {
                           return (
-                            <KeyPairDetails key={idx} k={key} v={contacts[key]}/>
+                            <KeyValuePair key={idx} k={
+                              <Box margin={'.5rem 0'}>
+                                <Text fWeight={'bold'} fSize={'.85em'}
+                                      tColor={"grey"}>{caseOut(key).toUpperCase()}</Text>
+                              </Box>
+                            } v={
+                              <Box margin={'.5rem 0'}>
+                                <Text fSize={'.85em'}>{contacts[key]}</Text>
+                              </Box>
+                            }/>
                           )
                         })}
                       </Grid>
@@ -206,6 +218,42 @@ const IEnabler = () => {
                   </Card>
                 </GridCell>
               </Grid>
+            </TabContent>
+            <TabContent value={"applications"}>
+              {applications.sort((a, b) => b.year - a.year || a.preference - b.preference).map((application) => {
+                return (
+                  <Card key={application.qualification} maxWidth={"md"}>
+                    <Text fWeight={'bold'}
+                          fSize={"medium"}>{application.description} - ({application.qualification})</Text>
+                    <Grid>
+                      {Object.keys(application).map((key, idx) => {
+                        if (key !== "description" && key !== "qualification" && key !== "code") {
+                          return (
+                            <KeyValuePair key={idx} k={
+                              <Box margin={'.5rem 0'}>
+                                <Text fWeight={'bold'} fSize={'.85em'} tColor={"grey"}>{key.toUpperCase()}</Text>
+                              </Box>
+                            } v={
+                              <Box margin={'.5rem 0'}>
+                                <Text fSize={'.85em'}>{application[key]}</Text>
+                              </Box>
+                            }/>
+                          )
+                        }
+                      })}
+                    </Grid>
+                    {application.status.toLowerCase().trim() === "firm offer" &&
+                    <Box display={"flex"} justifyContent={"flex-end"}>
+                      <Button rounded size={"sm"} outlined color={"danger"} style={{marginRight: theme.sizes.gutters[1]}}>
+                        reject
+                      </Button>
+                      <Button rounded size={"sm"} color={"info"} style={{marginLeft: theme.sizes.gutters[1]}}>
+                        Accept
+                      </Button>
+                    </Box>}
+                  </Card>
+                )
+              })}
             </TabContent>
           </TabContext>
         </Container>
