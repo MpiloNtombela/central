@@ -48,7 +48,7 @@ KeyPairDetails.propTypes = {
   v: PropTypes.string.isRequired,
 }
 
-const SideNav = () => {
+const SideNav = ({anchor, changeAnchor}) => {
   const theme = useTheme()
   return (
     <Box position='relative' height='100%' paddingBottom='3rem' style={{boxSizing: 'border-box'}}>
@@ -74,8 +74,10 @@ const SideNav = () => {
             } else {
               return (
                 <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                     hoverColor={'red'}
-                     style={{borderTopRightRadius: '9999rem', borderBottomRightRadius: '9999rem'}}>
+                     hoverColor={theme.palette.primary.main}
+                     style={{
+                       borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
+                     }}>
                   <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
                             textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
                 </Box>
@@ -85,7 +87,7 @@ const SideNav = () => {
         )}
       </Box>
       <Box position={'absolute'} bottom={'.25rem'} left={'0'} right={'0'} display={'flex'} justifyContent={'center'}>
-        <Button size={'sm'} rounded color='danger'>central log out</Button>
+        <Button onClick={changeAnchor} size={'sm'} rounded color='danger'>central log out</Button>
       </Box>
     </Box>
   )
@@ -101,7 +103,7 @@ const IEnabler = () => {
 
   const [drawerOpt, setDrawerOpt] = useImmer({
     width: 250,
-    anchor: 'left',
+    anchor: 'right',
     num: 0,
     open: true,
     fixed: false
@@ -119,8 +121,15 @@ const IEnabler = () => {
       draft.open = false
     })
   }
+
+  const changeAnchor = () => {
+    setDrawerOpt(draft => {
+      draft.anchor = drawerOpt.anchor === "left" ? "right" : "left"
+    })
+  }
+
   if (isLoading) {
-    return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg}/>
+    return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}/>
   } else {
     return (
       <DrawerContainer drawerOpen={drawerOpt.open || isLg} drawerFixed={isLg} drawerWidth={drawerOpt.width}
@@ -128,7 +137,7 @@ const IEnabler = () => {
         <Drawer elevation={3} rounded anchor={drawerOpt.anchor} height={drawerOpt.width} width={drawerOpt.width}
                 open={drawerOpt.open || isLg}
                 fixed={isLg} onClose={handleClose}>
-          <SideNav/>
+          <SideNav anchor={drawerOpt.anchor} changeAnchor={changeAnchor}/>
         </Drawer>
         <Container maxWidth="xl">
           <TabContext>
@@ -186,7 +195,7 @@ const IEnabler = () => {
                       </Grid>
                     </Box>
                     <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
-                      <Button gradient rounded size="sm">update details</Button>
+                      <Button color={'secondary'} rounded size="sm">update details</Button>
                     </Box>
                   </Card>
                   <Card>
@@ -206,5 +215,7 @@ const IEnabler = () => {
 }
 
 IEnabler.propTypes = {}
-
+SideNav.propTypes = {
+  anchor: PropTypes.oneOf(["top", "left", "bottom", "right"])
+}
 export default IEnabler

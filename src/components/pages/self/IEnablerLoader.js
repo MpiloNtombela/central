@@ -11,13 +11,13 @@ import Drawer, {DrawerContainer} from "../../layouts/Drawer";
 import Grid, {GridCell} from "../../layouts/Grid";
 import Skeleton from "../../layouts/Skeletons";
 
-const IEnablerLoader = ({drawerOpen = false, isLg}) => {
+const IEnablerLoader = ({drawerOpen = false, drawerAnchor="left", isLg}) => {
   const theme = useTheme()
 
   return (
-    <DrawerContainer drawerFixed={isLg} drawerAnchor={"left"} drawerWidth={210} drawerOpen={drawerOpen}>
+    <DrawerContainer drawerFixed={isLg} drawerAnchor={drawerAnchor} drawerWidth={210} drawerOpen={drawerOpen}>
       {drawerOpen && <Drawer onClose={() => {
-      }} open={drawerOpen} width={250} elevation={2}>
+      }} open={drawerOpen} width={250} elevation={2} anchor={drawerAnchor}>
         <Box marginTop={'1rem'}>
           {[1, 2, 3, 4, 5].map((num) => {
             if (num === 1 || num === 3) {
@@ -138,6 +138,7 @@ const IEnablerLoader = ({drawerOpen = false, isLg}) => {
 IEnablerLoader.propTypes = {
   drawerOpen: PropTypes.bool.isRequired,
   isLg: PropTypes.bool.isRequired,
+  drawerAnchor: PropTypes.oneOf(["top", "left", "bottom", "right"])
 }
 
 export default IEnablerLoader;
