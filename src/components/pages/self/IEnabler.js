@@ -16,6 +16,7 @@ import Collapsible from "../../layouts/Collapsible";
 import Container from '../../layouts/Container'
 import Drawer, {DrawerContainer} from '../../layouts/Drawer'
 import Grid, {GridCell} from "../../layouts/Grid";
+import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 import iRoutes from "../utils/ienablerRoutes";
 import IEnablerLoader from "./IEnablerLoader";
 
@@ -73,7 +74,8 @@ const SideNav = () => {
             } else {
               return (
                 <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                     hoverColor={theme.background.glass} style={{borderRadius: '9999rem'}}>
+                     hoverColor={'red'}
+                     style={{borderTopRightRadius: '9999rem', borderBottomRightRadius: '9999rem'}}>
                   <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
                             textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
                 </Box>
@@ -111,7 +113,7 @@ const IEnabler = () => {
       dispatch({type: LOADED})
     }, 2500)
   }, [])
-  
+
   const handleClose = () => {
     setDrawerOpt(draft => {
       draft.open = false
@@ -128,65 +130,75 @@ const IEnabler = () => {
                 fixed={isLg} onClose={handleClose}>
           <SideNav/>
         </Drawer>
-        <Container maxWidth="lg">
-          <Grid gridSpacing={2}>
-            <GridCell colsMd={6} colsLg={7}>
-              <Card>
-                <Text fSize="x-large" fWeight="bold">Student Details</Text>
-                <hr/>
-                <Box marginBottom={theme.sizes.gutters[4]}>
-                  <Card shadow>
-                    <Grid gridSpacing={2} alignGrid="center">
-                      <GridCell colsSm={4} colsLg={3} colsXg={2}>
-                        <Image bordered src={Xe} alt={"profile"} radius="50%" height="70px" width="70px"/>
-                      </GridCell>
-                      <GridCell colsSm={8} colsLg={9} colsXg={10}>
-                        <Box margin={`${theme.sizes.gutters[1]} 0`}>
-                          <Text fSize="1.2em" fWeight="bold">{student.firstName} {student.lastName}</Text>
-                        </Box>
-                        <Text fSize="small" fWeight="bold" tColor={theme.color.secondary}>{student.studentNumber}</Text>
-                      </GridCell>
-                    </Grid>
+        <Container maxWidth="xl">
+          <TabContext>
+            <Tabs center isFixed>
+              <Tab value={1}>Details</Tab>
+              <Tab value={2}>Applications</Tab>
+              <Tab value={3}>Financial</Tab>
+            </Tabs>
+            <TabContent value={1}>
+              <Grid gridSpacing={2}>
+                <GridCell colsMd={6} colsLg={7}>
+                  <Card>
+                    <Text fSize="x-large" fWeight="bold">Student Details</Text>
+                    <hr/>
+                    <Box marginBottom={theme.sizes.gutters[4]}>
+                      <Card shadow>
+                        <Grid gridSpacing={2} alignGrid="center">
+                          <GridCell colsSm={4} colsLg={3} colsXg={2}>
+                            <Image bordered src={Xe} alt={"profile"} radius="50%" height="70px" width="70px"/>
+                          </GridCell>
+                          <GridCell colsSm={8} colsLg={9} colsXg={10}>
+                            <Box margin={`${theme.sizes.gutters[1]} 0`}>
+                              <Text fSize="1.2em" fWeight="bold">{student.firstName} {student.lastName}</Text>
+                            </Box>
+                            <Text fSize="small" fWeight="bold"
+                                  tColor={theme.color.secondary}>{student.studentNumber}</Text>
+                          </GridCell>
+                        </Grid>
+                      </Card>
+                    </Box>
+                    <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[3]}>
+                      <Grid>
+                        {Object.keys(student).map((key, idx) => {
+                          if (key.toLowerCase() !== "firstname" && key.toLowerCase() !== "lastname" && key.toLowerCase() !== "contacts") {
+                            return (
+                              <KeyPairDetails key={idx} k={key} v={student[key]}/>
+                            )
+                          }
+                        })}
+                      </Grid>
+                    </Box>
                   </Card>
-                </Box>
-                <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[3]}>
-                  <Grid>
-                    {Object.keys(student).map((key, idx) => {
-                      if (key.toLowerCase() !== "firstname" && key.toLowerCase() !== "lastname" && key.toLowerCase() !== "contacts") {
-                        return (
-                          <KeyPairDetails key={idx} k={key} v={student[key]}/>
-                        )
-                      }
-                    })}
-                  </Grid>
-                </Box>
-              </Card>
-            </GridCell>
-            <GridCell colsMd={6} colsLg={5}>
-              <Card>
-                <Text fSize="x-large" fWeight="bold">Contacts</Text>
-                <hr/>
-                <Box marginTop={theme.sizes.gutters[2]}>
-                  <Grid>
-                    {Object.keys(contacts).map((key, idx) => {
-                      return (
-                        <KeyPairDetails key={idx} k={key} v={contacts[key]}/>
-                      )
-                    })}
-                  </Grid>
-                </Box>
-                <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
-                  <Button gradient rounded size="sm">update details</Button>
-                </Box>
-              </Card>
-              <Card>
-                <Box padding={`${theme.sizes.gutters[2]} 0`}>
-                  <Text fSize="large" fWeight="bold">You owe institution</Text>
-                  <Text fSize="small" fWeight="bold" tAlign="end" tColor="red">R 0.01</Text>
-                </Box>
-              </Card>
-            </GridCell>
-          </Grid>
+                </GridCell>
+                <GridCell colsMd={6} colsLg={5}>
+                  <Card>
+                    <Text fSize="x-large" fWeight="bold">Contacts</Text>
+                    <hr/>
+                    <Box marginTop={theme.sizes.gutters[2]}>
+                      <Grid>
+                        {Object.keys(contacts).map((key, idx) => {
+                          return (
+                            <KeyPairDetails key={idx} k={key} v={contacts[key]}/>
+                          )
+                        })}
+                      </Grid>
+                    </Box>
+                    <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
+                      <Button gradient rounded size="sm">update details</Button>
+                    </Box>
+                  </Card>
+                  <Card>
+                    <Box padding={`${theme.sizes.gutters[2]} 0`}>
+                      <Text fSize="large" fWeight="bold">You owe institution</Text>
+                      <Text fSize="small" fWeight="bold" tAlign="end" tColor="red">R 0.01</Text>
+                    </Box>
+                  </Card>
+                </GridCell>
+              </Grid>
+            </TabContent>
+          </TabContext>
         </Container>
       </DrawerContainer>
     )
