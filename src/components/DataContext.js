@@ -57,6 +57,62 @@ const dataState = {
       studyAddress: "7 Goat Avenue, Gothville 7777",
     },
   },
+  applications:[
+    {
+      year: 2018,
+      qualification: "BSCSIT",
+      description: "Bachelor of Science (CSIT)",
+      preference: 6,
+      status: "Unsuccessful",
+      collage: "Collage of Arg, Eng & Science",
+      code: "caes"
+    },
+    {
+      year: 2018,
+      qualification: "B-ART",
+      description: "Bachelor of Art",
+      preference: 5,
+      status: "Accept Offer",
+      collage: "Collage of Humanities",
+      code: "coh"
+    },
+    {
+      year: 2018,
+      qualification: "BETE",
+      description: "BEd (Teacher Education)",
+      preference: 4,
+      status: "Programme Full",
+      collage: "Collage of Humanities",
+      code: "coh"
+    },
+    {
+      year: 2019,
+      qualification: "BSS",
+      description: "Bachelor of Social Science",
+      preference: 1,
+      status: "Accepted Offer",
+      collage: "Collage of Humanities",
+      code: "coh"
+    },
+    {
+      year: 2022,
+      qualification: "BT-KING",
+      description: "Bachelor of Techno King😏",
+      preference: 1,
+      status: "Pending",
+      collage: "Collage of Gotham",
+      code: "cog"
+    },
+    {
+      year: 2022,
+      qualification: "BH-IST",
+      description: "Bachelor of Commerce Honours in IST",
+      preference: 1,
+      status: "Firm Offer",
+      collage: "Collage of Humanities",
+      code: "coh"
+    },
+  ],
   isLoading: true,
   alert: {
     message: "",
