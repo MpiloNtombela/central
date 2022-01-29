@@ -1,15 +1,15 @@
 const commonTheme = {
   palette: {
     primary: {
-      main: "hsl(218, 100%, 50%)",
-      light: "hsl(218, 100%, 60%)",
-      dark: "hsl(218, 100%, 40%)",
+      main: "hsl(360,100%,50%)",
+      light: "hsl(360, 100%, 60%)",
+      dark: "hsl(360, 100%, 40%)",
       contrastText: "hsl(0, 0%, 95%)",
     },
     secondary: {
-      main: "hsl(260,100%, 50%)",
-      light: "hsl(260, 100%, 40%)",
-      dark: "hsl(260, 100%, 20%)",
+      main: "hsl(0,0%,10%)",
+      light: "hsl(0, 0%, 15%)",
+      dark: "hsl(0, 0%, 5%)",
       contrastText: "hsl(0, 0%, 95%)",
     },
     danger: {
