@@ -1,8 +1,6 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
-import {useMediaQuery} from "react-responsive";
-import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Collapsible from "../../layouts/Collapsible";
@@ -11,12 +9,13 @@ import Drawer, {DrawerContainer} from "../../layouts/Drawer";
 import Grid, {GridCell} from "../../layouts/Grid";
 import Skeleton from "../../layouts/Skeletons";
 
-const IEnablerLoader = ({drawerOpen = false, drawerAnchor="left", isLg}) => {
+const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", isLg}) => {
   const theme = useTheme()
 
   return (
     <DrawerContainer drawerFixed={isLg} drawerAnchor={drawerAnchor} drawerWidth={210} drawerOpen={drawerOpen}>
-      {drawerOpen && <Drawer onClose={() => {
+      {drawerOpen &&
+      <Drawer onClose={() => {
       }} open={drawerOpen} width={250} elevation={2} anchor={drawerAnchor}>
         <Box marginTop={'1rem'}>
           {[1, 2, 3, 4, 5].map((num) => {
@@ -75,6 +74,16 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor="left", isLg}) => {
         </Box>
       </Drawer>}
       <Container maxWidth="lg">
+        <Box marginTop={theme.sizes.gutters[1]}>
+          <Grid gridSpacing={2} alignGrid={'center'} justifyGrid={'center'}>
+            {[1, 2, 3].map((num) => (
+              <GridCell key={num} colsSm={4}>
+                <Skeleton skeletonType={'text'}
+                          style={{height: '1.75rem', background: theme.background.secondary}}/>
+              </GridCell>
+            ))}
+          </Grid>
+        </Box>
         <Grid gridSpacing={2}>
           <GridCell colsMd={6} colsLg={7}>
             <Card>
@@ -94,10 +103,12 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor="left", isLg}) => {
                 <Grid gridSpacing={2}>
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                     <GridCell key={num} colsSm={6}>
-                      <Skeleton style={{width: num % 2 !== 0 ?
+                      <Skeleton style={{
+                        width: num % 2 !== 0 ?
                           num === 3 || num === 7 ?
                             "30%" : '60%'
-                          : '85%'}} skeletonType="text"/>
+                          : '85%'
+                      }} skeletonType="text"/>
                     </GridCell>
                   ))}
                 </Grid>
