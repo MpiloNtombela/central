@@ -150,18 +150,18 @@ const IEnabler = () => {
                     <hr/>
                     <Box marginBottom={theme.sizes.gutters[4]}>
                       <Card shadow>
-                        <Grid gridSpacing={2} alignGrid="center">
-                          <GridCell colsSm={4} colsLg={3} colsXg={2}>
+                        <Box display={"flex"} alignItems={"center"}>
+                          <Box>
                             <Image bordered src={Xe} alt={"profile"} radius="50%" height="70px" width="70px"/>
-                          </GridCell>
-                          <GridCell colsSm={8} colsLg={9} colsXg={10}>
+                          </Box>
+                          <Box marginLeft={theme.sizes.gutters[2]}>
                             <Box margin={`${theme.sizes.gutters[1]} 0`}>
                               <Text fSize="1.2em" fWeight="bold">{student.firstName} {student.lastName}</Text>
                             </Box>
                             <Text fSize="small" fWeight="bold"
                                   tColor={theme.color.secondary}>{student.studentNumber}</Text>
-                          </GridCell>
-                        </Grid>
+                          </Box>
+                        </Box>
                       </Card>
                     </Box>
                     <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[3]}>
