@@ -1,11 +1,12 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {MdMoneyOff} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import Xe from "../../../../public/Xe.png"
-import {useDataContext} from "../../../hooks/context";
+import {useDataContext, useDataDispatch} from "../../../hooks/context";
+import {LOADED, LOADING} from "../../DataContext";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
@@ -90,8 +91,9 @@ const SideNav = ({anchor, changeAnchor}) => {
 
 const IEnabler = () => {
 
-  const {student, isLoading, applications} = useDataContext()
-  // const dispatch = useDataDispatch()
+  const {student, applications, isLoading} = useDataContext()
+  const applicationsData = [...applications].sort((a, b) => b.year - a.year || a.preference - b.preference)
+  const dispatch = useDataDispatch()
   const {contacts} = student;
   const theme = useTheme()
   const isLg = useMediaQuery({minWidth: theme.breakpoints.lg})
@@ -99,17 +101,16 @@ const IEnabler = () => {
   const [drawerOpt, setDrawerOpt] = useImmer({
     width: 250,
     anchor: 'left',
-    num: 0,
     open: true,
     fixed: false
   })
 
-  // useEffect(() => {
-  //   dispatch({type: LOADING})
-  //   setTimeout(() => {
-  //     dispatch({type: LOADED})
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    dispatch({type: LOADING})
+    setTimeout(() => {
+      dispatch({type: LOADED})
+    }, 2000)
+  }, [])
 
   const handleClose = () => {
     setDrawerOpt(draft => {
@@ -123,7 +124,7 @@ const IEnabler = () => {
     })
   }
 
-  if (!isLoading) {
+  if (isLoading) {
     return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}/>
   } else {
     return (
@@ -136,7 +137,7 @@ const IEnabler = () => {
         </Drawer>
         <Container maxWidth="xl">
           <TabContext>
-            <Tabs center isFixed selectedTab={"applications"}>
+            <Tabs center isFixed>
               <Tab value={"details"}>Details</Tab>
               <Tab value={"applications"}>Applications</Tab>
               <Tab value={"financial"}>Financial</Tab>
@@ -221,7 +222,7 @@ const IEnabler = () => {
               </Grid>
             </TabContent>
             <TabContent value={"applications"}>
-              {applications.sort((a, b) => b.year - a.year || a.preference - b.preference).map((application) => {
+              {applicationsData.map((application) => {
                 return (
                   <Card key={application.qualification} maxWidth={"md"}>
                     <Text fWeight={'bold'}
@@ -258,10 +259,12 @@ const IEnabler = () => {
               })}
             </TabContent>
             <TabContent value={"financial"}>
-              <Box display={"flex"} justifyContent={"center"} marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}>
+              <Box display={"flex"} justifyContent={"center"} marginTop={theme.sizes.gutters[4]}
+                   marginBottom={theme.sizes.gutters[4]}>
                 <MdMoneyOff color={theme.color.secondary} size={172}/>
               </Box>
-              <Text tColor={theme.color.secondary} fSize={"large"} fWeight={"700"} tAlign={"center"}>No Financial Record</Text>
+              <Text tColor={theme.color.secondary} fSize={"large"} fWeight={"700"} tAlign={"center"}>No Financial
+                Record</Text>
             </TabContent>
           </TabContext>
         </Container>
@@ -272,6 +275,7 @@ const IEnabler = () => {
 
 IEnabler.propTypes = {}
 SideNav.propTypes = {
-  anchor: PropTypes.oneOf(["top", "left", "bottom", "right"])
+  anchor: PropTypes.oneOf(["top", "left", "bottom", "right"]),
+  changeAnchor: PropTypes.func,
 }
 export default IEnabler
