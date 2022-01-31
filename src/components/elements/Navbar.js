@@ -9,11 +9,11 @@ import {NavLink} from "react-router-dom";
 export const NAV_HEIGHT = 3.25;
 
 
-const Brand = styled.div`
+const StyledBrand = styled.div`
   margin-right: ${props => props.theme.sizes.gutters[2]};
 `
 
-export const StyledNavLink = styled(NavLink)`
+export const NavbarLink = styled(NavLink)`
   text-decoration: none;
   margin: 0 ${({theme}) => theme.sizes.gutters[2]};
   font-weight: 500;
@@ -49,7 +49,7 @@ const StyledNavbar = styled.nav`
   transition: all .5s ease-in-out;
   overflow: hidden;
 
-  ${StyledNavLink} {
+  ${NavbarLink} {
     color: inherit;
   }
 
@@ -62,7 +62,7 @@ const StyledNavbar = styled.nav`
       display: ${({open}) => open ? `flex` : 'none'};
     }
 
-    ${StyledNavLink} {
+    ${NavbarLink} {
       margin: 0;
       padding: ${({theme}) => theme.sizes.gutters[2]};
       border-radius: ${props => props.theme.sizes.radius.sm};
@@ -93,7 +93,7 @@ const StyledNavbar = styled.nav`
     }
 
   ;
-    ${Brand} {
+    ${StyledBrand} {
       min-height: ${NAV_HEIGHT}rem;
       max-height: ${NAV_HEIGHT}rem;
       display: flex;
@@ -103,12 +103,12 @@ const StyledNavbar = styled.nav`
 
 `
 
-const Navbar = ({logo, maxBreak = "sm", elevation = 0, children}) => {
+const Navbar = ({logo, maxBreak = "sm", elevation = 0, style, brandStyle, brandClass, children}) => {
   return (
-    <StyledNavbar navElevation={elevation} open={true} maxBreak={maxBreak}>
-      <Brand>
+    <StyledNavbar navElevation={elevation} open={true} maxBreak={maxBreak} style={style}>
+      <StyledBrand style={brandStyle} className={brandClass}>
         {logo}
-      </Brand>
+      </StyledBrand>
       {children}
     </StyledNavbar>
   );
@@ -118,7 +118,10 @@ Navbar.propTypes = {
   children: PropTypes.node,
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   logo: PropTypes.node,
-  maxBreak: PropTypes.oneOf(["sm", "md", "lg", "xl", "xxl", false])
+  maxBreak: PropTypes.oneOf(["sm", "md", "lg", "xl", "xxl", false]),
+  style: PropTypes.object,
+  brandStyle: PropTypes.object,
+  brandClass: PropTypes.string,
 }
 
 export default Navbar;
