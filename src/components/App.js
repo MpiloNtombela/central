@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Button from "./elements/Button";
-import Navbar from "./elements/Navbar";
+import IconText from "./elements/IconText";
+import Navbar, {NavbarLinks, StyledNavLink} from "./elements/Navbar";
+import Text from "./elements/Text";
 import Theme from "./Theme";
 
 const App = () => {
@@ -18,7 +20,7 @@ const App = () => {
     <Theme isDark={isDark}>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
+          <Route path="/" element={<Button color={"danger"} onClick={handleMode}>change mode</Button>}/>
         </Routes>
       </HashRouter>
     </Theme>
