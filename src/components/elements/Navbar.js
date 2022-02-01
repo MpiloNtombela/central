@@ -42,7 +42,12 @@ export const NavbarLink = styled(NavLink)`
   }
 `
 
-export const NavbarLinks = styled.div`
+export const NavbarItem = styled.div`
+  background: inherit;
+  color: inherit;
+`
+
+export const NavbarItems = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
@@ -69,7 +74,6 @@ const StyledNavbarContent = styled.div`
   ${NavbarLink} {
     color: inherit;
   }
-
 `
 
 const StyledNavbar = styled.nav`
@@ -86,7 +90,7 @@ const StyledNavbar = styled.nav`
       align-items: normal;
     }
 
-    ${NavbarLinks} {
+    ${NavbarItems} {
       flex-direction: column;
       position: absolute;
       top: ${({open}) => open ? `${NAV_HEIGHT}rem` : '-450%'};
