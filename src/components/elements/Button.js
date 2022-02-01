@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const StyledButton = styled.button(
-  ({ theme, color, gradient, size, outlined, rounded, block }) => {
+  ({theme, color, gradient, size, outlined, rounded, block}) => {
     const b = theme.palette;
     const c = b[color];
 
@@ -11,15 +11,15 @@ const StyledButton = styled.button(
 
   color: ${!outlined ? c.contrastText : c.main};
   background: ${!outlined
-        ? gradient
-          ? `linear-gradient(140deg, ${b.primary.main}, ${b.secondary.main})`
-          : c.main
-        : "transparent"
-      };
+      ? gradient
+        ? `linear-gradient(140deg, ${b.primary.main}, ${b.secondary.main})`
+        : c.main
+      : "transparent"
+    };
   padding: ${size === "sm" ? ".3rem 1rem" : ".5rem 1.25rem"};
   text-transform: uppercase;
   font-weight: 500;
-  // font-size: ${size === "sm" ? "1rem" : ".75em"};
+  font-size: ${size === "sm" ? "1rem" : ".75em"};
   line-height: 1.25;
   border: ${outlined ? `2px solid ${c.main}` : "0"};
   border-radius: ${rounded ? "9999rem" : theme.sizes.radius};
@@ -30,6 +30,7 @@ const StyledButton = styled.button(
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.75;
   text-align: center;
+  white-space: nowrap;
   letter-spacing: 0.02857em;
   box-shadow: 0px 0px 5px 0px hsla(0, 0%, 0%, .5);
   min-width: ${block ? '100%' : '64px'};
@@ -37,14 +38,13 @@ const StyledButton = styled.button(
 
   &:hover {
     background: ${!outlined
-        ? gradient
-          ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
-          : c.main
-        : "hsl(0, 0%, 90%)"
-      };
+      ? gradient
+        ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
+        : c.light
+      : "hsla(0, 0%, 90%, .8)"
+    };
     cursor: pointer;
     outline: none;
-    opacity: .8;
   };
   &:disabled {
     background: ${outlined ? "transparent" : '#888'};
@@ -54,36 +54,45 @@ const StyledButton = styled.button(
     box-shadow: 0px 0px 2px 0px hsla(0, 0%, 0%, .5);
     opacity: 1;
   }
+  &:focus{
+    background: ${!outlined
+      ? gradient
+        ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
+        : c.dark
+      : "hsla(0, 0%, 90%, .9)"
+    };
+    box-shadow: 0px 0px .75rem ${c.dark};
+  }
 `;
   }
 );
 
 const Button = ({
-  color = "primary",
-  size = "md",
-  type = "button",
-  gradient,
-  outlined,
-  block,
-  rounded,
-  style,
-  disabled,
-  onClick,
-  children,
-}) => {
+                  color = "primary",
+                  size = "md",
+                  type = "button",
+                  gradient,
+                  outlined,
+                  block,
+                  rounded,
+                  style,
+                  disabled,
+                  onClick,
+                  children,
+                }) => {
   return (
     <StyledButton
-      color={ color }
-      size={ size }
-      outlined={ outlined }
-      rounded={ rounded }
-      style={ style }
-      gradient={ gradient }
-      onClick={ onClick }
-      block={ block }
-      disabled={ disabled }
-      type={ type }>
-      <span>{ children }</span>
+      color={color}
+      size={size}
+      outlined={outlined}
+      rounded={rounded}
+      style={style}
+      gradient={gradient}
+      onClick={onClick}
+      block={block}
+      disabled={disabled}
+      type={type}>
+      <span>{children}</span>
     </StyledButton>
   );
 };

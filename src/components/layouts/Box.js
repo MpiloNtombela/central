@@ -7,10 +7,12 @@ export const BoxStyled = styled.div`
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => props.marginBottom};
   margin-left: ${props => props.marginLeft};
+  margin-right: ${props => props.marginRight};
   padding: ${props => props.padding};
   padding-top: ${props => props.paddingTop};
   padding-bottom: ${props => props.paddingBottom};
   padding-left: ${props => props.paddingLeft};
+  padding-right: ${props => props.paddingRight};
   width: ${props => props.width};
   height: ${props => props.height};
   max-width: ${props => props.maxWidth};
@@ -39,10 +41,12 @@ const Box = ({
                marginTop,
                marginBottom,
                marginLeft,
+               marginRight,
                padding,
                paddingTop,
                paddingBottom,
                paddingLeft,
+               paddingRight,
                width,
                height,
                maxWidth,
@@ -66,10 +70,12 @@ const Box = ({
       marginTop={marginTop}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
+      marginRight={marginRight}
       padding={padding}
       paddingTop={paddingTop}
       paddingBottom={paddingBottom}
       paddingLeft={paddingLeft}
+      paddingRight={paddingRight}
       width={width}
       height={height}
       maxWidth={maxWidth}
@@ -95,15 +101,17 @@ Box.propTypes = {
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
   marginLeft: PropTypes.string,
+  marginRight: PropTypes.string,
   padding: PropTypes.string,
   paddingTop: PropTypes.string,
   paddingBottom: PropTypes.string,
   paddingLeft: PropTypes.string,
+  paddingRight: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
   maxWidth: PropTypes.string,
   maxHeight: PropTypes.string,
-  display: PropTypes.string,
+  display: PropTypes.oneOf(["inline", "block", "inline-block", "flex", "grid"]),
   justifyContent: PropTypes.string,
   alignItems: PropTypes.string,
   position: PropTypes.oneOf(["relative", "sticky", "absolute", "static", "fixed"]),
