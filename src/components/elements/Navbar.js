@@ -143,7 +143,7 @@ const StyledNavbar = styled.nav`
 `
 
 const Navbar = ({
-                  logo,
+                  logo = "BRAND",
                   maxBreak = "sm",
                   elevation = 0,
                   openIcon = "MENU",
