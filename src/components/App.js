@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import Button from "./elements/Button";
-import IconText from "./elements/IconText";
-import Navbar, {NavbarLinks, NavbarLink} from "./elements/Navbar";
-import Text from "./elements/Text";
-import Box from "./layouts/Box";
 import Theme from "./Theme";
 
 const App = () => {
