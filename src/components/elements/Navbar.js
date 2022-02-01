@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import React from 'react';
+import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 
 /**
@@ -11,6 +11,25 @@ export const NAV_HEIGHT = 3.25;
 
 const StyledBrand = styled.div`
   margin-right: ${props => props.theme.sizes.gutters[2]};
+  position: relative;
+  background: inherit;
+  padding: 0 ${({theme}) => theme.sizes.gutters[2]};
+`
+const StyleNavbarIcon = styled.div`
+  display: none;
+  align-items: center;
+  min-height: ${NAV_HEIGHT}rem;
+  max-height: ${NAV_HEIGHT}rem;
+  background: inherit;
+  padding: 0 ${({theme}) => theme.sizes.gutters[2]};
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const StyledExtraContent = styled.div`
+  background: inherit;
 `
 
 export const NavbarLink = styled(NavLink)`
@@ -27,46 +46,63 @@ export const NavbarLinks = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  max-height: fit-content;
+  transition: all .5s ease-in-out;
 
   .active-parent {
     color: ${props => props.theme.palette.secondary.main}
   }
 `
 
-const StyledNavbar = styled.nav`
+const StyledNavbarContent = styled.div`
   display: flex;
   position: ${({navStyle}) => navStyle ? navStyle : 'static'};
   background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
   color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
-  box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${props => props.navElevation});
   min-height: ${NAV_HEIGHT}rem;
   max-height: ${NAV_HEIGHT}rem;
-  padding: 0 0.5rem;
   box-sizing: border-box;
   width: 100%;
-  z-index: ${props => props.theme.sizes.zIndex.nav};
   align-items: center;
-  transition: all .5s ease-in-out;
   overflow: hidden;
 
   ${NavbarLink} {
     color: inherit;
   }
 
+`
+
+const StyledNavbar = styled.nav`
+  display: flex;
+  position: relative;
+  background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
+  color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
+  box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${props => props.navElevation});
+  z-index: ${props => props.theme.sizes.zIndex.nav};
+
   @media (max-width: ${({maxBreak, theme}) => maxBreak ? theme.breakpoints[maxBreak] : 0}px) {
-    flex-direction: column;
-    align-items: normal;
-    max-height: ${({open}) => open ? `70vh` : `${NAV_HEIGHT}rem`};
+    ${StyledNavbarContent} {
+      flex-direction: column;
+      align-items: normal;
+    }
+
     ${NavbarLinks} {
       flex-direction: column;
-      display: ${({open}) => open ? `flex` : 'none'};
+      position: absolute;
+      top: ${({open}) => open ? `${NAV_HEIGHT}rem` : '-450%'};
+      left: 0;
+      right: 0;
+      background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
+      color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
+      padding: ${({theme}) => theme.sizes.gutters[2]};
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, ${props => (props.navElevation / 2 / 10)});
+      z-index: -1;
     }
 
     ${NavbarLink} {
       margin: 0;
       padding: ${({theme}) => theme.sizes.gutters[2]};
       border-radius: ${props => props.theme.sizes.radius.sm};
-      transition: padding-left .5s ease;
 
       &:hover:not(.active) {
         position: relative;
@@ -92,24 +128,48 @@ const StyledNavbar = styled.nav`
       }
     }
 
-  ;
     ${StyledBrand} {
       min-height: ${NAV_HEIGHT}rem;
       max-height: ${NAV_HEIGHT}rem;
       display: flex;
       align-items: center;
     }
+
+    ${StyleNavbarIcon} {
+      display: ${props => props.maxBreak ? 'flex' : 'none'};
+    }
   }
 
 `
 
-const Navbar = ({logo, maxBreak = "sm", elevation = 0, style, brandStyle, brandClass, children}) => {
+const Navbar = ({
+                  logo,
+                  maxBreak = "sm",
+                  elevation = 0,
+                  openIcon = "MENU",
+                  closeIcon = "CLOSE",
+                  extraContentElem,
+                  style,
+                  brandStyle,
+                  brandClass,
+                  children
+                }) => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <StyledNavbar navElevation={elevation} open={true} maxBreak={maxBreak} style={style}>
-      <StyledBrand style={brandStyle} className={brandClass}>
-        {logo}
-      </StyledBrand>
-      {children}
+    <StyledNavbar navElevation={elevation} style={style} maxBreak={maxBreak} open={open}>
+      <StyledNavbarContent navElevation={elevation} open={open}>
+        <StyledBrand style={brandStyle} className={brandClass}>
+          {logo}
+        </StyledBrand>
+        {children}
+      </StyledNavbarContent>
+      <StyledExtraContent>
+        {extraContentElem}
+      </StyledExtraContent>
+      <StyleNavbarIcon onClick={() => setOpen(!open)}>
+        {open ? closeIcon : openIcon}
+      </StyleNavbarIcon>
     </StyledNavbar>
   );
 };
@@ -122,6 +182,9 @@ Navbar.propTypes = {
   style: PropTypes.object,
   brandStyle: PropTypes.object,
   brandClass: PropTypes.string,
+  extraContentElem: PropTypes.element,
+  closeIcon: PropTypes.node,
+  openIcon: PropTypes.node,
 }
 
 export default Navbar;
