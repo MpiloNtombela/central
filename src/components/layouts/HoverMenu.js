@@ -1,80 +1,109 @@
 import styled from '@emotion/styled'
 import PropTypes from "prop-types";
 import React from 'react'
-export const StyledHoverMenu = styled.div(({ theme, frost }) => `
-    cursor: pointer;
-    .menu {
-        position: absolute;
-        visibility: hidden;
-        background: ${frost ? theme.background.glass : theme.background.secondary};
-        min-width: 250px;
-        // min-height: 75px;
-        color: ${theme.color.main};
-        border-radius: ${theme.sizes.radius.lg};
-        box-shadow: 0px -5px 20px 0px rgba(0, 0, 0, .15);
-        padding: ${theme.sizes.gutters[2]};
-        margin-top: ${theme.sizes.gutters[2]};
-        opacity: 0;
-        transition: all .5s ease-in-out;
-        backdrop-filter: ${frost ? 'blur(3px)' : 'none'};
-        &::before{
-            content: '';
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            transform: translate(-50%, -50%)
+
+
+const StyledMenu = styled.div`
+  position: absolute;
+  visibility: hidden;
+  min-width: 200px;
+  background: ${({theme}) => theme.background.secondary};
+  color: ${({theme}) => theme.color.main};
+  border-radius: ${({theme}) => theme.sizes.radius.md};
+  box-shadow: 0px -5px 20px 0px rgba(0, 0, 0, .15);
+  padding: ${({theme}) => theme.sizes.gutters[2]};
+  margin-top: ${({theme}) => theme.sizes.gutters[2]};
+  opacity: 0;
+  transition: opacity .5s, visibility .5s ease-in-out;
+  z-index: 1;
+`
+
+const StyledArrowUp = styled.div`
+  position: absolute;
+  width: 0;
+  left: 50%;
+  height: 0;
+  border-left: .5rem solid transparent;
+  border-right: .5rem solid transparent;
+  border-bottom: .5rem solid ${({theme}) => theme.background.secondary};
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+  transition: opacity .5s, visibility .5s ease-in-out;
+  z-index: 1;
+`
+const StyledHoverMenu = styled.div`
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+
+  & .open-menu {
+    visibility: ${({isHover}) => !isHover && `visible`};
+    opacity: ${({isHover}) => !isHover && `1`};;
+  }
+
+  &:hover ${StyledMenu}, &:hover ${StyledArrowUp} {
+    visibility: ${({isHover}) => isHover && `visible`};
+    opacity: ${({isHover}) => isHover && `1`};;
+  }
+
+  ${StyledMenu} {
+    background: ${({frost, theme}) => frost ? theme.background.glass : theme.background.secondary};
+    backdrop-filter: ${({frost}) => frost ? 'blur(3px)' : 'none'};
+  }
+
+  ${StyledArrowUp} {
+    border-bottom: .5rem solid ${({frost, theme}) => frost ? theme.background.glass : theme.background.secondary};
+  }
+
+`
+const HoverMenu = ({frost, isHover, children}) => {
+  const handleOver = (e) => {
+    const container = e.currentTarget
+    const menu = container.querySelector(".menu");
+    const arrow = container.querySelector(".arrow-up");
+    if (menu !== e.target && !menu.contains(e.target)) {
+      console.log((window.innerWidth - e.pageX) < menu.getBoundingClientRect().width)
+      if ((window.innerWidth - e.pageX) < menu.getBoundingClientRect().width) {
+        menu.style.right = '0%';
+      } else {
+        menu.style.right = 'unset';
+      }
+      if (!isHover) {
+        menu.classList.add("open-menu")
+        arrow.classList.add("open-menu")
+      }
+    }
+    if (!isHover) {
+      document.body.addEventListener('click', (evt) => {
+        if (!isHover && container !== evt.target && !container.contains(evt.target)) {
+          menu.classList.remove("open-menu")
+          arrow.classList.remove("open-menu")
         }
+      })
     }
-    .arrow-cont {
-        position: relative;
+  }
 
-    }
-    .arrow-up {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-left: .5rem solid transparent;
-        border-right: .5rem solid transparent;
-        border-bottom: .5rem solid ${frost ? theme.background.glass : theme.background.secondary};
-        transform: translateX(-50%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all .5s ease-in-out;
-    }
-    &:hover .menu, &:hover .arrow-up {
-        visibility: visible;
-        opacity: 1;
-    }
+  return (
+    <StyledHoverMenu isHover={isHover} frost={frost} onMouseOver={isHover ? handleOver : null}
+                     onClick={!isHover ? handleOver : null}>
+      {children}
+      <StyledArrowUp className={"arrow-up"}/>
+    </StyledHoverMenu>
+  )
+}
 
-`)
-const HoverMenu = ({ frost, children }) => {
-    const handleOver = (e) => {
-        const menu = e.currentTarget.querySelector(".menu");
-        if (menu.getBoundingClientRect().right > window.innerWidth) {
-            menu.style.right = 0;
-        } else if (menu.getBoundingClientRect().right < window.innerWidth) {
-            setTimeout(() => {
-                menu.style.right = "inherit"
-            }, 500);
-        }
-    }
-
-    return (
-        <StyledHoverMenu frost={ frost } onMouseOver={ handleOver }>
-            { children }
-            <div className='arrow-cont'>
-                <div className='arrow-up' />
-            </div>
-        </StyledHoverMenu>
-    )
+export const Menu = ({children}) => {
+  return (
+    <StyledMenu className={"menu"}>
+      {children}
+    </StyledMenu>
+  )
 }
 
 HoverMenu.propTypes = {
-    frost: PropTypes.bool,
-    children: PropTypes.node,
+  frost: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 export default HoverMenu
