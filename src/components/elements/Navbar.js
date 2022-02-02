@@ -34,7 +34,6 @@ const StyledExtraContent = styled.div`
 
 export const NavbarLink = styled(NavLink)`
   text-decoration: none;
-  margin: 0 ${({theme}) => theme.sizes.gutters[2]};
   font-weight: 500;
 
   &.active {
@@ -45,6 +44,8 @@ export const NavbarLink = styled(NavLink)`
 export const NavbarItem = styled.div`
   background: inherit;
   color: inherit;
+  margin: 0 ${({theme}) => theme.sizes.gutters[3]};
+
 `
 
 export const NavbarItems = styled.div`
@@ -104,8 +105,6 @@ const StyledNavbar = styled.nav`
     }
 
     ${NavbarLink} {
-      margin: 0;
-      padding: ${({theme}) => theme.sizes.gutters[2]};
       border-radius: ${props => props.theme.sizes.radius.sm};
 
       &:hover:not(.active) {
