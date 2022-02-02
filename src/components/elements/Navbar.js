@@ -70,7 +70,6 @@ const StyledNavbarContent = styled.div`
   box-sizing: border-box;
   width: 100%;
   align-items: center;
-  overflow: hidden;
 
   ${NavbarLink} {
     color: inherit;
