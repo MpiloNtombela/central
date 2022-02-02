@@ -1,31 +1,32 @@
 import PropTypes from "prop-types";
 import React from 'react';
+import {FaSignOutAlt} from "react-icons/fa";
 import {NavLink} from "react-router-dom";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
-import Navbar, {NavbarLink, NavbarLinks} from "../elements/Navbar";
+import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
 import Text from "../elements/Text";
 import Grid, {GridCell} from "../layouts/Grid";
 import HoverMenu from "../layouts/HoverMenu";
-import {selfHelp} from "./utils/mainRoutes";
+import {achievements, admin, selfHelp} from "./utils/mainRoutes";
 
 const NavRoute = ({route}) => {
   return (
-    <NavbarLink to={"/"}>
+    <NavbarItem style={{margin: `0 1rem`}}>
       <HoverMenu frost>
-        <IconText text={route.name} icon={route.icon}/>
+        <IconText stack align={'center'} text={route.name} icon={route.icon} textSize={"small"}/>
         <div className='menu'>
           <Grid gridSpacing={ 2 }>
             {route.subRoutes.map((r, i) => {
               const {hex} = stringToColor(r.name);
               return (
                 <GridCell key={i} colsSm={4}>
-                  <NavLink to={r.path}>
+                  <NavbarLink to={r.path} style={{margin: 0}}>
                     <IconText
                       stack
                       icon={r.icon}
                       text={r.name}
-                      textSize='x-small'
+                      textSize='.75rem'
                       bgColor={hex}
                       align={'center'}
                       iconStyle={{
@@ -35,14 +36,14 @@ const NavRoute = ({route}) => {
                         justifyContent: "center",
                         alignItems: "center"
                       }}/>
-                  </NavLink>
+                  </NavbarLink>
                 </GridCell>
               )
             })}
           </Grid>
         </div>
       </HoverMenu>
-    </NavbarLink>
+    </NavbarItem>
   )
 }
 
@@ -50,9 +51,15 @@ const MainNavbar = () => {
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
             elevation={1}>
-      <NavbarLinks>
+      <NavbarItems>
         <NavRoute route={selfHelp}/>
-      </NavbarLinks>
+        <NavRoute route={achievements}/>
+        <NavRoute route={admin}/>
+        <NavbarItem style={{margin: `0 1rem`}}>
+          <IconText
+            stack textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>} text={ "logout" } textSize='.75rem' />
+        </NavbarItem>
+      </NavbarItems>
     </Navbar>
   );
 };
