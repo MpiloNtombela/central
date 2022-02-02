@@ -1,22 +1,23 @@
+import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
 import {FaSignOutAlt} from "react-icons/fa";
-import {NavLink} from "react-router-dom";
+import {useMediaQuery} from "react-responsive";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
 import Text from "../elements/Text";
 import Grid, {GridCell} from "../layouts/Grid";
-import HoverMenu from "../layouts/HoverMenu";
+import DropMenu, {Menu} from "../layouts/DropMenu";
 import {achievements, admin, selfHelp} from "./utils/mainRoutes";
 
-const NavRoute = ({route}) => {
+const NavRoute = ({route, isBreak}) => {
   return (
     <NavbarItem style={{margin: `0 1rem`}}>
-      <HoverMenu frost>
-        <IconText stack align={'center'} text={route.name} icon={route.icon} textSize={"small"}/>
-        <div className='menu'>
-          <Grid gridSpacing={ 2 }>
+      <DropMenu frost>
+        <IconText stack={!isBreak} align={'center'} text={route.name} icon={route.icon} textSize={"small"}/>
+        <Menu>
+          <Grid gridSpacing={2}>
             {route.subRoutes.map((r, i) => {
               const {hex} = stringToColor(r.name);
               return (
@@ -41,23 +42,26 @@ const NavRoute = ({route}) => {
               )
             })}
           </Grid>
-        </div>
-      </HoverMenu>
+        </Menu>
+      </DropMenu>
     </NavbarItem>
   )
 }
 
 const MainNavbar = () => {
+  const theme = useTheme()
+  const isSm = useMediaQuery({ maxWidth: theme.breakpoints.sm })
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
             elevation={1}>
       <NavbarItems>
-        <NavRoute route={selfHelp}/>
-        <NavRoute route={achievements}/>
-        <NavRoute route={admin}/>
+        <NavRoute isBreak={isSm} route={selfHelp}/>
+        <NavRoute isBreak={isSm} route={achievements}/>
+        <NavRoute isBreak={isSm} route={admin}/>
         <NavbarItem style={{margin: `0 1rem`}}>
           <IconText
-            stack textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>} text={ "logout" } textSize='.75rem' />
+            stack={!isSm} textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>} text={"logout"}
+            textSize='.75rem'/>
         </NavbarItem>
       </NavbarItems>
     </Navbar>
@@ -66,6 +70,7 @@ const MainNavbar = () => {
 
 NavRoute.propTypes = {
   route: PropTypes.object,
+  isBreak: PropTypes.bool,
 }
 
 export default MainNavbar;
