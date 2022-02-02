@@ -38,6 +38,10 @@ export const NavbarLink = styled(NavLink)`
 
   &.active {
     color: ${props => props.theme.palette.primary.main} !important;
+    ${props => {
+      const {activeCss} = props;
+      return activeCss;
+    }}
   }
 `
 
@@ -54,10 +58,6 @@ export const NavbarItems = styled.div`
   justify-content: flex-end;
   max-height: fit-content;
   transition: all .5s ease-in-out;
-
-  .active-parent {
-    color: ${props => props.theme.palette.secondary.main}
-  }
 `
 
 const StyledNavbarContent = styled.div`
@@ -103,30 +103,22 @@ const StyledNavbar = styled.nav`
       z-index: -1;
     }
 
+    ${NavbarItem} {
+      margin: 0;
+      padding: ${({theme}) => theme.sizes.gutters[2]};
+    }
+
     ${NavbarLink} {
       border-radius: ${props => props.theme.sizes.radius.sm};
-
-      &:hover:not(.active) {
-        position: relative;
-        transition: all .25s ease-in-out;
-        padding-left: ${({theme}) => theme.sizes.gutters[3]};
-
-        &:not(.active)::before {
-          content: "";
-          position: absolute;
-          width: 0;
-          height: 0;
-          border-left: .5rem solid ${({theme}) => theme.palette.primary.main};
-          border-top: .5rem solid transparent;
-          border-bottom: .5rem solid transparent;
-          transform: translateX(-135%);
-        }
-      }
 
       &.active {
         background: ${props => props.theme.palette.primary.main};
         color: ${props => props.theme.palette.primary.contrastText} !important;
         mix-blend-mode: normal;
+        ${props => {
+          const {activeCss} = props;
+          return activeCss;
+        }}
       }
     }
 
