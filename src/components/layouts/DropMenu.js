@@ -32,19 +32,14 @@ const StyledArrowUp = styled.div`
   transition: opacity .5s, visibility .5s ease-in-out;
   z-index: 1;
 `
-const StyledHoverMenu = styled.div`
+const StyledDropMenu = styled.div`
   cursor: pointer;
   position: relative;
   width: fit-content;
 
   & .open-menu {
-    visibility: ${({isHover}) => !isHover && `visible`};
-    opacity: ${({isHover}) => !isHover && `1`};;
-  }
-
-  &:hover ${StyledMenu}, &:hover ${StyledArrowUp} {
-    visibility: ${({isHover}) => isHover && `visible`};
-    opacity: ${({isHover}) => isHover && `1`};;
+    visibility: visible;
+    opacity: 1;;
   }
 
   ${StyledMenu} {
@@ -55,41 +50,34 @@ const StyledHoverMenu = styled.div`
   ${StyledArrowUp} {
     border-bottom: .5rem solid ${({frost, theme}) => frost ? theme.background.glass : theme.background.secondary};
   }
-
 `
-const HoverMenu = ({frost, isHover, children}) => {
-  const handleOver = (e) => {
+const DropMenu = ({frost, children}) => {
+  const handleClick = (e) => {
     const container = e.currentTarget
     const menu = container.querySelector(".menu");
     const arrow = container.querySelector(".arrow-up");
     if (menu !== e.target && !menu.contains(e.target)) {
-      console.log((window.innerWidth - e.pageX) < menu.getBoundingClientRect().width)
       if ((window.innerWidth - e.pageX) < menu.getBoundingClientRect().width) {
         menu.style.right = '0%';
       } else {
         menu.style.right = 'unset';
       }
-      if (!isHover) {
-        menu.classList.add("open-menu")
-        arrow.classList.add("open-menu")
+      menu.classList.add("open-menu")
+      arrow.classList.add("open-menu")
+    }
+    document.body.addEventListener('click', (evt) => {
+      if (container !== evt.target && !container.contains(evt.target)) {
+        menu.classList.remove("open-menu")
+        arrow.classList.remove("open-menu")
       }
-    }
-    if (!isHover) {
-      document.body.addEventListener('click', (evt) => {
-        if (!isHover && container !== evt.target && !container.contains(evt.target)) {
-          menu.classList.remove("open-menu")
-          arrow.classList.remove("open-menu")
-        }
-      })
-    }
+    })
   }
 
   return (
-    <StyledHoverMenu isHover={isHover} frost={frost} onMouseOver={isHover ? handleOver : null}
-                     onClick={!isHover ? handleOver : null}>
+    <StyledDropMenu frost={frost} onClick={handleClick}>
       {children}
       <StyledArrowUp className={"arrow-up"}/>
-    </StyledHoverMenu>
+    </StyledDropMenu>
   )
 }
 
@@ -101,9 +89,13 @@ export const Menu = ({children}) => {
   )
 }
 
-HoverMenu.propTypes = {
+Menu.propTypes = {
+  children: PropTypes.node,
+}
+
+DropMenu.propTypes = {
   frost: PropTypes.bool,
   children: PropTypes.node,
 }
 
-export default HoverMenu
+export default DropMenu
