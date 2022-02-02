@@ -42,22 +42,22 @@ export const GridCell = styled.div((props) => {
 
   @media(max-width: ${props.theme.breakpoints.xl}px) {
     flex: 0 0 auto;
-    width: ${Math.round(8.33 * cols.xl)}%
+    width: ${8.33 * cols.xl}%
   }
 
   @media(max-width: ${props.theme.breakpoints.lg}px) {
     flex: 0 0 auto;
-    width: ${Math.round(8.33 * cols.lg)}%
+    width: ${8.33 * cols.lg}%
   }
 
   @media(max-width: ${props.theme.breakpoints.md}px) {
     flex: 0 0 auto;
-    width: ${Math.round(8.33 * cols.md)}%
+    width: ${8.33 * cols.md}%
   }
 
   @media(max-width: ${props.theme.breakpoints.sm}px) {
     flex: 0 0 auto;
-    width: ${Math.round(8.33 * cols.sm)}%
+    width: ${8.33 * cols.sm}%
   }
 `;
 });
