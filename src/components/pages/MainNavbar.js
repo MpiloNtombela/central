@@ -13,15 +13,16 @@ import {achievements, admin, selfHelp} from "./utils/mainRoutes";
 
 const NavRoute = ({route, isBreak}) => {
   return (
-    <NavbarItem style={{margin: `0 1rem`}}>
+    <NavbarItem>
       <DropMenu frost>
-        <IconText stack={!isBreak} align={'center'} text={route.name} icon={route.icon} textSize={"small"}/>
+        <IconText stack={!isBreak} iconStyle={{marginRight: isBreak ? '.5rem' : '0'}} align={'center'}
+                  text={route.name} icon={route.icon} textSize={isBreak ? '1rem' : "small"}/>
         <Menu>
-          <Grid gridSpacing={2}>
+          <Grid gridSpacing={3}>
             {route.subRoutes.map((r, i) => {
               const {hex} = stringToColor(r.name);
               return (
-                <GridCell key={i} colsSm={4}>
+                <GridCell key={i} colsSm={12 / route.subRoutes.length}>
                   <NavbarLink to={r.path} style={{margin: 0}}>
                     <IconText
                       stack
@@ -35,7 +36,7 @@ const NavRoute = ({route, isBreak}) => {
                         width: "36px",
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}/>
                   </NavbarLink>
                 </GridCell>
@@ -50,18 +51,20 @@ const NavRoute = ({route, isBreak}) => {
 
 const MainNavbar = () => {
   const theme = useTheme()
-  const isSm = useMediaQuery({ maxWidth: theme.breakpoints.sm })
+  const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
-            elevation={1}>
+            elevation={4}>
       <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
         <NavRoute isBreak={isSm} route={admin}/>
-        <NavbarItem style={{margin: `0 1rem`}}>
+        <NavbarItem>
           <IconText
-            stack={!isSm} textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>} text={"logout"}
-            textSize='.75rem'/>
+            iconStyle={{marginRight: isSm ? '.5rem' : '0'}}
+            stack={!isSm} align={'center'} textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>}
+            text={"logout"}
+            textSize={isSm ? '1rem' : "small"}/>
         </NavbarItem>
       </NavbarItems>
     </Navbar>
