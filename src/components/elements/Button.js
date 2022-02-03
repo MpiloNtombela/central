@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const StyledButton = styled.button(
-  ({theme, color, gradient, size, outlined, rounded, block}) => {
+  ({theme, color, gradient, size, outlined, rounded, block, disabled}) => {
     const b = theme.palette;
     const c = b[color];
 
@@ -16,12 +16,11 @@ const StyledButton = styled.button(
         : c.main
       : "transparent"
     };
-  padding: ${size === "sm" ? ".3rem 1rem" : ".5rem 1.25rem"};
+  padding: ${size === "sm" ? ".25rem 1rem" : ".45rem 1.25rem"};
   text-transform: uppercase;
   font-weight: 500;
-  font-size: ${size === "sm" ? "1rem" : ".75em"};
   line-height: 1.25;
-  border: ${outlined ? `2px solid ${c.main}` : "0"};
+  border: 2px solid ${disabled ? '#888' : c.main};
   border-radius: ${rounded ? "9999rem" : theme.sizes.radius};
   min-width: max-content;
   font-size: 0.875rem;
@@ -37,31 +36,29 @@ const StyledButton = styled.button(
   transition: background, .5s, ease-in-out;
 
   &:hover {
-    background: ${!outlined
-      ? gradient
-        ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
-        : c.light
-      : "hsla(0, 0%, 90%, .8)"
+    background: ${(outlined ? c.glass : gradient
+      ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
+      : c.light)
     };
     cursor: pointer;
     outline: none;
+    border-color: ${disabled ? '#888' : outlined ? c.main : c.light};
   };
   &:disabled {
     background: ${outlined ? "transparent" : '#888'};
-    color: #ccc;
+    color: ${outlined ? '#888' : '#ccc'};
     cursor: default;
-    border: ${outlined ? `2px solid #888` : "0"};
-    box-shadow: 0px 0px 2px 0px hsla(0, 0%, 0%, .5);
+    border-color: #888
+    box-shadow: 0px 0px 2px 0px hsla(0, 0%, 0%, .35);
     opacity: 1;
   }
   &:focus{
-    background: ${!outlined
-      ? gradient
-        ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
-        : c.dark
-      : "hsla(0, 0%, 90%, .9)"
+    background: ${(outlined ? c.glass : gradient
+      ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
+      : c.dark)
     };
     box-shadow: 0px 0px .75rem ${c.dark};
+    border-color: ${c.dark}
   }
 `;
   }
