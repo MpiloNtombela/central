@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
-import Button from "./elements/Button";
+import Test from "./Test";
 import Theme from "./Theme";
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
     <Theme isDark={isDark}>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Button color={"danger"} onClick={handleMode}>change mode</Button>}/>
+          <Route path="/" element={<Test/>}/>
         </Routes>
       </HashRouter>
     </Theme>
