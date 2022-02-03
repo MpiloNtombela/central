@@ -181,7 +181,7 @@ Navbar.propTypes = {
   brandStyle: PropTypes.object,
   brandClass: PropTypes.string,
   extraContentElem: PropTypes.element,
-  navPosition: PropTypes.oneOf(["fixed-top" || "sticky-top"]),
+  navPosition: PropTypes.oneOf(["fixed-top", "sticky-top"]),
   closeIcon: PropTypes.node,
   openIcon: PropTypes.node,
 }
