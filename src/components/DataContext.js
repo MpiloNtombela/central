@@ -115,6 +115,7 @@ const dataState = {
   ],
   announcements: [
     {
+      id: 1,
       title: "Checkout my profile",
       content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
       date: "01/01/2022",
@@ -129,6 +130,7 @@ const dataState = {
       active: true
     },
     {
+      id: 7,
       title: "Bust pipe at (certain campus🤐)",
       content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
       date: "06/02/2022",
@@ -143,6 +145,7 @@ const dataState = {
       active: Date.now() > Date.parse('07/02/2022')
     },
     {
+      id: 3,
       title: "inactive message",
       content: "Just to showcase an inactive announcement, in case you saw this project before the 07/20/2022",
       date: "03/02/2022",
@@ -152,6 +155,7 @@ const dataState = {
       active: false
     },
     {
+      id: 5,
       title: "Registration closing date",
       content: `All registration processes closes on the 24/02/2022 , 
       unless otherwise a formal notice from the institution stating the extension.`,
@@ -162,6 +166,7 @@ const dataState = {
       active: Date.now() < Date.parse('24/02/2022')
     },
     {
+      id: 10,
       title: "Negative term decision",
       content: `If you received a letter notifying you of negative term decision,
        please follow the action below before attempting to register.`,
