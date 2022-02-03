@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import DataProvider from "./DataContext";
 import Button from "./elements/Button";
+import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
 import Theme from "./Theme";
@@ -24,7 +25,7 @@ const App = () => {
         <HashRouter>
           <MainNavbar/>
           <Routes>
-            <Route path="/" element={<Button onClick={handleMode}>change mode</Button>}/>
+            <Route path="/" element={<Home/>}/>
             <Route path="/e" element={<IEnabler/>}/>
           </Routes>
         </HashRouter>
