@@ -1,17 +1,17 @@
 const commonTheme = {
   palette: {
     primary: {
-      main: "hsl(218, 100%, 50%)",
-      light: "hsl(218, 100%, 60%)",
-      dark: "hsl(218, 100%, 30%)",
-      glass: "hsla(218, 100%, 60%, .45)",
+      main: "hsl(360, 100%, 50%)",
+      light: "hsl(360, 100%, 60%)",
+      dark: "hsl(360, 100%, 30%)",
+      glass: "hsla(360, 100%, 60%, .45)",
       contrastText: "hsl(0, 0%, 95%)",
     },
     secondary: {
-      main: "hsl(260,100%, 50%)",
-      light: "hsl(260, 100%, 60%)",
-      dark: "hsl(260, 100%, 30%)",
-      glass: "hsla(260, 100%, 60%, .45)",
+      main: "hsl(0,0%, 10%)",
+      light: "hsl(0, 0%, 15%)",
+      dark: "hsl(0, 0%, 5%)",
+      glass: "hsla(0, 0%, 15%, .45)",
       contrastText: "hsl(0, 0%, 95%)",
     },
     success: {
