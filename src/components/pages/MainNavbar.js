@@ -55,7 +55,7 @@ const MainNavbar = () => {
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
-            elevation={4}>
+            elevation={4} navPosition="sticky-top">
       <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
