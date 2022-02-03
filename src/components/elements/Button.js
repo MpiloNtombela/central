@@ -98,7 +98,7 @@ const Button = ({
 };
 
 Button.propTypes = {
-  color: PropTypes.oneOf(["primary", "secondary", "success", 'warning', 'danger']),
+  color: PropTypes.oneOf(["primary", "secondary", "success", 'warning', 'danger', 'info']),
   size: PropTypes.oneOf(["sm", "md"]),
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   gradient: PropTypes.bool,
