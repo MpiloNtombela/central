@@ -78,11 +78,14 @@ const StyledNavbarContent = styled.div`
 
 const StyledNavbar = styled.nav`
   display: flex;
-  position: relative;
+  position: ${({navPosition}) => navPosition === "fixed-top" ? "fixed" : navPosition === "sticky-top" ? "sticky" : "relative"};
   background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
   color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
   box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${props => props.navElevation});
   z-index: ${props => props.theme.sizes.zIndex.nav};
+  top: ${({navPosition}) => (navPosition === "fixed-top" || navPosition === "sticky-top") && 0};
+  left: ${({navPosition}) => (navPosition === "fixed-top" || navPosition === "sticky-top") && 0};
+  right: ${({navPosition}) => (navPosition === "fixed-top" || navPosition === "sticky-top") && 0};
 
   @media (max-width: ${({maxBreak, theme}) => maxBreak ? theme.breakpoints[maxBreak] : 0}px) {
     ${StyledNavbarContent} {
@@ -143,6 +146,7 @@ const Navbar = ({
                   openIcon = "MENU",
                   closeIcon = "CLOSE",
                   extraContentElem,
+                  navPosition,
                   style,
                   brandStyle,
                   brandClass,
@@ -151,7 +155,7 @@ const Navbar = ({
   const [open, setOpen] = useState(false)
 
   return (
-    <StyledNavbar navElevation={elevation} style={style} maxBreak={maxBreak} open={open}>
+    <StyledNavbar navPosition={navPosition} navElevation={elevation} style={style} maxBreak={maxBreak} open={open}>
       <StyledNavbarContent navElevation={elevation} open={open}>
         <StyledBrand style={brandStyle} className={brandClass}>
           {logo}
@@ -177,6 +181,7 @@ Navbar.propTypes = {
   brandStyle: PropTypes.object,
   brandClass: PropTypes.string,
   extraContentElem: PropTypes.element,
+  navPosition: PropTypes.oneOf(["fixed-top", "sticky-top"]),
   closeIcon: PropTypes.node,
   openIcon: PropTypes.node,
 }
