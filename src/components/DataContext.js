@@ -113,6 +113,70 @@ const dataState = {
       code: "cog"
     },
   ],
+  announcements: [
+    {
+      title: "Checkout my profile",
+      content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
+      date: "01/01/2022",
+      importantScore: 10,
+      pinned: true,
+      action: {
+        type: 'link',
+        name: 'my linkedin',
+        destination: 'https://linkedin.com/in/mpilo-ntombela',
+        message: null
+      },
+      active: true
+    },
+    {
+      title: "Bust pipe at (certain campus🤐)",
+      content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
+      date: "06/02/2022",
+      importantScore: 3,
+      pinned: false,
+      action: {
+        type: 'button',
+        name: 'enquiries',
+        destination: null,
+        message: 'the matter has been resolved'
+      },
+      active: Date.now() > Date.parse('07/02/2022')
+    },
+    {
+      title: "inactive message",
+      content: "Just to showcase an inactive announcement, in case you saw this project before the 07/20/2022",
+      date: "03/02/2022",
+      importantScore: 1,
+      pinned: false,
+      action: null,
+      active: false
+    },
+    {
+      title: "Registration closing date",
+      content: `All registration processes closes on the 24/02/2022 , 
+      unless otherwise a formal notice from the institution stating the extension.`,
+      date: '10/01/2022',
+      importantScore: 8,
+      action: null,
+      pinned: true,
+      active: Date.now() < Date.parse('24/02/2022')
+    },
+    {
+      title: "Negative term decision",
+      content: `If you received a letter notifying you of negative term decision,
+       please follow the action below before attempting to register.`,
+      importantScore: 9,
+      date: '10/01/2022',
+      action: {
+        type: 'button',
+        name: 'take action',
+        destination: null,
+        message: 'you do not have any negative term decision'
+      },
+      pinned: true,
+      active: Date.now() < Date.parse('24/02/2022')
+    }
+  ],
   isLoading: true,
   alert: {
     message: "",
