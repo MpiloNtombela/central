@@ -10,6 +10,7 @@ import {LOADED, LOADING} from "../../DataContext";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
+import {NAV_HEIGHT} from "../../elements/Navbar";
 import Text from '../../elements/Text'
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
@@ -44,10 +45,11 @@ KeyValuePair.propTypes = {
   v: PropTypes.node.isRequired,
 }
 
-const SideNav = ({anchor, changeAnchor}) => {
+const SideNav = ({anchor, changeAnchor, fixed}) => {
   const theme = useTheme()
   return (
-    <Box position='relative' height='100%' paddingBottom='3rem' style={{boxSizing: 'border-box'}}>
+    <Box position='relative' height='100%' paddingBottom='3rem' paddingTop={fixed && `${NAV_HEIGHT}rem`}
+         style={{boxSizing: 'border-box'}}>
       <Box height={'100%'} maxHeight={'100%'} style={{overflowY: 'auto'}}>
         {iRoutes.map((route, idx) => {
             if (route.subRoutes) {
@@ -109,7 +111,7 @@ const IEnabler = () => {
     dispatch({type: LOADING})
     setTimeout(() => {
       dispatch({type: LOADED})
-    }, 2000)
+    }, 2500)
   }, [])
 
   const handleClose = () => {
@@ -125,7 +127,8 @@ const IEnabler = () => {
   }
 
   if (isLoading) {
-    return <IEnablerLoader drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}/>
+    return <IEnablerLoader fixed={isLg} drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}
+                           drawerWidth={drawerOpt.width}/>
   } else {
     return (
       <DrawerContainer drawerOpen={drawerOpt.open || isLg} drawerFixed={isLg} drawerWidth={drawerOpt.width}
@@ -133,7 +136,7 @@ const IEnabler = () => {
         <Drawer elevation={3} rounded anchor={drawerOpt.anchor} height={drawerOpt.width} width={drawerOpt.width}
                 open={drawerOpt.open || isLg}
                 fixed={isLg} onClose={handleClose}>
-          <SideNav anchor={drawerOpt.anchor} changeAnchor={changeAnchor}/>
+          <SideNav fixed={isLg} anchor={drawerOpt.anchor} changeAnchor={changeAnchor}/>
         </Drawer>
         <Container maxWidth="xl">
           <TabContext>

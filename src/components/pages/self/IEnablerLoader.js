@@ -1,6 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
+import {NAV_HEIGHT} from "../../elements/Navbar";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Collapsible from "../../layouts/Collapsible";
@@ -9,15 +10,15 @@ import Drawer, {DrawerContainer} from "../../layouts/Drawer";
 import Grid, {GridCell} from "../../layouts/Grid";
 import Skeleton from "../../layouts/Skeletons";
 
-const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", isLg}) => {
+const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", fixed, drawerWidth}) => {
   const theme = useTheme()
 
   return (
-    <DrawerContainer drawerFixed={isLg} drawerAnchor={drawerAnchor} drawerWidth={210} drawerOpen={drawerOpen}>
+    <DrawerContainer drawerFixed={fixed} drawerAnchor={drawerAnchor} drawerWidth={drawerWidth} drawerOpen={drawerOpen}>
       {drawerOpen &&
       <Drawer onClose={() => {
-      }} open={drawerOpen} width={250} elevation={2} anchor={drawerAnchor}>
-        <Box marginTop={'1rem'}>
+      }} open={drawerOpen} width={drawerWidth} fixed={fixed} elevation={2} anchor={drawerAnchor}>
+        <Box marginTop={'1rem'} paddingTop={fixed && `${NAV_HEIGHT}rem`}>
           {[1, 2, 3, 4, 5].map((num) => {
             if (num === 1 || num === 3) {
               return (
@@ -73,7 +74,7 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", isLg}) => {
           })}
         </Box>
       </Drawer>}
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Box marginTop={theme.sizes.gutters[1]}>
           <Grid gridSpacing={2} alignGrid={'center'} justifyGrid={'center'}>
             {[1, 2, 3].map((num) => (
@@ -148,8 +149,9 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", isLg}) => {
 
 IEnablerLoader.propTypes = {
   drawerOpen: PropTypes.bool.isRequired,
-  isLg: PropTypes.bool.isRequired,
-  drawerAnchor: PropTypes.oneOf(["top", "left", "bottom", "right"])
+  fixed: PropTypes.bool.isRequired,
+  drawerAnchor: PropTypes.oneOf(["top", "left", "bottom", "right"]),
+  drawerWidth: PropTypes.number.isRequired,
 }
 
 export default IEnablerLoader;
