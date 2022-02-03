@@ -21,8 +21,9 @@ const NavRoute = ({route, isBreak}) => {
           <Grid gridSpacing={3}>
             {route.subRoutes.map((r, i) => {
               const {hex} = stringToColor(r.name);
+              const len = route.subRoutes.length
               return (
-                <GridCell key={i} colsSm={12 / route.subRoutes.length}>
+                <GridCell key={i} colsSm={len < 4 && len > 0 ? 12 / len : 4}>
                   <NavbarLink to={r.path} style={{margin: 0}}>
                     <IconText
                       stack
