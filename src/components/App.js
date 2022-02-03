@@ -1,10 +1,10 @@
+import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import DataProvider from "./DataContext";
 import Button from "./elements/Button";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
 import Theme from "./Theme";
-import React, {useEffect, useState} from "react";
 
 const App = () => {
   const [isDark, setMode] = useState(true)
