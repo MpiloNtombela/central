@@ -48,37 +48,37 @@ KeyValuePair.propTypes = {
 const SideNav = ({anchor, changeAnchor, fixed}) => {
   const theme = useTheme()
   return (
-    <Box position='relative' height='100%' paddingBottom='3rem' paddingTop={fixed && `${NAV_HEIGHT}rem`}
+    <Box position='relative' height='100%' paddingBottom='3rem' paddingTop={fixed ? `${NAV_HEIGHT}rem` : 'unset'}
          style={{boxSizing: 'border-box'}}>
       <Box height={'100%'} maxHeight={'100%'} style={{overflowY: 'auto'}}>
         {iRoutes.map((route, idx) => {
-            if (route.subRoutes) {
-              return (
-                <Collapsible key={idx}
-                             header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                                               textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>}
-                             bgColor={theme.background.main}>
-                  {route.subRoutes.map((sRoute, idx) => {
-                    return (
-                      <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                           hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
-                        <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
-                                  textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
-                      </Box>
-                    )
-                  })}
-                </Collapsible>
-              )
-            } else {
-              return (
-                <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                     hoverColor={theme.palette.primary.main}
-                     style={{
-                       borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
-                     }}>
-                  <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                            textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
-                </Box>
+          if (route.subRoutes) {
+            return (
+              <Collapsible key={idx}
+                           header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                                             textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>}
+                           bgColor={theme.background.main}>
+                {route.subRoutes.map((sRoute, idx) => {
+                  return (
+                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                         hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
+                      <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
+                                textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
+                    </Box>
+                  )
+                })}
+              </Collapsible>
+            )
+          } else {
+            return (
+              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                   hoverColor={theme.palette.primary.main}
+                   style={{
+                     borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
+                   }}>
+                <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                          textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
+              </Box>
               )
             }
           }
@@ -280,5 +280,6 @@ IEnabler.propTypes = {}
 SideNav.propTypes = {
   anchor: PropTypes.oneOf(["top", "left", "bottom", "right"]),
   changeAnchor: PropTypes.func,
+  fixed: PropTypes.bool,
 }
 export default IEnabler

@@ -18,7 +18,7 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", fixed, drawe
       {drawerOpen &&
       <Drawer onClose={() => {
       }} open={drawerOpen} width={drawerWidth} fixed={fixed} elevation={2} anchor={drawerAnchor}>
-        <Box marginTop={'1rem'} paddingTop={fixed && `${NAV_HEIGHT}rem`}>
+        <Box marginTop={'1rem'} paddingTop={fixed ? `${NAV_HEIGHT}rem` : 'unset'}>
           {[1, 2, 3, 4, 5].map((num) => {
             if (num === 1 || num === 3) {
               return (
