@@ -7,8 +7,10 @@ const StyledModal = styled.div`
   background: ${({theme}) => theme.background.secondary};
   width: 100%;
   border-radius: ${({theme, radius}) => theme.sizes.radius[radius]};
-  padding: ${({theme}) => theme.sizes.gutters[1]};
+  padding: ${({theme}) => theme.sizes.gutters[2]};
   box-sizing: border-box;
+  margin: ${({theme}) => theme.sizes.gutters[4]};
+  box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${({elevation}) => elevation});
 `
 
 const StyledModalOverlay = styled.div`
@@ -21,16 +23,18 @@ const StyledModalOverlay = styled.div`
   left: ${({open}) => open ? 0 : `-100%`};
   bottom: ${({open}) => open ? 0 : `-100%`};
   right: ${({open}) => open ? 0 : `-100%`};
+  transition: opacity .5s ease-in-out;
+  overflow: auto;
   z-index: ${({theme, open}) => open ? theme.sizes.zIndex.modal : -1};
-  transition: opacity, visibility .5s ease-in-out;
 `
 
 
-const Modal = ({open, radius = 'sm', maxWidth = 'sm', children}) => {
+const Modal = ({open, centerVert, elevation = 1, radius = 'sm', maxWidth = 'sm', children}) => {
   return (
     <StyledModalOverlay open={open}>
-      <Container maxWidth={maxWidth} navPadding>
-        <StyledModal radius={radius}>
+      <Container maxWidth={maxWidth}
+                 style={{display: centerVert ? 'flex' : 'block', alignItems: 'center'}}>
+        <StyledModal radius={radius} elevation={elevation}>
           {children}
         </StyledModal>
       </Container>
@@ -43,6 +47,8 @@ Modal.propTypes = {
   radius: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl']),
   maxWidth: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
   children: PropTypes.node,
+  centerVert: PropTypes.bool,
+  elevation: PropTypes.oneOf([1, 2, 3, 4])
 }
 
 export default Modal;
