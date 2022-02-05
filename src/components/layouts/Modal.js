@@ -10,8 +10,8 @@ const StyledModal = styled.div`
   padding: ${({theme}) => theme.sizes.gutters[2]};
   box-sizing: border-box;
   box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${({elevation}) => elevation});
-  max-height: ${({scrollOverlay, theme}) => scrollOverlay ? `calc(100vh - 2rem)` : `fit-content`};
-  overflow-y: ${({scrollOverlay}) => scrollOverlay ? 'auto' : `hidden`};
+  max-height: ${({scrollOverlay}) => scrollOverlay ? `fit-content` : `calc(100vh - 2rem)`};
+  overflow-y: ${({scrollOverlay}) => scrollOverlay ? `hidden` : 'auto'};
 `
 
 const StyledModalOverlay = styled.div`
@@ -26,12 +26,12 @@ const StyledModalOverlay = styled.div`
   right: ${({open}) => open ? 0 : `-100%`};
   transition: opacity .5s ease-in-out;
   padding: ${({theme}) => theme.sizes.gutters[4]} 0;
-  overflow-y: ${({scrollOverlay}) => scrollOverlay ? 'hidden' : `auto`};
+  overflow-y: ${({scrollOverlay}) => scrollOverlay ? `auto` : 'hidden'};
   z-index: ${({theme, open}) => open ? theme.sizes.zIndex.modal : -1};
 `
 
 
-const Modal = ({open, centerVert, scrollOverlay, elevation = 1, radius = 'sm', maxWidth = 'sm', children}) => {
+const Modal = ({open, centerVert, scrollOverlay = true, elevation = 1, radius = 'sm', maxWidth = 'sm', children}) => {
   return (
     <StyledModalOverlay open={open} scrollOverlay={scrollOverlay}>
       <Container maxWidth={maxWidth}
@@ -50,7 +50,8 @@ Modal.propTypes = {
   maxWidth: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
   children: PropTypes.node,
   centerVert: PropTypes.bool,
-  elevation: PropTypes.oneOf([1, 2, 3, 4])
+  elevation: PropTypes.oneOf([1, 2, 3, 4]),
+  scrollOverlay: PropTypes.bool,
 }
 
 export default Modal;
