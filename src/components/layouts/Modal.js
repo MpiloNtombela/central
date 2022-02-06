@@ -34,7 +34,7 @@ const StyledModalContent = styled.div`
 const StyledModal = styled.div`
   background: ${({theme}) => theme.background.secondary};
   width: 100%;
-  border-radius: ${({theme, radius}) => radius ? theme.sizes.radius[radius] : 0};
+  border-radius: ${({theme, rounded}) => rounded ? theme.sizes.radius[rounded] : 0};
   box-sizing: border-box;
   box-shadow: 0px -5px 20px 0px rgba(0, 0, 0,.${({elevation}) => elevation});
   max-height: ${({
@@ -65,16 +65,19 @@ export const ModalHeader = ({
                               sticky,
                               hasBack,
                               onBackClick,
+                              backIcon,
                               onCloseClick,
+                              closeIcon,
                               hasClose = true,
                               elevation = 1,
                               children
                             }) => {
   const theme = useTheme()
+
   return (
     <StyledModalHeader text={text} elevation={elevation} sticky={sticky}>
       {hasBack && <Box marginRight={theme.sizes.gutters[3]} onClick={onBackClick}>
-        &larr;
+        {backIcon ? backIcon : '&larr;'}
       </Box>}
       <Box
         style={{
@@ -84,7 +87,7 @@ export const ModalHeader = ({
           whiteSpace: text ? 'nowrap' : 'inherit'
         }}>{children ? children : text}</Box>
       {hasClose && <Box marginLeft={theme.sizes.gutters[3]} onClick={onCloseClick}>
-        <Text fSize={'small'} fWeight={'bold'}>CLOSE</Text>
+        {closeIcon ? closeIcon : <Text fSize={'small'} fWeight={'bold'}>CLOSE</Text>}
       </Box>}
     </StyledModalHeader>
   )
@@ -98,12 +101,12 @@ export const ModalContent = ({children}) => {
   )
 }
 
-const Modal = ({open, centerVert, scrollOverlay = true, elevation = 1, radius = 'sm', maxWidth = 'sm', children}) => {
+const Modal = ({open, centerVert, scrollOverlay = true, elevation = 1, rounded = 'sm', maxWidth = 'sm', children}) => {
   return (
     <StyledModalOverlay open={open} scrollOverlay={scrollOverlay} maxWidth={maxWidth}>
       <Container maxWidth={maxWidth}
                  style={{display: centerVert ? 'flex' : 'block', alignItems: 'center'}}>
-        <StyledModal radius={radius} elevation={elevation} scrollOverlay={scrollOverlay} maxWidth={maxWidth}>
+        <StyledModal rounded={rounded} elevation={elevation} scrollOverlay={scrollOverlay} maxWidth={maxWidth}>
           {children}
         </StyledModal>
       </Container>
@@ -120,6 +123,8 @@ ModalHeader.propTypes = {
   children: PropTypes.node,
   onBackClick: PropTypes.func,
   onCloseClick: PropTypes.func,
+  backIcon: PropTypes.element,
+  closeIcon: PropTypes.element,
 }
 
 ModalContent.propTypes = {
@@ -128,7 +133,7 @@ ModalContent.propTypes = {
 
 Modal.propTypes = {
   open: PropTypes.bool.isRequired,
-  radius: PropTypes.oneOf(["sm", "md", "lg", "xl", "xxl", false]),
+  rounded: PropTypes.oneOf(["sm", "md", "lg", "xl", "xxl", false]),
   maxWidth: PropTypes.oneOf(["sm", "md", "lg", "xl", false]),
   children: PropTypes.node,
   centerVert: PropTypes.bool,
