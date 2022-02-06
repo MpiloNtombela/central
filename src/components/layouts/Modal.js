@@ -46,7 +46,7 @@ const StyledModal = styled.div`
 
 const StyledModalOverlay = styled.div`
   background: hsla(0, 0%, 0%, .45);
-  backdrop-filter: blur(.25rem);
+  backdrop-filter: blur(.2rem);
   visibility: ${({open}) => open ? 'visible' : 'hidden'};
   opacity: ${({open}) => open ? 1 : 0};
   position: fixed;
@@ -73,7 +73,6 @@ export const ModalHeader = ({
                               children
                             }) => {
   const theme = useTheme()
-
   return (
     <StyledModalHeader text={text} elevation={elevation} sticky={sticky}>
       {hasBack && <Box marginRight={theme.sizes.gutters[3]} onClick={onBackClick}>
@@ -101,12 +100,31 @@ export const ModalContent = ({children}) => {
   )
 }
 
-const Modal = ({open, centerVert, scrollOverlay = true, elevation = 1, rounded = 'sm', maxWidth = 'sm', children}) => {
+const Modal = ({
+                 open,
+                 centerVert,
+                 isStatic,
+                 onClose,
+                 scrollOverlay = true,
+                 elevation = 1,
+                 rounded = 'sm',
+                 maxWidth = 'sm',
+                 children
+               }) => {
+  const handleClick = (e) => {
+    if (isStatic) return;
+    const cont = e.currentTarget;
+    const modal = cont.querySelector('[data-modal]')
+    if (modal !== e.target && !modal.contains(e.target)) {
+      onClose()
+    }
+  }
   return (
-    <StyledModalOverlay open={open} scrollOverlay={scrollOverlay} maxWidth={maxWidth}>
+    <StyledModalOverlay open={open} scrollOverlay={scrollOverlay} maxWidth={maxWidth} onClick={(e) => handleClick(e)}>
       <Container maxWidth={maxWidth}
                  style={{display: centerVert ? 'flex' : 'block', alignItems: 'center'}}>
-        <StyledModal rounded={rounded} elevation={elevation} scrollOverlay={scrollOverlay} maxWidth={maxWidth}>
+        <StyledModal data-modal rounded={rounded} elevation={elevation} scrollOverlay={scrollOverlay}
+                     maxWidth={maxWidth}>
           {children}
         </StyledModal>
       </Container>
@@ -139,6 +157,8 @@ Modal.propTypes = {
   centerVert: PropTypes.bool,
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   scrollOverlay: PropTypes.bool,
+  isStatic: PropTypes.bool,
+  onClose: PropTypes.func,
 }
 
 export default Modal;
