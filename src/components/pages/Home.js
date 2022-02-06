@@ -1,6 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
+import {MdPushPin} from "react-icons/md";
 import {useDataContext} from "../../hooks/context";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
@@ -20,8 +21,9 @@ const Announcement = ({announcement, theme, collapsed}) => {
           collapsed={collapsed}
           isHighlighted={false}
           header={<Text style={{textTransform: 'capitalize'}} fWeight={'500'}>
-            {announcement.title}</Text>}>
-          <Text fSize={'1rem'} tColor={theme.color.secondary}>{announcement?.content}</Text>
+            {announcement.title} {announcement.pinned && <MdPushPin color={theme.color.secondary}/>}</Text>}>
+          <Text fSize={theme.typography.fontsize.paragraph}
+                tColor={theme.color.secondary}>{announcement?.content}</Text>
           {announcement?.actions.length > 0 &&
           <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
             {announcement?.actions.map((action, idx) => {
@@ -35,7 +37,7 @@ const Announcement = ({announcement, theme, collapsed}) => {
                       color: theme.palette.primary.main
                     }}
                        href={action.destination}>{action.name}</a> :
-                    <Button size={'sm'} rounded>{action.name}</Button>}
+                    <Button size={'sm'} outlined={!action.important} rounded>{action.name}</Button>}
                 </Box>)
             })}
           </Box>}
@@ -63,10 +65,14 @@ const Announcements = () => {
   return (
     <>
       {announcements.sort((aa, ab) => {
-        if (aa.pinned || aa.importantScore > ab.importantScore) {
+        if (aa.pinned && ab.pinned) {
+          return ab.importantScore - aa.importantScore
+        } else if (aa.pinned) {
           return -1
-        } else {
+        } else if (ab.pinned) {
           return 1
+        } else {
+          return ab.importantScore - aa.importantScore
         }
       }).slice(0, 5).map((announcement, idx) => {
         return (
@@ -76,7 +82,7 @@ const Announcements = () => {
       <Box marginTop={theme.sizes.gutters[4]}>
         <Button onClick={showMoreToggle} color={"primary"} size={'sm'} rounded block>show more</Button>
       </Box>
-      <Modal open={showMore} onClose={showMoreToggle} maxWidth={'md'} rounded={"md"}>
+      <Modal open={showMore} onClose={showMoreToggle} maxWidth={'md'} rounded={"md"} elevation={2}>
         <ModalHeader text={"Announcements"} elevation={4} onCloseClick={showMoreToggle}/>
         <ModalContent>
           <TabContext>
