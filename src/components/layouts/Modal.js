@@ -60,20 +60,30 @@ const StyledModalOverlay = styled.div`
   z-index: ${({theme, open}) => open ? theme.sizes.zIndex.modal : -1};
 `
 
-export const ModalHeader = ({text, hasBack, sticky, hasClose = true, elevation = 1, children}) => {
+export const ModalHeader = ({
+                              text,
+                              sticky,
+                              hasBack,
+                              onBackClick,
+                              onCloseClick,
+                              hasClose = true,
+                              elevation = 1,
+                              children
+                            }) => {
   const theme = useTheme()
   return (
     <StyledModalHeader text={text} elevation={elevation} sticky={sticky}>
-      {hasBack && <Box marginRight={theme.sizes.gutters[3]}>
+      {hasBack && <Box marginRight={theme.sizes.gutters[3]} onClick={onBackClick}>
         &larr;
       </Box>}
-      <Box style={{
-        flex: 2,
-        textOverflow: 'ellipsis',
-        overflow: text ? 'hidden' : 'inherit',
-        whiteSpace: text ? 'nowrap' : 'inherit'
-      }}>{children ? children : text}</Box>
-      {hasClose && <Box marginLeft={theme.sizes.gutters[3]}>
+      <Box
+        style={{
+          flex: 2,
+          textOverflow: 'ellipsis',
+          overflow: text ? 'hidden' : 'inherit',
+          whiteSpace: text ? 'nowrap' : 'inherit'
+        }}>{children ? children : text}</Box>
+      {hasClose && <Box marginLeft={theme.sizes.gutters[3]} onClick={onCloseClick}>
         <Text fSize={'small'} fWeight={'bold'}>CLOSE</Text>
       </Box>}
     </StyledModalHeader>
@@ -108,6 +118,8 @@ ModalHeader.propTypes = {
   sticky: PropTypes.bool,
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   children: PropTypes.node,
+  onBackClick: PropTypes.func,
+  onCloseClick: PropTypes.func,
 }
 
 ModalContent.propTypes = {
