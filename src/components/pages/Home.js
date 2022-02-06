@@ -7,10 +7,12 @@ import Box from "../layouts/Box";
 import Card from "../layouts/Card";
 import Container from "../layouts/Container";
 import Grid, {GridCell} from "../layouts/Grid";
+import Modal, {ModalContent, ModalHeader} from "../layouts/Modal";
 
 const Announcements = () => {
   const data = useDataContext()
   const announcements = [...data.announcements]
+  const [ann, setAnn] = useState(null)
   const theme = useTheme()
   const handleOpen = (id) => {
     const a = announcements.find(a => a.id === id)
@@ -18,7 +20,7 @@ const Announcements = () => {
   }
   return (
     <>
-      {announcements.sort((aa, ab) => aa.importantScore < ab.importantScore) .map((a, idx) => {
+      {announcements.sort((aa, ab) => aa.importantScore < ab.importantScore).map((a, idx) => {
         return (
           <div onClick={() => handleOpen(a.id)} key={idx}>
             <Card>
@@ -30,6 +32,12 @@ const Announcements = () => {
           </div>
         )
       })}
+      <Modal open={ann !== null} rounded={'md'} maxWidth={"sm"} elevation={2} onClose={() => setAnn(null)}>
+        <ModalHeader text={ann?.title} hasClose onCloseClick={() => setAnn(null)}/>
+        <ModalContent>
+          <Text fSize={theme.typography.fontsize.paragraph}>{ann?.content}</Text>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
