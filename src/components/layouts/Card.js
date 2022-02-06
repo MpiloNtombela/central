@@ -5,9 +5,9 @@ import {css} from "@emotion/react";
 
 const cardBase = ({theme, maxWidth, bgColor, shadow}) => css`
   background: ${bgColor ?
-          bgColor === "main" ? theme.bgColor.main
+          bgColor === "main" ? theme.background.main
                   : theme.palette[bgColor].main
-          : theme.bgColor.secondary};
+          : theme.background.secondary};
   border-radius: ${theme.sizes.radius.md};
   box-shadow: ${shadow ? "0px 0px 10px 0px hsla(0, 0%, 0%, .2)" : "none"};
   font-family: ${theme.typography.fontFamily};
