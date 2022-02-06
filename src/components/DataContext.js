@@ -117,16 +117,16 @@ const dataState = {
     {
       id: 1,
       title: "Checkout my profile",
-      content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
+      content: "You can also find me or connect with me in these networks I use",
       date: "01/01/2022",
       importantScore: 10,
       pinned: true,
-      action: {
+      actions: [{
         type: 'link',
         name: 'my linkedin',
         destination: 'https://linkedin.com/in/mpilo-ntombela',
         message: null
-      },
+      }],
       active: true
     },
     {
@@ -136,12 +136,12 @@ const dataState = {
       date: "06/02/2022",
       importantScore: 3,
       pinned: false,
-      action: {
+      actions: [{
         type: 'button',
         name: 'enquiries',
         destination: null,
         message: 'the matter has been resolved'
-      },
+      }],
       active: Date.now() > Date.parse('07/02/2022')
     },
     {
@@ -151,7 +151,7 @@ const dataState = {
       date: "03/02/2022",
       importantScore: 1,
       pinned: false,
-      action: null,
+      actions: null,
       active: false
     },
     {
@@ -161,7 +161,7 @@ const dataState = {
       unless otherwise a formal notice from the institution stating the extension.`,
       date: '10/01/2022',
       importantScore: 8,
-      action: null,
+      actions: [],
       pinned: true,
       active: Date.now() < Date.parse('24/02/2022')
     },
@@ -172,12 +172,12 @@ const dataState = {
        please follow the action below before attempting to register.`,
       importantScore: 9,
       date: '10/01/2022',
-      action: {
+      actions: [{
         type: 'button',
         name: 'take action',
         destination: null,
         message: 'you do not have any negative term decision'
-      },
+      }],
       pinned: true,
       active: Date.now() < Date.parse('24/02/2022')
     }
