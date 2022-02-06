@@ -97,7 +97,7 @@ export const lightTheme = {
   },
   color: {
     main: "hsl(0, 0%, 20%)",
-    secondary: "hsl(0, 0%, 50%)",
+    secondary: "hsl(0, 0%, 60%)",
   },
   ...commonTheme,
 };
@@ -110,7 +110,7 @@ export const darkTheme = {
   },
   color: {
     main: "hsl(0, 0%, 95%)",
-    secondary: "hsl(0, 0%, 50%)",
+    secondary: "hsl(0, 0%, 70%)",
   },
   ...commonTheme,
 };
