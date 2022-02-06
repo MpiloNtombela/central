@@ -125,7 +125,7 @@ Box.propTypes = {
   hoverColor: PropTypes.string,
   style: PropTypes.object,
   onClick: PropTypes.func,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node
 }
 
 export default Box;
