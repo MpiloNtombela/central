@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 export const DrawerContainer = styled.div(({drawerAnchor, drawerOpen, drawerWidth, drawerFixed}) => `
     width: 100%;
@@ -48,7 +48,7 @@ const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, an
   const handleClick = (e) => {
     if (fixed) return;
     const cont = e.currentTarget;
-    const drawer = cont.querySelector('.jsx-drawer')
+    const drawer = cont.querySelector('[data-drawer]')
     if (drawer !== e.target && !drawer.contains(e.target)) {
       onClose()
     }
@@ -63,7 +63,7 @@ const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, an
       width={width}
       height={height}>
       <StyledDrawer
-        className='jsx-drawer'
+        data-drawer
         fixed={fixed}
         open={open}
         anchor={anchor}
