@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
-import {MdPushPin} from "react-icons/md";
+import {MdClose, MdPushPin} from "react-icons/md";
 import {useDataContext} from "../../hooks/context";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
@@ -64,7 +64,7 @@ const Announcements = () => {
   }
   return (
     <>
-      {announcements.sort((aa, ab) => {
+      {announcements.filter(a => a.active).sort((aa, ab) => {
         if (aa.pinned && ab.pinned) {
           return ab.importantScore - aa.importantScore
         } else if (aa.pinned) {
@@ -83,7 +83,8 @@ const Announcements = () => {
         <Button onClick={showMoreToggle} color={"primary"} size={'sm'} rounded block>show more</Button>
       </Box>
       <Modal open={showMore} onClose={showMoreToggle} maxWidth={'md'} rounded={"md"} elevation={2}>
-        <ModalHeader text={"Announcements"} elevation={4} onCloseClick={showMoreToggle}/>
+        <ModalHeader closeIcon={<MdClose size={24}/>} text={"Announcements"} elevation={4}
+                     onCloseClick={showMoreToggle}/>
         <ModalContent>
           <TabContext>
             <Tabs isFixed>
