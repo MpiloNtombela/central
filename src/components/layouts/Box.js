@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
 import styled from "@emotion/styled";
+import PropTypes from "prop-types";
+import React from "react";
 
 export const BoxStyled = styled.div`
   margin: ${props => props.margin};
@@ -27,11 +27,11 @@ export const BoxStyled = styled.div`
   left: ${props => props.left};
 
   &:hover {
-    background: ${props => props.isHover ? props.hoverColor
-            ? props.hoverColor
-            : props.theme.background.glass
+    background: ${({hoverColor, isHover, theme}) => isHover ? hoverColor
+            ? hoverColor
+            : theme.background.glass
             : 'inherit'};
-    cursor: ${props => props.isHover ? 'pointer' : 'default'};
+    cursor: ${({isHover, onClick}) => onClick || isHover ? 'pointer' : 'default'};
   }
 `
 
@@ -62,6 +62,7 @@ const Box = ({
                isHover,
                hoverColor,
                style,
+               onClick,
                children
              }) => {
   return (
@@ -90,6 +91,7 @@ const Box = ({
       left={left}
       isHover={isHover}
       hoverColor={hoverColor}
+      onClick={onClick}
       style={style}>
       {children}
     </BoxStyled>
@@ -122,6 +124,7 @@ Box.propTypes = {
   isHover: PropTypes.bool,
   hoverColor: PropTypes.string,
   style: PropTypes.object,
+  onClick: PropTypes.func,
   children: PropTypes.node.isRequired
 }
 
