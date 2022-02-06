@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 export const DrawerContainer = styled.div(({drawerAnchor, drawerOpen, drawerWidth, drawerFixed}) => `
     width: 100%;
@@ -37,8 +37,8 @@ const StyledDrawer = styled.div(({theme, anchor, open, width, height, fixed, ele
     max-width: ${width ? width : anchor === 'left' || anchor === 'right' ? '315px' : `100%`};
     pointer-events: auto;
     box-sizing: border-box;
-    width: ${anchor === 'top' || anchor === 'bottom' ? '100%' : width ? `${width}px` : 'auto'};
-    height: ${anchor === 'left' || anchor === 'right' ? '100%' : height ? `${height}px` : 'auto'};
+    width: ${anchor === 'top' || anchor === 'bottom' ? '100%' : width ? width : 'auto'};
+    height: ${anchor === 'left' || anchor === 'right' ? '100%' : height ? height : 'auto'};
     background: ${theme.background.main};
     transition: all .5s ease-in-out;
 `)
@@ -48,7 +48,7 @@ const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, an
   const handleClick = (e) => {
     if (fixed) return;
     const cont = e.currentTarget;
-    const drawer = cont.querySelector('.jsx-drawer')
+    const drawer = cont.querySelector('[data-drawer]')
     if (drawer !== e.target && !drawer.contains(e.target)) {
       onClose()
     }
@@ -63,12 +63,12 @@ const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, an
       width={width}
       height={height}>
       <StyledDrawer
-        className='jsx-drawer'
+        data-drawer
         fixed={fixed}
         open={open}
         anchor={anchor}
-        width={width}
-        height={height}
+        width={typeof width === 'number' ? `${width}px` : width}
+        height={typeof height === 'number' ? `${height}px` : height}
         rounded={rounded}
         elevation={elevation}>
         {children}
@@ -90,8 +90,8 @@ Drawer.propTypes = {
   fixed: PropTypes.bool,
   open: PropTypes.bool.isRequired,
   rounded: PropTypes.bool,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
 }
