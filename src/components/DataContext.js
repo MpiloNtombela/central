@@ -121,12 +121,19 @@ const dataState = {
       date: "01/01/2022",
       importantScore: 10,
       pinned: true,
-      actions: [{
-        type: 'link',
-        name: 'my linkedin',
-        destination: 'https://linkedin.com/in/mpilo-ntombela',
-        message: null
-      }],
+      actions: [
+        {
+          type: 'link',
+          name: 'linkedin',
+          destination: 'https://linkedin.com/in/mpilo-ntombela',
+          message: null
+        },
+        {
+          type: 'link',
+          name: 'github',
+          destination: 'https://github.com/MpiloNtombela/',
+          message: null
+        }],
       active: true
     },
     {
@@ -142,7 +149,7 @@ const dataState = {
         destination: null,
         message: 'the matter has been resolved'
       }],
-      active: Date.now() > Date.parse('07/02/2022')
+      active: Date.now() < Date.parse('07/02/2022')
     },
     {
       id: 3,
@@ -151,7 +158,7 @@ const dataState = {
       date: "03/02/2022",
       importantScore: 1,
       pinned: false,
-      actions: null,
+      actions: [],
       active: false
     },
     {
@@ -163,7 +170,7 @@ const dataState = {
       importantScore: 8,
       actions: [],
       pinned: true,
-      active: Date.now() < Date.parse('24/02/2022')
+      active: Date.now() < Date.parse('02/24/2022')
     },
     {
       id: 10,
@@ -179,7 +186,7 @@ const dataState = {
         message: 'you do not have any negative term decision'
       }],
       pinned: true,
-      active: Date.now() < Date.parse('24/02/2022')
+      active: Date.now() < Date.parse('02/24/2022')
     }
   ],
   isLoading: true,
