@@ -137,7 +137,7 @@ const dataState = {
       active: true
     },
     {
-      id: 7,
+      id: 2,
       title: "Bust pipe at (certain campus🤐)",
       content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
       date: "06/02/2022",
@@ -146,6 +146,7 @@ const dataState = {
       actions: [{
         type: 'button',
         name: 'enquiries',
+        important: true,
         destination: null,
         message: 'the matter has been resolved'
       }],
@@ -162,6 +163,32 @@ const dataState = {
       active: false
     },
     {
+      id: 4,
+      title: "Zoom event invite",
+      content: "You are kindly invited to inauguration of a newly found prof. of Techno kings😏 on the 04/20/2022",
+      date: "01/02/2022",
+      importantScore: 2,
+      pinned: false,
+      actions: [
+        {
+          type: 'button',
+          name: 'enquiries',
+          destination: null,
+          important: false,
+          message: 'Enquiries closed for this event'
+        },
+        {
+          type: 'button',
+          name: 'RSVP now',
+          destination: null,
+          important: true,
+          message: 'Event already passed'
+        },
+
+      ],
+      active: false
+    },
+    {
       id: 5,
       title: "Registration closing date",
       content: `All registration processes closes on the 24/02/2022 , 
@@ -173,7 +200,7 @@ const dataState = {
       active: Date.now() < Date.parse('02/24/2022')
     },
     {
-      id: 10,
+      id: 6,
       title: "Negative term decision",
       content: `If you received a letter notifying you of negative term decision,
        please follow the action below before attempting to register.`,
@@ -183,6 +210,7 @@ const dataState = {
         type: 'button',
         name: 'take action',
         destination: null,
+        important: true,
         message: 'you do not have any negative term decision'
       }],
       pinned: true,
