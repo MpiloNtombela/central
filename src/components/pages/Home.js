@@ -7,6 +7,7 @@ import Button from "../elements/Button";
 import Text from "../elements/Text";
 import Box from "../layouts/Box";
 import Card from "../layouts/Card";
+import Chip from "../layouts/Chip";
 import Collapsible from "../layouts/Collapsible";
 import Container from "../layouts/Container";
 import Grid, {GridCell} from "../layouts/Grid";
@@ -24,6 +25,11 @@ const Announcement = ({announcement, theme, collapsed}) => {
             {announcement.title} {announcement.pinned && <MdPushPin color={theme.color.secondary}/>}</Text>}>
           <Text fSize={theme.typography.fontsize.paragraph}
                 tColor={theme.color.secondary}>{announcement?.content}</Text>
+          <Box display={'flex'} marginTop={theme.sizes.gutters[4]}>
+            {announcement.pinned &&
+            <Box marginRight={theme.sizes.gutters[1]}><Chip bgColor={'secondary'} rounded={false} text={'pinned'} textSize={'.7rem'}/></Box>}
+            {<Chip bgColor={'secondary'} rounded={false} text={announcement.date} textSize={'.7rem'}/>}
+          </Box>
           {announcement?.actions.length > 0 &&
           <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
             {announcement?.actions.map((action, idx) => {
