@@ -3,13 +3,17 @@ import PropTypes from "prop-types";
 import React from 'react';
 import {FaSignOutAlt} from "react-icons/fa";
 import {useMediaQuery} from "react-responsive";
+import {useDataContext} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
+import Image from "../elements/Image";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
 import Text from "../elements/Text";
+import Chip from "../layouts/Chip";
 import Grid, {GridCell} from "../layouts/Grid";
 import DropMenu, {Menu} from "../layouts/DropMenu";
 import {achievements, admin, selfHelp} from "./utils/mainRoutes";
+import Xe from "../../../public/Xe.png"
 
 const NavRoute = ({route, isBreak}) => {
   return (
@@ -53,6 +57,7 @@ const NavRoute = ({route, isBreak}) => {
 const MainNavbar = () => {
   const theme = useTheme()
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
+  const {student} = useDataContext()
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
             elevation={4} navPosition="sticky-top">
@@ -61,11 +66,7 @@ const MainNavbar = () => {
         <NavRoute isBreak={isSm} route={achievements}/>
         <NavRoute isBreak={isSm} route={admin}/>
         <NavbarItem>
-          <IconText
-            iconStyle={{marginRight: isSm ? '.5rem' : '0'}}
-            stack={!isSm} align={'center'} textStyle={{color: 'red'}} icon={<FaSignOutAlt color={'red'} size={28}/>}
-            text={"logout"}
-            textSize={isSm ? '1rem' : "small"}/>
+          <Chip avatar={<Image radius={"50%"} isThumb src={Xe} alt={''}/>} text={student.studentNumber} bordered bgColor={'secondary'}/>
         </NavbarItem>
       </NavbarItems>
     </Navbar>
