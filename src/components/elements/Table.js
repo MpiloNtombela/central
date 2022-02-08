@@ -4,6 +4,7 @@ import React from 'react';
 
 export const TableHead = styled.th`
   box-sizing: border-box;
+  white-space: nowrap;
 `
 
 export const TableData = styled.td`
@@ -17,15 +18,23 @@ export const THead = styled.thead``
 export const TBody = styled.tbody``
 export const TFoot = styled.tfoot``
 
+const StyledTableContainer = styled.div`
+  max-width: 100%;
+  display: flex;
+  overflow-x: auto;
+  height: fit-content;
+  border-radius: ${({theme})=> theme.sizes.radius.lg};
+`
+
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   box-sizing: border-box;
 
   ${TableRow}, ${TableData}, ${TableHead} {
-    border: ${({bordered, theme}) => bordered ? `.125rem solid ${theme.palette.muted.glass}` : 0};;
+    border: ${({bordered, theme}) => bordered ? `.124rem solid ${theme.palette.muted.glass}` : 0};;
   }
-  
+
   ${TBody} ${TableRow} {
     &:nth-of-type(odd) {
       background: ${({striped, color, theme}) => striped ? theme.palette[color]?.light : 'none'};
@@ -40,8 +49,9 @@ const StyledTable = styled.table`
   ${TableHead} {
     padding: 0 ${({theme}) => theme.sizes.gutters[2]};
     text-align: ${({contentAlign}) => contentAlign};
-    text-transform: ${({capHead}) => capHead ? 'uppercase' : 'none'};
+    text-transform: ${({capHead}) => capHead ? 'uppercase' : 'capitalize'};
     background: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.dark : 'none'};
+    color: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.contrastText : 'inherit'};
   }
 
   ${TableData} {
@@ -59,15 +69,31 @@ const Table = ({
                  striped = false,
                  capHead = false,
                  bordered = false,
-                 children
+                 responsive,
+                 children,
                }) => {
-  return (
-    <StyledTable striped={striped} headColor={headColor} color={color} contentAlign={contentAlign} tableSize={tableSize}
-                 bordered={bordered}
-                 capHead={capHead}>
-      {children}
-    </StyledTable>
-  );
+
+  if (responsive) {
+    return (
+      <StyledTableContainer>
+        <StyledTable striped={striped} headColor={headColor} color={color} contentAlign={contentAlign}
+                     tableSize={tableSize}
+                     bordered={bordered}
+                     capHead={capHead}>
+          {children}
+        </StyledTable>
+      </StyledTableContainer>)
+  } else {
+    return (
+      <StyledTable striped={striped} headColor={headColor} color={color} contentAlign={contentAlign}
+                   tableSize={tableSize}
+                   bordered={bordered}
+                   capHead={capHead}>
+        {children}
+      </StyledTable>
+    );
+  }
+
 };
 
 Table.propTypes = {
@@ -79,6 +105,7 @@ Table.propTypes = {
   capHead: PropTypes.bool,
   striped: PropTypes.bool,
   bordered: PropTypes.bool,
+  responsive: PropTypes.bool,
 }
 
 export default Table;
