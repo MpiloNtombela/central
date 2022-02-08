@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import React from 'react';
 
 const StyledAvatar = styled.div`
-  max-height: 2rem;
-  max-width: 2rem;
+  max-height: 1.75rem;
+  max-width: 1.75rem;
   aspect-ratio: 1/1;
   margin-right: ${({theme}) => theme.sizes.gutters[1]};
-  margin-left: ${({theme}) => `-${theme.sizes.gutters[1]}`};
+  margin-left: ${({theme}) => `-${theme.sizes.gutters[2]}`};
   box-sizing: border-box;
   text-transform: uppercase;
   display: inline-flex;
@@ -34,20 +34,20 @@ const StyledChip = styled.div`
   border-radius: ${({theme, rounded}) => rounded ? '9999rem' : theme.sizes.radius.sm};
   background: ${({
                    theme,
-                   bgColor,
-                   bordered
-                 }) => bordered ? 'transparent'
-          : bgColor === "main" ? theme.background.main
-                  : theme.palette[bgColor].main};
+                   color,
+                   outlined
+                 }) => outlined ? 'transparent'
+          : color === "main" ? theme.background.main
+                  : theme.palette[color].main};
   color: ${({
               theme,
-              bgColor,
-              bordered
-            }) => bordered ? bgColor === "main" ? theme.color.main
-          : theme.palette[bgColor]?.main
-          : theme.palette[bgColor]?.contrastText};
-  border: 1px solid ${({theme, bordered, bgColor}) => bordered ? bgColor === "main" ? theme.background.main
-          : theme.palette[bgColor]?.main
+              color,
+              outlined
+            }) => outlined ? color === "main" ? theme.color.main
+          : theme.palette[color]?.main
+          : theme.palette[color]?.contrastText};
+  border: 1px solid ${({theme, outlined, color}) => outlined ? color === "main" ? theme.background.main
+          : theme.palette[color]?.main
           : 'transparent'};
   align-items: center;
   justify-content: center;
@@ -64,8 +64,8 @@ const StyledChip = styled.div`
   ${StyledEndIcon} {
     color: ${({
                 theme,
-                bgColor,
-              }) => bgColor === "main" ? theme.color.secondary : theme.palette[bgColor]?.dark};
+                color,
+              }) => color === "main" ? theme.color.secondary : theme.palette[color]?.dark};
 
     &:hover {
       cursor: ${({onClick}) => onClick ? 'pointer' : 'default'};
@@ -74,15 +74,15 @@ const StyledChip = styled.div`
 
   &:hover {
     cursor: ${({onClick}) => onClick ? 'pointer' : 'default'};
-    color: ${({onClick, theme, bgColor}) => onClick ? theme.palette[bgColor]?.contrastText : ''};
+    color: ${({onClick, theme, color}) => onClick ? theme.palette[color]?.contrastText : ''};
     background: ${({
                      onClick,
                      theme,
-                     bgColor,
-                     bordered
-                   }) => onClick ? bgColor === "main" ? bordered ? theme.background.glass
+                     color,
+                     outlined
+                   }) => onClick ? color === "main" ? outlined ? theme.background.glass
             : theme.background.main
-            : bordered ? theme.palette[bgColor].glass : theme.palette[bgColor].light : ''};
+            : outlined ? theme.palette[color].glass : theme.palette[color].light : ''};
   }
 `
 
@@ -92,9 +92,9 @@ const Chip = ({
                 endIcon,
                 onEndIconClick,
                 onClick,
-                bgColor = "main",
+                color = "main",
                 textSize,
-                bordered,
+                outlined,
                 rounded = true
               }) => {
 
@@ -102,8 +102,8 @@ const Chip = ({
     <StyledChip avatar={avatar}
                 textSize={textSize}
                 rounded={rounded}
-                bordered={bordered}
-                bgColor={bgColor}
+                outlined={outlined}
+                color={color}
                 onClick={onClick}>
       {avatar && <StyledAvatar>
         {avatar}
@@ -115,12 +115,12 @@ const Chip = ({
 };
 
 Chip.propTypes = {
-  bgColor: PropTypes.oneOf(["main", "primary", "secondary", "success", "warning", "danger", "info"]),
+  color: PropTypes.oneOf(["main", "primary", "secondary", "success", "warning", "danger", "info"]),
   rounded: PropTypes.bool,
   text: PropTypes.node,
   avatar: PropTypes.node,
   textSize: PropTypes.string,
-  bordered: PropTypes.bool,
+  outlined: PropTypes.bool,
   endIcon: PropTypes.node,
   onEndIconClick: PropTypes.func,
   onClick: PropTypes.func,
