@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
-import {MdClose, MdPushPin} from "react-icons/md";
+import {MdCalendarToday, MdCalendarViewMonth, MdClose, MdPushPin} from "react-icons/md";
 import {useDataContext} from "../../hooks/context";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
@@ -27,8 +27,10 @@ const Announcement = ({announcement, theme, collapsed}) => {
                 tColor={theme.color.secondary}>{announcement?.content}</Text>
           <Box display={'flex'} marginTop={theme.sizes.gutters[4]}>
             {announcement.pinned &&
-            <Box marginRight={theme.sizes.gutters[1]}><Chip bgColor={'secondary'} rounded={false} text={'pinned'} textSize={'.7rem'}/></Box>}
-            {<Chip bgColor={'secondary'} rounded={false} text={announcement.date} textSize={'.7rem'}/>}
+            <Box marginRight={theme.sizes.gutters[1]}>
+              <Chip avatar={<MdPushPin size={'.75rem'}/>} bgColor={'secondary'} bordered text={'pinned'} textSize={'.7rem'}/>
+            </Box>}
+            {<Chip avatar={<MdCalendarToday size={'.75rem'}/>} bordered bgColor={'secondary'} text={announcement.date} textSize={'.7rem'}/>}
           </Box>
           {announcement?.actions.length > 0 &&
           <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
