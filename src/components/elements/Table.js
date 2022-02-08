@@ -13,9 +13,9 @@ export const TableData = styled.td`
 export const TableRow = styled.tr`
   box-sizing: border-box;
 `
-export const THead = ({children}) => <thead>{children}</thead>
-export const TBody = ({children}) => <tbody>{children}</tbody>
-export const TFoot = ({children}) => <tfoot>{children}</tfoot>
+export const THead = styled.thead``
+export const TBody = styled.tbody``
+export const TFoot = styled.tfoot``
 
 const StyledTable = styled.table`
   width: 100%;
@@ -23,7 +23,14 @@ const StyledTable = styled.table`
   box-sizing: border-box;
 
   ${TableRow}, ${TableData}, ${TableHead} {
-    border: .1rem solid red;
+    border: ${({bordered, theme, color}) => bordered ? `.1rem solid ${theme.palette[color]?.glass}` : 0};;
+  }
+  
+  ${TBody} ${TableRow} {
+    &:nth-of-type(odd) {
+      background: ${({striped, color, theme}) => striped ? theme.palette[color]?.light : 'none'};
+      color: ${({striped, color, theme}) => striped ? theme.palette[color]?.contrastText : 'inherit'};
+    }
   }
 
   ${TableRow} {
@@ -34,6 +41,7 @@ const StyledTable = styled.table`
     padding: 0 ${({theme}) => theme.sizes.gutters[2]};
     text-align: ${({contentAlign}) => contentAlign};
     text-transform: ${({capHead}) => capHead ? 'uppercase' : 'none'};
+    background: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.dark : 'none'};
   }
 
   ${TableData} {
@@ -43,19 +51,34 @@ const StyledTable = styled.table`
 `
 
 
-const Table = ({color, contentAlign = 'start', tableSize = "sm", capHead = false, children}) => {
+const Table = ({
+                 color = 'secondary',
+                 contentAlign = 'start',
+                 headColor,
+                 tableSize = "sm",
+                 striped = false,
+                 capHead = false,
+                 bordered = false,
+                 children
+               }) => {
   return (
-    <StyledTable contentAlign={contentAlign} tableSize={tableSize} capHead={capHead}>
+    <StyledTable striped={striped} headColor={headColor} color={color} contentAlign={contentAlign} tableSize={tableSize}
+                 bordered={bordered}
+                 capHead={capHead}>
       {children}
     </StyledTable>
   );
 };
 
 Table.propTypes = {
+  color: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info"]),
+  headColor: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info"]),
   contentAlign: PropTypes.oneOf(['start', 'center', 'end']),
   tableSize: PropTypes.oneOf(['sm', 'lg']),
   children: PropTypes.node,
   capHead: PropTypes.bool,
+  striped: PropTypes.bool,
+  bordered: PropTypes.bool,
 }
 
 export default Table;
