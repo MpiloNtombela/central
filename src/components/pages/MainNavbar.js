@@ -1,6 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
+import {MdArrowDropDown} from "react-icons/md";
 import {FaSignOutAlt} from "react-icons/fa";
 import {useMediaQuery} from "react-responsive";
 import {useDataContext} from "../../hooks/context";
@@ -9,6 +10,7 @@ import IconText from "../elements/IconText";
 import Image from "../elements/Image";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
 import Text from "../elements/Text";
+import Box from "../layouts/Box";
 import Chip from "../layouts/Chip";
 import Grid, {GridCell} from "../layouts/Grid";
 import DropMenu, {Menu} from "../layouts/DropMenu";
@@ -65,8 +67,33 @@ const MainNavbar = () => {
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
         <NavRoute isBreak={isSm} route={admin}/>
-        <NavbarItem>
-          <Chip avatar={<Image radius={"50%"} isThumb src={Xe} alt={''}/>} text={student.studentNumber} bordered bgColor={'secondary'}/>
+        <NavbarItem style={{display: 'flex', alignItems: 'center'}}>
+            <DropMenu>
+              <Chip avatar={<Image radius={"50%"}
+                                   style={{
+                                     border: `1px solid ${theme.palette.secondary.main}`,
+                                     padding: theme.sizes.gutters[1]
+                                   }} src={Xe} alt={''}/>}
+                    text={student.studentNumber}
+                    outlined color={'secondary'}
+                    endIcon={<MdArrowDropDown size={'1rem'}/>}/>
+              <Menu>
+                <Box onClick={()=>{}} style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
+                  <IconText
+                    icon={<FaSignOutAlt/>}
+                    text={'logout'}
+                    textSize='.75rem'
+                    align={'center'}
+                    iconStyle={{
+                      height: "36px",
+                      width: "36px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}/>
+                </Box>
+              </Menu>
+            </DropMenu>
         </NavbarItem>
       </NavbarItems>
     </Navbar>
