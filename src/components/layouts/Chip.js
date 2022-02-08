@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import React from 'react';
 
 const StyledAvatar = styled.div`
-  max-height: 2rem;
-  max-width: 2rem;
+  max-height: 1.75rem;
+  max-width: 1.75rem;
   aspect-ratio: 1/1;
   margin-right: ${({theme}) => theme.sizes.gutters[1]};
-  margin-left: ${({theme}) => `-${theme.sizes.gutters[1]}`};
+  margin-left: ${({theme}) => `-${theme.sizes.gutters[2]}`};
   box-sizing: border-box;
   text-transform: uppercase;
   display: inline-flex;
