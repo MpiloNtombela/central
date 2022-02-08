@@ -42,6 +42,12 @@ const commonTheme = {
       glass: "hsla(210, 100%, 60%, .45)",
       contrastText: "hsl(0, 0%, 95%)",
     },
+    muted: {
+      main: "hsl(0,0%,50%)",
+      light: "hsl(0,0%,70%)",
+      dark: "hsl(0,0%,45%)",
+      glass: "hsla(0,0%,70%, .45)",
+    }
   },
   breakpoints: {
     sm: 575,
