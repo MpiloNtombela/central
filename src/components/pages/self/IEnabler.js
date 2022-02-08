@@ -52,33 +52,33 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
          style={{boxSizing: 'border-box'}}>
       <Box height={'100%'} maxHeight={'100%'} style={{overflowY: 'auto'}}>
         {iRoutes.map((route, idx) => {
-          if (route.subRoutes) {
-            return (
-              <Collapsible key={idx}
-                           header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                                             textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>}
-                           bgColor={theme.background.main}>
-                {route.subRoutes.map((sRoute, idx) => {
-                  return (
-                    <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                         hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
-                      <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
-                                textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
-                    </Box>
-                  )
-                })}
-              </Collapsible>
-            )
-          } else {
-            return (
-              <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
-                   hoverColor={theme.palette.primary.main}
-                   style={{
-                     borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
-                   }}>
-                <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
-                          textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
-              </Box>
+            if (route.subRoutes) {
+              return (
+                <Collapsible key={idx}
+                             header={<IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                                               textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>}
+                             bgColor={theme.background.main}>
+                  {route.subRoutes.map((sRoute, idx) => {
+                    return (
+                      <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                           hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
+                        <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
+                                  textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
+                      </Box>
+                    )
+                  })}
+                </Collapsible>
+              )
+            } else {
+              return (
+                <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                     hoverColor={theme.palette.primary.main}
+                     style={{
+                       borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
+                     }}>
+                  <IconText text={route.name} textSize={"medium"} icon={route.icon} align={'center'}
+                            textStyle={{paddingLeft: theme.sizes.gutters[2], fontWeight: 500}}/>
+                </Box>
               )
             }
           }
@@ -212,22 +212,24 @@ const IEnabler = () => {
                       </Grid>
                     </Box>
                     <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
-                      <Button color={'secondary'} rounded size="sm">update details</Button>
+                      <Button color={'primary'} rounded size="sm">update details</Button>
                     </Box>
                   </Card>
-                  <Card>
-                    <Box padding={`${theme.sizes.gutters[2]} 0`}>
-                      <Text fSize="large" fWeight="bold">You owe institution</Text>
-                      <Text fSize="small" fWeight="bold" tAlign="end" tColor="red">R 0.01</Text>
-                    </Box>
-                  </Card>
+                  <Box margin={`${theme.sizes.gutters[2]} auto`}>
+                    <Card>
+                      <Box padding={`${theme.sizes.gutters[2]} 0`}>
+                        <Text fSize="large" fWeight="bold">You owe institution</Text>
+                        <Text fSize="small" fWeight="bold" tAlign="end" tColor="red">R 0.01</Text>
+                      </Box>
+                    </Card>
+                  </Box>
                 </GridCell>
               </Grid>
             </TabContent>
             <TabContent value={"applications"}>
               {applicationsData.map((application) => {
                 return (
-                  <Card key={application.qualification} maxWidth={"md"}>
+                  <Card key={application.qualification} style={{margin: `${theme.sizes.gutters[2]} auto`}} maxWidth={"md"}>
                     <Text fWeight={'bold'}
                           fSize={"medium"}>{application.description} - ({application.qualification})</Text>
                     <Grid>

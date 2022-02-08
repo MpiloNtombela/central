@@ -132,14 +132,16 @@ const IEnablerLoader = ({drawerOpen = false, drawerAnchor = "left", fixed, drawe
                 <Skeleton skeletonType={'header'} style={{borderRadius: '9999rem', height: '2.25rem', width: '150px'}}/>
               </Box>
             </Card>
-            <Card>
-              <Box padding={`${theme.sizes.gutters[2]} 0`}>
-                <Skeleton skeletonType={'header'}/>
-                <Box marginTop={theme.sizes.gutters[2]} display="flex" justifyContent="flex-end">
-                  <Skeleton skeletonType='text' style={{width: "100px"}}/>
+            <Box margin={`${theme.sizes.gutters[2]} auto`}>
+              <Card>
+                <Box padding={`${theme.sizes.gutters[2]} 0`}>
+                  <Skeleton skeletonType={'header'}/>
+                  <Box marginTop={theme.sizes.gutters[2]} display="flex" justifyContent="flex-end">
+                    <Skeleton skeletonType='text' style={{width: "100px"}}/>
+                  </Box>
                 </Box>
-              </Box>
-            </Card>
+              </Card>
+            </Box>
           </GridCell>
         </Grid>
       </Container>

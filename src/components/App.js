@@ -26,7 +26,7 @@ const App = () => {
           <MainNavbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/e" element={<IEnabler/>}/>
+            <Route path="/self-help/ienabler" element={<IEnabler/>}/>
           </Routes>
         </HashRouter>
       </Theme>
