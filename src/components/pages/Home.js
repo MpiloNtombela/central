@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
-import {MdCalendarToday, MdCalendarViewMonth, MdClose, MdPushPin} from "react-icons/md";
+import {MdAdminPanelSettings, MdCalendarToday, MdClose, MdPushPin} from "react-icons/md";
 import {useDataContext} from "../../hooks/context";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
@@ -12,6 +12,7 @@ import Collapsible from "../layouts/Collapsible";
 import Container from "../layouts/Container";
 import Grid, {GridCell} from "../layouts/Grid";
 import Modal, {ModalContent, ModalHeader} from "../layouts/Modal";
+import Skeleton from "../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../layouts/Tabs";
 
 const Announcement = ({announcement, theme, collapsed}) => {
@@ -26,11 +27,16 @@ const Announcement = ({announcement, theme, collapsed}) => {
           <Text fSize={theme.typography.fontsize.paragraph}
                 tColor={theme.color.secondary}>{announcement?.content}</Text>
           <Box display={'flex'} marginTop={theme.sizes.gutters[4]}>
+            {announcement.user &&
+            <Box marginRight={theme.sizes.gutters[1]}>
+              <Chip avatar={announcement.user.toLowerCase() === "mpilo" ? <MdAdminPanelSettings size={'.75rem'}/> :
+                <Text fSize={'.75rem'}>🤷‍♂️</Text>} text={announcement.user} textSize={'.7rem'}/>
+            </Box>}
             {announcement.pinned &&
             <Box marginRight={theme.sizes.gutters[1]}>
-              <Chip avatar={<MdPushPin size={'.75rem'}/>} bgColor={'secondary'} bordered text={'pinned'} textSize={'.7rem'}/>
+              <Chip avatar={<MdPushPin size={'.75rem'}/>} text={'pinned'} textSize={'.7rem'}/>
             </Box>}
-            {<Chip avatar={<MdCalendarToday size={'.75rem'}/>} bordered bgColor={'secondary'} text={announcement.date} textSize={'.7rem'}/>}
+            {<Chip avatar={<MdCalendarToday size={'.75rem'}/>} text={announcement.date} textSize={'.7rem'}/>}
           </Box>
           {announcement?.actions.length > 0 &&
           <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
@@ -55,34 +61,81 @@ const Announcement = ({announcement, theme, collapsed}) => {
   )
 }
 
-Announcement.propTypes = {
-  announcement: PropTypes.object,
-  theme: PropTypes.any,
-  collapsed: PropTypes.bool,
+const AnnouncementLoader = () => {
+  return (
+    <>
+      <Box marginBottom={'1rem'}>
+        <TabContext>
+          <Tabs isFixed>
+            <Tab value={'latest'}>latest</Tab>
+            <Tab value={'previous'}>previous</Tab>
+          </Tabs>
+        </TabContext>
+      </Box>
+      <Card>
+        <Skeleton skeletonType={'header'}/>
+        <Box marginBottom={'1.5rem'}/>
+        <Skeleton style={{width: '90%'}} skeletonType={'text'}/>
+        <Skeleton style={{width: '80%'}} skeletonType={'text'}/>
+        <Skeleton style={{width: '65%'}} skeletonType={'text'}/>
+        <Box display={'flex'} margin={'1rem 0'}>
+          <Skeleton style={{width: '70px', borderRadius: '9999rem', marginRight: '.5rem'}} skeletonType={'text'}/>
+          <Skeleton style={{width: '65px', borderRadius: '9999rem', marginRight: '.5rem'}} skeletonType={'text'}/>
+          <Skeleton style={{width: '80px', borderRadius: '9999rem', marginRight: '.5rem'}} skeletonType={'text'}/>
+        </Box>
+        <Box display={'flex'} justifyContent={'flex-end'}>
+          <Skeleton style={{
+            width: '95px',
+            height: '1.25rem',
+            marginRight: '.5rem',
+            borderRadius: '9999rem'
+          }} skeletonType={'text'}/>
+
+          <Skeleton style={{
+            width: '100px',
+            height: '1.25rem',
+            marginRight: '.5rem',
+            borderRadius: '9999rem'
+          }} skeletonType={'text'}/>
+        </Box>
+      </Card>
+      {[1, 2, 3, 4].map(a => (
+        <Box key={a} margin={'1rem 0'}>
+          <Card>
+            <Skeleton style={{width: `75%`}} skeletonType={'header'}/>
+          </Card>
+        </Box>
+      ))}
+    </>
+  )
 }
 
 const Announcements = () => {
   const data = useDataContext()
-  const announcements = [...data.announcements]
+  const announcements = [...data.announcements.sort((aa, ab) => {
+    if (aa.pinned && ab.pinned) {
+      return ab.importantScore - aa.importantScore
+    } else if (aa.pinned) {
+      return -1
+    } else if (ab.pinned) {
+      return 1
+    } else {
+      return ab.importantScore - aa.importantScore
+    }
+  })]
   const [showMore, setShowMore] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const theme = useTheme()
 
   const showMoreToggle = () => {
     setShowMore(!showMore)
+    setTimeout(() => {
+      setLoaded(true)
+    }, 2500)
   }
   return (
     <>
-      {announcements.filter(a => a.active).sort((aa, ab) => {
-        if (aa.pinned && ab.pinned) {
-          return ab.importantScore - aa.importantScore
-        } else if (aa.pinned) {
-          return -1
-        } else if (ab.pinned) {
-          return 1
-        } else {
-          return ab.importantScore - aa.importantScore
-        }
-      }).slice(0, 5).map((announcement, idx) => {
+      {announcements.filter(a => a.active).slice(0, 5).map((announcement, idx) => {
         return (
           <Announcement key={announcement.id} announcement={announcement} collapsed={idx === 0} theme={theme}/>
         )
@@ -94,7 +147,7 @@ const Announcements = () => {
         <ModalHeader closeIcon={<MdClose size={24}/>} text={"Announcements"} elevation={4}
                      onCloseClick={showMoreToggle}/>
         <ModalContent>
-          <TabContext>
+          {loaded ? <TabContext>
             <Tabs isFixed>
               <Tab value={'latest'}>latest</Tab>
               <Tab value={'previous'}>previous</Tab>
@@ -113,7 +166,7 @@ const Announcements = () => {
                 )
               })}
             </TabContent>
-          </TabContext>
+          </TabContext> : <AnnouncementLoader/>}
         </ModalContent>
       </Modal>
     </>
@@ -138,5 +191,13 @@ const Home = () => {
     );
   }
 ;
+
+
+Announcement.propTypes =
+  {
+    announcement: PropTypes.object,
+    theme: PropTypes.any,
+    collapsed: PropTypes.bool,
+  }
 
 export default Home;
