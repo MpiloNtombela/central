@@ -4,23 +4,25 @@ import PropTypes from 'prop-types';
 
 const StyledImage = styled.img`
   border-radius: ${props => props.radius || props.theme.sizes.radius.sm};
-  width: ${props => props.width || '100px'};
-  height: ${props => props.height || '100px'};
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || '100%'};
   background: ${props => props.isThumb ? props.theme.background.secondary : 'none'};
   padding: ${props => props.isThumb || props.bordered ? props.theme.sizes.gutters[1] : 0};
-  box-shadow: ${props => props.isThumb ? '0 0 5px 0 hsla(0, 0%, 10%, .2)' : 'none'};
   border: ${props => props.bordered ?
           `2px solid ${props.borderColor ? props.borderColor
-                  : props.theme.color.secondary}` : 'none'}
+                  : props.theme.color.secondary}` : 'none'};
+  aspect-ratio: ${props => props.radius === '50%' ? `1/1` : 'auto'};
+  box-sizing: border-box;
 `;
 
-const Image = ({alt, height, radius, src, width, isThumb, bordered, borderColor}) => {
+const Image = ({alt, height, radius, src, width, isThumb, bordered, borderColor, style}) => {
   return (
     <StyledImage src={src} alt={alt}
                  width={width} height={height}
                  radius={radius}
                  isThumb={isThumb} bordered={bordered}
-                 borderColor={borderColor}/>
+                 borderColor={borderColor}
+                 style={style}/>
   );
 };
 
@@ -34,6 +36,7 @@ Image.propTypes = {
   isThumb: PropTypes.bool,
   bordered: PropTypes.bool,
   borderColor: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default Image;
