@@ -119,6 +119,7 @@ const dataState = {
       title: "Checkout my profile",
       content: "You can also find me or connect with me in these networks I use",
       date: "01/01/2022",
+      user: 'Mpilo',
       importantScore: 10,
       pinned: true,
       actions: [
@@ -142,6 +143,7 @@ const dataState = {
       content: "No water at a (certain campus🤐) due to bust pipes, the matter is now handled by the municipality",
       date: "06/02/2022",
       importantScore: 3,
+      user: 'Communique️',
       pinned: false,
       actions: [{
         type: 'button',
@@ -157,6 +159,7 @@ const dataState = {
       title: "inactive message",
       content: "Just to showcase an inactive announcement, in case you saw this project before the 07/20/2022",
       date: "03/02/2022",
+      user: null,
       importantScore: 1,
       pinned: false,
       actions: [],
@@ -167,6 +170,7 @@ const dataState = {
       title: "Zoom event invite",
       content: "You are kindly invited to inauguration of a newly found prof. of Techno kings😏 on the 04/20/2022",
       date: "01/02/2022",
+      user: 'Communique️',
       importantScore: 2,
       pinned: false,
       actions: [
@@ -194,6 +198,7 @@ const dataState = {
       content: `All registration processes closes on the 24/02/2022 , 
       unless otherwise a formal notice from the institution stating the extension.`,
       date: '10/01/2022',
+      user: 'Communique️',
       importantScore: 8,
       actions: [],
       pinned: true,
@@ -205,6 +210,7 @@ const dataState = {
       content: `If you received a letter notifying you of negative term decision,
        please follow the action below before attempting to register.`,
       importantScore: 9,
+      user: 'Support dep.',
       date: '10/01/2022',
       actions: [{
         type: 'button',
