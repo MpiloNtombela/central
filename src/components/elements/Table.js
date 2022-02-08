@@ -23,7 +23,7 @@ const StyledTable = styled.table`
   box-sizing: border-box;
 
   ${TableRow}, ${TableData}, ${TableHead} {
-    border: ${({bordered, theme, color}) => bordered ? `.1rem solid ${theme.palette[color]?.glass}` : 0};;
+    border: ${({bordered, theme}) => bordered ? `.125rem solid ${theme.palette.muted.glass}` : 0};;
   }
   
   ${TBody} ${TableRow} {
