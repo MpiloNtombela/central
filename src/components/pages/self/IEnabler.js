@@ -22,7 +22,7 @@ import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 import iRoutes from "../utils/ienablerRoutes";
 import IEnablerLoader from "./IEnablerLoader";
 
-const caseOut = (str) => {
+export const caseOut = (str) => {
   const r = /([a-z])([A-Z])/g
   return str.replace(r, '$1 $2')
 }
