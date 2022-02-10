@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {MdAdminPanelSettings, MdCalendarToday, MdClose, MdPushPin} from "react-icons/md";
 import {useDataContext} from "../../hooks/context";
 import Button from "../elements/Button";
+import Table, {TableData, TableHead, TableRow, TBody, THead} from "../elements/Table";
 import Text from "../elements/Text";
 import Box from "../layouts/Box";
 import Card from "../layouts/Card";
@@ -14,6 +15,7 @@ import Grid, {GridCell} from "../layouts/Grid";
 import Modal, {ModalContent, ModalHeader} from "../layouts/Modal";
 import Skeleton from "../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../layouts/Tabs";
+import {caseOut} from "./self/IEnabler";
 
 const Announcement = ({announcement, theme, collapsed}) => {
   return (
@@ -174,13 +176,43 @@ const Announcements = () => {
 }
 
 const Home = () => {
-    return (
-      <Container maxWidth='xl' navPadding>
-        <Grid gridSpacing={2}>
-          <GridCell colsLg={7} colsXl={8}>
-            <Card>
-              <Text fSize={'1.25rem'} fWeight={'bold'}>Latest Ads</Text>
-            </Card>
+  const {ads} = useDataContext()
+  const theme = useTheme()
+  return (
+    <Container maxWidth='xl' navPadding>
+      <Grid gridSpacing={2}>
+        <GridCell colsLg={7} colsXl={8}>
+          <Card>
+            <Text fSize={'1.25rem'} fWeight={'bold'}>Latest Ads</Text>
+            <Box marginTop={theme.sizes.gutters[3]}>
+              <Table responsive capHead captionText={'Latest Ads'} captionSide={'bottom'} headColor={'secondary'}
+                     tableSize={'lg'} bordered>
+                <THead>
+                  <TableRow>
+                    {Object.keys(ads[0])?.map((key, idx) => {
+                      if (key.toLowerCase() !== 'id') {
+                        return <TableHead key={idx}>{caseOut(key)}</TableHead>
+                      }
+                    })}
+                  </TableRow>
+                </THead>
+                <TBody>
+                  {ads.slice(0, 10).map((ad) => {
+                    return (<TableRow key={ad.id}>
+                      {
+                        Object.keys(ad).map((key, idx) => {
+                          if (key.toLowerCase() !== 'id') {
+                            return <TableData key={idx}>{ad[key]}</TableData>
+                          }
+                        })
+                      }
+                    </TableRow>)
+                  })}
+                </TBody>
+              </Table>
+            </Box>
+
+          </Card>
           </GridCell>
           <GridCell colsLg={5} colsXl={4}>
             <Text fSize={'1.25rem'} fWeight={'bold'}>Announcements</Text>
