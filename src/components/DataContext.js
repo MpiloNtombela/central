@@ -13,6 +13,8 @@ export const LOADED = "LOADED"
 export const DataContext = React.createContext();
 export const DispatchContext = React.createContext();
 
+const date = new Date();
+
 const reducer = (draft, action) => {
   switch (action.type) {
     case LOADING:
@@ -226,163 +228,183 @@ const dataState = {
   ads: [
     {
       id: 1,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Fantastic Steel Fish",
-      department: "Movies",
+      title: "Fantastic Steel Fish",
+      category: "Movies",
       price: "681.00",
-      productMaterial: "Granite"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 2,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Gorgeous Plastic Cheese",
-      department: "Computers",
+      title: "Gorgeous Plastic Cheese",
+      category: "Computers",
       price: "480.00",
-      productMaterial: "Wooden"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 3,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Refined Cotton Pants",
-      department: "Automotive",
+      title: "Refined Cotton Pants",
+      category: "Automotive",
       price: "229.00",
-      productMaterial: "Fresh"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 4,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Ergonomic Steel Salad",
-      department: "Beauty",
+      title: "Ergonomic Steel Salad",
+      category: "Beauty",
       price: "568.00",
-      productMaterial: "Metal"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 5,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Gorgeous Metal Chips",
-      department: "Grocery",
+      title: "Gorgeous Metal Chips",
+      category: "Grocery",
       price: "689.00",
-      productMaterial: "Steel"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 6,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Unbranded Plastic Gloves",
-      department: "Beauty",
+      title: "Unbranded Plastic Gloves",
+      category: "Beauty",
       price: "922.00",
-      productMaterial: "Fresh"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 7,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Handcrafted Rubber Sausages",
-      department: "Grocery",
+      title: "Handcrafted Rubber Sausages",
+      category: "Grocery",
       price: "196.00",
-      productMaterial: "Granite"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 8,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Gorgeous Steel Sausages",
-      department: "Outdoors",
+      title: "Gorgeous Steel Sausages",
+      category: "Outdoors",
       price: "881.00",
-      productMaterial: "Plastic"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 9,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Handmade Fresh Tuna",
-      department: "Automotive",
+      title: "Handmade Fresh Tuna",
+      category: "Automotive",
       price: "958.00",
-      productMaterial: "Rubber"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 10,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Rustic Plastic Shoes",
-      department: "Baby",
+      title: "Rustic Plastic Shoes",
+      category: "Baby",
       price: "148.00",
-      productMaterial: "Fresh"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 11,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Unbranded Plastic Salad",
-      department: "Jewelery",
+      title: "Unbranded Plastic Salad",
+      category: "Jewelery",
       price: "623.00",
-      productMaterial: "Frozen"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 12,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Gorgeous Granite Soap",
-      department: "Home",
+      title: "Gorgeous Granite Soap",
+      category: "Home",
       price: "574.00",
-      productMaterial: "Concrete"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 13,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Generic Soft Fish",
-      department: "Home",
+      title: "Generic Soft Fish",
+      category: "Home",
       price: "711.00",
-      productMaterial: "Rubber"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 14,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Gorgeous Frozen Pants",
-      department: "Jewelery",
+      title: "Gorgeous Frozen Pants",
+      category: "Jewelery",
       price: "255.00",
-      productMaterial: "Soft"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 15,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Incredible Wooden Sausages",
-      department: "Beauty",
+      title: "Incredible Wooden Sausages",
+      category: "Beauty",
       price: "232.00",
-      productMaterial: "Granite"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 16,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Sleek Frozen Mouse",
-      department: "Movies",
+      title: "Sleek Frozen Mouse",
+      category: "Movies",
       price: "935.00",
-      productMaterial: "Steel"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 17,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Rustic Frozen Hat",
-      department: "Automotive",
+      title: "Rustic Frozen Hat",
+      category: "Automotive",
       price: "645.00",
-      productMaterial: "Plastic"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 18,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Generic Frozen Pizza",
-      department: "Games",
+      title: "Generic Frozen Pizza",
+      category: "Games",
       price: "804.00",
-      productMaterial: "Soft"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 19,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Handcrafted Granite Fish",
-      department: "Beauty",
+      title: "Handcrafted Granite Fish",
+      category: "Beauty",
       price: "168.00",
-      productMaterial: "Cotton"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 20,
+      postedBy: 'MpiloX',
       email: 'dev@mpilo.live',
-      productName: "Ergonomic Fresh Bike",
-      department: "Electronics",
+      title: "Ergonomic Fresh Bike",
+      category: "Electronics",
       price: "508.00",
-      productMaterial: "Fresh"
+      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     }
   ],
   isLoading: true,
