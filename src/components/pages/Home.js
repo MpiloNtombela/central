@@ -176,49 +176,61 @@ const Announcements = () => {
 }
 
 const Home = () => {
-  const {ads} = useDataContext()
-  const theme = useTheme()
-  return (
-    <Container maxWidth='xl' navPadding>
-      <Grid gridSpacing={2}>
-        <GridCell colsLg={7} colsXl={8}>
-          <Card>
-            <Text fSize={'1.25rem'} fWeight={'bold'}>Latest Ads</Text>
-            <Box marginTop={theme.sizes.gutters[3]}>
-              <Table responsive capHead captionText={'Latest Ads'} captionSide={'bottom'} headColor={'secondary'}
-                     tableSize={'lg'} bordered>
-                <THead>
-                  <TableRow>
-                    {Object.keys(ads[0])?.map((key, idx) => {
-                      if (key.toLowerCase() !== 'id') {
-                        return <TableHead key={idx}>{caseOut(key)}</TableHead>
-                      }
-                    })}
-                  </TableRow>
-                </THead>
-                <TBody>
-                  {ads.slice(0, 10).map((ad) => {
-                    return (<TableRow key={ad.id}>
-                      {
-                        Object.keys(ad).map((key, idx) => {
-                          if (key.toLowerCase() !== 'id') {
-                            return <TableData key={idx}>{ad[key]}</TableData>
-                          }
-                        })
-                      }
-                    </TableRow>)
-                  })}
-                </TBody>
-              </Table>
-            </Box>
+    const [openAds, setOpenAds] = useState(false)
+    const {ads} = useDataContext()
+    const theme = useTheme()
 
-          </Card>
+    const handleOpenAdsToggle = () => {
+      setOpenAds(!openAds)
+    }
+    return (
+      <Container maxWidth='xl' navPadding>
+        <Grid gridSpacing={2}>
+          <GridCell colsLg={7} colsXl={8}>
+            <Card>
+              <Text fSize={'1.25rem'} fWeight={'bold'}>Latest Ads</Text>
+              <Box marginTop={theme.sizes.gutters[3]}>
+                <Button onClick={handleOpenAdsToggle}>show all ads</Button>
+              </Box>
+            </Card>
           </GridCell>
           <GridCell colsLg={5} colsXl={4}>
             <Text fSize={'1.25rem'} fWeight={'bold'}>Announcements</Text>
             <Announcements/>
           </GridCell>
         </Grid>
+        <Modal open={openAds} onClose={handleOpenAdsToggle} maxWidth={'lg'} scrollOverlay={false}>
+          <ModalHeader text={'Latest Ads'} onCloseClick={handleOpenAdsToggle}/>
+          <ModalContent>
+            <Table responsive capHead captionText={'Latest Ads'} captionSide={'bottom'} headColor={'secondary'}
+                   tableSize={'lg'} bordered>
+              <THead>
+                <TableRow>
+                  {Object.keys(ads[0])?.map((key, idx) => {
+                    if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
+                      return <TableHead key={idx}>{caseOut(key)}</TableHead>
+                    }
+                  })}
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </THead>
+              <TBody>
+                {ads.slice(0, 10).map((ad) => {
+                  return (<TableRow key={ad.id}>
+                    {
+                      Object.keys(ad).map((key, idx) => {
+                        if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
+                          return <TableData key={idx}>{ad[key]}</TableData>
+                        }
+                      })
+                    }
+                    <TableData><Button size={'sm'} rounded color={'info'}>view add</Button></TableData>
+                  </TableRow>)
+                })}
+              </TBody>
+            </Table>
+          </ModalContent>
+        </Modal>
       </Container>
     );
   }
