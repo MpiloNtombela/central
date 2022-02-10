@@ -200,7 +200,7 @@ const Home = () => {
           </GridCell>
         </Grid>
         <Modal open={openAds} onClose={handleOpenAdsToggle} maxWidth={'lg'} scrollOverlay={false}>
-          <ModalHeader text={'Latest Ads'} onCloseClick={handleOpenAdsToggle}/>
+          <ModalHeader sticky text={'Latest Ads'} onCloseClick={handleOpenAdsToggle}/>
           <ModalContent>
             <Table responsive capHead captionText={'Latest Ads'} captionSide={'bottom'} headColor={'secondary'}
                    tableSize={'lg'} bordered>
@@ -215,7 +215,7 @@ const Home = () => {
                 </TableRow>
               </THead>
               <TBody>
-                {ads.slice(0, 10).map((ad) => {
+                {ads.map((ad) => {
                   return (<TableRow key={ad.id}>
                     {
                       Object.keys(ad).map((key, idx) => {
