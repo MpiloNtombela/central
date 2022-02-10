@@ -223,6 +223,168 @@ const dataState = {
       active: Date.now() < Date.parse('02/24/2022')
     }
   ],
+  ads: [
+    {
+      id: 1,
+      email: 'dev@mpilo.live',
+      productName: "Fantastic Steel Fish",
+      department: "Movies",
+      price: "681.00",
+      productMaterial: "Granite"
+    },
+    {
+      id: 2,
+      email: 'dev@mpilo.live',
+      productName: "Gorgeous Plastic Cheese",
+      department: "Computers",
+      price: "480.00",
+      productMaterial: "Wooden"
+    },
+    {
+      id: 3,
+      email: 'dev@mpilo.live',
+      productName: "Refined Cotton Pants",
+      department: "Automotive",
+      price: "229.00",
+      productMaterial: "Fresh"
+    },
+    {
+      id: 4,
+      email: 'dev@mpilo.live',
+      productName: "Ergonomic Steel Salad",
+      department: "Beauty",
+      price: "568.00",
+      productMaterial: "Metal"
+    },
+    {
+      id: 5,
+      email: 'dev@mpilo.live',
+      productName: "Gorgeous Metal Chips",
+      department: "Grocery",
+      price: "689.00",
+      productMaterial: "Steel"
+    },
+    {
+      id: 6,
+      email: 'dev@mpilo.live',
+      productName: "Unbranded Plastic Gloves",
+      department: "Beauty",
+      price: "922.00",
+      productMaterial: "Fresh"
+    },
+    {
+      id: 7,
+      email: 'dev@mpilo.live',
+      productName: "Handcrafted Rubber Sausages",
+      department: "Grocery",
+      price: "196.00",
+      productMaterial: "Granite"
+    },
+    {
+      id: 8,
+      email: 'dev@mpilo.live',
+      productName: "Gorgeous Steel Sausages",
+      department: "Outdoors",
+      price: "881.00",
+      productMaterial: "Plastic"
+    },
+    {
+      id: 9,
+      email: 'dev@mpilo.live',
+      productName: "Handmade Fresh Tuna",
+      department: "Automotive",
+      price: "958.00",
+      productMaterial: "Rubber"
+    },
+    {
+      id: 10,
+      email: 'dev@mpilo.live',
+      productName: "Rustic Plastic Shoes",
+      department: "Baby",
+      price: "148.00",
+      productMaterial: "Fresh"
+    },
+    {
+      id: 11,
+      email: 'dev@mpilo.live',
+      productName: "Unbranded Plastic Salad",
+      department: "Jewelery",
+      price: "623.00",
+      productMaterial: "Frozen"
+    },
+    {
+      id: 12,
+      email: 'dev@mpilo.live',
+      productName: "Gorgeous Granite Soap",
+      department: "Home",
+      price: "574.00",
+      productMaterial: "Concrete"
+    },
+    {
+      id: 13,
+      email: 'dev@mpilo.live',
+      productName: "Generic Soft Fish",
+      department: "Home",
+      price: "711.00",
+      productMaterial: "Rubber"
+    },
+    {
+      id: 14,
+      email: 'dev@mpilo.live',
+      productName: "Gorgeous Frozen Pants",
+      department: "Jewelery",
+      price: "255.00",
+      productMaterial: "Soft"
+    },
+    {
+      id: 15,
+      email: 'dev@mpilo.live',
+      productName: "Incredible Wooden Sausages",
+      department: "Beauty",
+      price: "232.00",
+      productMaterial: "Granite"
+    },
+    {
+      id: 16,
+      email: 'dev@mpilo.live',
+      productName: "Sleek Frozen Mouse",
+      department: "Movies",
+      price: "935.00",
+      productMaterial: "Steel"
+    },
+    {
+      id: 17,
+      email: 'dev@mpilo.live',
+      productName: "Rustic Frozen Hat",
+      department: "Automotive",
+      price: "645.00",
+      productMaterial: "Plastic"
+    },
+    {
+      id: 18,
+      email: 'dev@mpilo.live',
+      productName: "Generic Frozen Pizza",
+      department: "Games",
+      price: "804.00",
+      productMaterial: "Soft"
+    },
+    {
+      id: 19,
+      email: 'dev@mpilo.live',
+      productName: "Handcrafted Granite Fish",
+      department: "Beauty",
+      price: "168.00",
+      productMaterial: "Cotton"
+    },
+    {
+      id: 20,
+      email: 'dev@mpilo.live',
+      productName: "Ergonomic Fresh Bike",
+      department: "Electronics",
+      price: "508.00",
+      productMaterial: "Fresh"
+    }
+  ],
   isLoading: true,
   alert: {
     message: "",
