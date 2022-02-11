@@ -175,6 +175,19 @@ const Announcements = () => {
   )
 }
 
+/*
+* <Box
+                      isHover
+                      hoverColor={theme.palette.primary.glass}
+                      style={{
+                        border: `1px solid ${idx % 2 === 0 ? theme.palette.muted.glass : 'transparent'}`,
+                        borderRadius: '.25rem'
+                      }}
+                      key={ad.id}
+                      padding={theme.sizes.gutters[2]}>
+                      <Text>{ad.title}</Text>
+                    </Box>*/
+
 const Home = () => {
     const [openAds, setOpenAds] = useState(false)
     const {ads} = useDataContext()
@@ -188,9 +201,24 @@ const Home = () => {
         <Grid gridSpacing={2}>
           <GridCell colsLg={7} colsXl={8}>
             <Card>
-              <Text fSize={'1.25rem'} fWeight={'bold'}>Latest Ads</Text>
-              <Box marginTop={theme.sizes.gutters[3]}>
-                <Button onClick={handleOpenAdsToggle}>show all ads</Button>
+              <Table captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead color={'muted'} striped tableSize={'lg'} headColor={"primary"}>
+                <THead>
+                  <TableRow>
+                    <TableHead>Latest Ads</TableHead>
+                  </TableRow>
+                </THead>
+                <TBody>
+                  {ads.slice(0, 10).map((ad) => {
+                    return (
+                      <TableRow key={ad.id}>
+                        <TableData>{ad.title}</TableData>
+                      </TableRow>
+                    )
+                  })}
+                </TBody>
+              </Table>
+              <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
+                <Button size={'sm'} rounded onClick={handleOpenAdsToggle}>show all ads</Button>
               </Box>
             </Card>
           </GridCell>
@@ -237,11 +265,10 @@ const Home = () => {
 ;
 
 
-Announcement.propTypes =
-  {
-    announcement: PropTypes.object,
-    theme: PropTypes.any,
-    collapsed: PropTypes.bool,
-  }
+Announcement.propTypes = {
+  announcement: PropTypes.object,
+  theme: PropTypes.any,
+  collapsed: PropTypes.bool,
+}
 
 export default Home;
