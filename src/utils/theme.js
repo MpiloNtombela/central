@@ -44,9 +44,9 @@ const commonTheme = {
     },
     muted: {
       main: "hsl(0,0%,50%)",
-      light: "hsl(0,0%,70%)",
+      light: "hsl(0,0%,75%)",
       dark: "hsl(0,0%,45%)",
-      glass: "hsla(0,0%,70%, .45)",
+      glass: "hsla(0,0%,75%, .45)",
     }
   },
   breakpoints: {
