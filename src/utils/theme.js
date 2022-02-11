@@ -1,55 +1,114 @@
 import {contrastColor} from "./colors";
 
+const colors = {
+  primary: {
+    main: "hsl(218, 100%, 50%)",
+    light: "hsl(218, 100%, 60%)",
+    dark: "hsl(218, 100%, 30%)",
+    glass: "hsla(218, 100%, 60%, .45)",
+  },
+  secondary: {
+    main: "hsl(260,100%, 50%)",
+    light: "hsl(260, 100%, 60%)",
+    dark: "hsl(260, 100%, 30%)",
+    glass: "hsla(260, 100%, 60%, .45)",
+  },
+  success: {
+    main: "hsl(117,100%, 35%)",
+    light: "hsl(115, 100%, 45%)",
+    dark: "hsl(115, 100%, 25%)",
+    glass: "hsla(115, 100%, 45%, .45)",
+  },
+  danger: {
+    main: "hsl(0, 100%, 50%)",
+    light: "hsl(0, 100%, 60%)",
+    dark: "hsl(0, 100%, 30%)",
+    glass: "hsla(0, 100%, 60%, .45)",
+  },
+  warning: {
+    main: "hsl(20, 100%, 50%)",
+    light: "hsl(20, 100%, 60%)",
+    dark: "hsl(20, 100%, 30%)",
+    glass: "hsla(20, 100%, 60%, .45)",
+  },
+  info: {
+    main: "hsl(210, 100%, 50%)",
+    light: "hsl(210, 100%, 60%)",
+    dark: "hsl(210, 100%, 30%)",
+    glass: "hsla(210, 100%, 60%, .45)",
+  },
+  dark: {
+    main: "hsl(0,0%,50%)",
+    light: "hsl(0,0%,75%)",
+    dark: "hsl(0,0%,45%)",
+    glass: "hsla(0,0%,75%, .45)",
+  }
+}
+
 const commonTheme = {
   palette: {
     primary: {
-      main: "hsl(218, 100%, 50%)",
-      light: "hsl(218, 100%, 60%)",
-      dark: "hsl(218, 100%, 30%)",
-      glass: "hsla(218, 100%, 60%, .45)",
-      contrastText: contrastColor("hsl(218, 100%, 50%)", true).color,
+      ...colors.primary,
+      contrastText: contrastColor(colors.primary.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.primary.dark, true).color,
+        light: contrastColor(colors.primary.light, true).color,
+        glass: contrastColor(colors.primary.glass, true, true).color
+      }
     },
     secondary: {
-      main: "hsl(260,100%, 50%)",
-      light: "hsl(260, 100%, 60%)",
-      dark: "hsl(260, 100%, 30%)",
-      glass: "hsla(260, 100%, 60%, .45)",
-      contrastText: contrastColor("hsl(260,100%, 50%)", true).color,
+      ...colors.secondary,
+      contrastText: contrastColor(colors.secondary.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.secondary.dark, true).color,
+        light: contrastColor(colors.secondary.light, true).color,
+        glass: contrastColor(colors.secondary.glass, true, true).color
+      }
     },
     success: {
-      main: "hsl(117,100%, 35%)",
-      light: "hsl(115, 100%, 45%)",
-      dark: "hsl(115, 100%, 25%)",
-      glass: "hsla(115, 100%, 45%, .45)",
-      contrastText: contrastColor("hsl(117,100%, 35%)", true).color,
+      ...colors.success,
+      contrastText: contrastColor(colors.success.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.success.dark, true).color,
+        light: contrastColor(colors.success.light, true).color,
+        glass: contrastColor(colors.success.glass, true, true).color
+      }
     },
     danger: {
-      main: "hsl(0, 100%, 50%)",
-      light: "hsl(0, 100%, 60%)",
-      dark: "hsl(0, 100%, 30%)",
-      glass: "hsla(0, 100%, 60%, .45)",
-      contrastText: contrastColor("hsl(0, 100%, 50%)", true).color,
+      ...colors.danger,
+      contrastText: contrastColor(colors.danger.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.danger.dark, true).color,
+        light: contrastColor(colors.danger.light, true).color,
+        glass: contrastColor(colors.danger.glass, true, true).color
+      }
     },
     warning: {
-      main: "hsl(20, 100%, 50%)",
-      light: "hsl(20, 100%, 60%)",
-      dark: "hsl(20, 100%, 30%)",
-      glass: "hsla(20, 100%, 60%, .45)",
-      contrastText: contrastColor("hsl(20, 100%, 50%)", true).color,
+      ...colors.warning,
+      contrastText: contrastColor(colors.warning.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.warning.dark, true).color,
+        light: contrastColor(colors.warning.light, true).color,
+        glass: contrastColor(colors.warning.glass, true, true).color
+      }
     },
     info: {
-      main: "hsl(210, 100%, 50%)",
-      light: "hsl(210, 100%, 60%)",
-      dark: "hsl(210, 100%, 30%)",
-      glass: "hsla(210, 100%, 60%, .45)",
-      contrastText: contrastColor("hsl(210, 100%, 50%)", true).color,
+      ...colors.info,
+      contrastText: contrastColor(colors.info.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.info.dark, true).color,
+        light: contrastColor(colors.info.light, true).color,
+        glass: contrastColor(colors.info.glass, true, true).color
+      }
     },
     dark: {
-      main: "hsl(0,0%,50%)",
-      light: "hsl(0,0%,75%)",
-      dark: "hsl(0,0%,45%)",
-      glass: "hsla(0,0%,75%, .45)",
-      contrastText: contrastColor("hsl(0,0%,50%)", true).color,
+      ...colors.dark,
+      contrastText: contrastColor(colors.dark.main, true).color,
+      contrast: {
+        dark: contrastColor(colors.dark.dark, true).color,
+        light: contrastColor(colors.dark.light, true).color,
+        glass: contrastColor(colors.dark.glass, true, true).color
+      }
     }
   },
   breakpoints: {
