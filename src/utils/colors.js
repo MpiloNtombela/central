@@ -133,7 +133,7 @@ export const contrastColor = (color, isHSL = false) => {
   if (!isHSL) {
     ({r, g, b} = hex2rgb(color))
   } else {
-    ({r, g, b} = hex2rgb(color))
+    ({r, g, b} = hsl2rgb(color))
   }
   let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
   return {
