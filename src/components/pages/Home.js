@@ -176,6 +176,42 @@ const Announcements = () => {
   )
 }
 
+const AllAds = ({ads, openAds, handleClose}) => {
+  return (
+    <Modal open={openAds} onClose={handleClose} maxWidth={'lg'} scrollOverlay={false}>
+      <ModalHeader sticky text={'Latest Ads'} onCloseClick={handleClose}/>
+      <ModalContent>
+        <Table responsive isHover capHead captionText={`${ads.length} of ${ads.length} ads`} captionSide={'bottom'}
+               headColor={'secondary'}
+               tableSize={'lg'} bordered>
+          <THead>
+            <TableRow>
+              {Object.keys(ads[0])?.map((key, idx) => {
+                if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
+                  return <TableHead key={idx}>{caseOut(key)}</TableHead>
+                }
+              })}
+            </TableRow>
+          </THead>
+          <TBody>
+            {ads.map((ad) => {
+              return (<TableRow key={ad.id}>
+                {
+                  Object.keys(ad).map((key, idx) => {
+                    if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
+                      return <TableData key={idx}>{ad[key]}</TableData>
+                    }
+                  })
+                }
+              </TableRow>)
+            })}
+          </TBody>
+        </Table>
+      </ModalContent>
+    </Modal>
+  )
+}
+
 const Home = () => {
     const [openAds, setOpenAds] = useState(false)
     const {ads} = useDataContext()
@@ -184,6 +220,7 @@ const Home = () => {
     const handleOpenAdsToggle = () => {
       setOpenAds(!openAds)
     }
+
     return (
       <Container maxWidth='xl' navPadding>
         <Grid gridSpacing={2}>
@@ -216,37 +253,7 @@ const Home = () => {
             <Announcements/>
           </GridCell>
         </Grid>
-        <Modal open={openAds} onClose={handleOpenAdsToggle} maxWidth={'lg'} scrollOverlay={false}>
-          <ModalHeader sticky text={'Latest Ads'} onCloseClick={handleOpenAdsToggle}/>
-          <ModalContent>
-            <Table responsive isHover capHead captionText={`${ads.length} of ${ads.length} ads`} captionSide={'bottom'}
-                   headColor={'secondary'}
-                   tableSize={'lg'} bordered color={'secondary'}>
-              <THead>
-                <TableRow>
-                  {Object.keys(ads[0])?.map((key, idx) => {
-                    if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
-                      return <TableHead key={idx}>{caseOut(key)}</TableHead>
-                    }
-                  })}
-                </TableRow>
-              </THead>
-              <TBody>
-                {ads.map((ad) => {
-                  return (<TableRow key={ad.id}>
-                    {
-                      Object.keys(ad).map((key, idx) => {
-                        if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
-                          return <TableData key={idx}>{ad[key]}</TableData>
-                        }
-                      })
-                    }
-                  </TableRow>)
-                })}
-              </TBody>
-            </Table>
-          </ModalContent>
-        </Modal>
+        <AllAds handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads}/>
       </Container>
     );
   }
@@ -257,6 +264,12 @@ Announcement.propTypes = {
   announcement: PropTypes.object,
   theme: PropTypes.any,
   collapsed: PropTypes.bool,
+}
+
+AllAds.propTypes = {
+  ads: PropTypes.array.isRequired,
+  openAds: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
 }
 
 export default Home;
