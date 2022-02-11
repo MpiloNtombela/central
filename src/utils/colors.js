@@ -86,7 +86,7 @@ export const hsl2rgb = (hsl) => {
 
 /**
  * @description a util func to convert HSL color to HEX <e.g hsl(0, 0%, 100%) => (255, 255, 255)>
- * @param {string} hsl - hsl color value (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%
+ * @param {string} hsl - hsl color value (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%)
  * @returns {string} - hex color (e.g #FFFFFF)
  */
 export const hsl2hex = (hsl) => {
@@ -121,27 +121,23 @@ export const stringToColor = (value) => {
 
 /**
  * @description a util func that calc a suitable b/w contrast for a given hex color (e.g #FFFFFF => #000000)
- * @param {string} hex - hex color (e.g #00FF00)
- * @param {string} hsl - hsl color value (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%)
  * @returns {{contrast: number, color: string}} object
+ * @param {string} color - hex(e.g #000000) or hsl(e.g '0, 0%, 100%') color value
+ * @param {boolean} isHSL - if the color provided is HSL (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%')
  */
-export const contrastColor = (hex = '', hsl = '') => {
-  if (hex.trim().length === 0 && hsl.trim().length === 0) {
+export const contrastColor = (color, isHSL = false) => {
+  if (!color) {
     throw new Error(`Expected a hex or hls color, but got neither`)
   }
-  if (hex.trim().length) {
-    let {r, g, b} = hex2rgb(hex)
-    let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
-    return {
-      contrast: contrast,
-      color: contrast > 150 ? "#000000" : "#FFFFFF"
-    }
+  let r, g, b;
+  if (!isHSL) {
+    ({r, g, b} = hex2rgb(color))
   } else {
-    let {r, g, b} = hsl2rgb(hsl)
-    let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
-    return {
-      contrast: contrast,
-      color: contrast > 150 ? "#000000" : "#FFFFFF"
-    }
+    ({r, g, b} = hex2rgb(color))
+  }
+  let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
+  return {
+    contrast: contrast,
+    color: contrast > 150 ? "#000000" : "#FFFFFF"
   }
 }
