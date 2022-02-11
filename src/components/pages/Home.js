@@ -112,7 +112,7 @@ const AnnouncementLoader = () => {
   )
 }
 
-const Announcements = () => {
+const Announcements = React.memo(function Announcements() {
   const data = useDataContext()
   const announcements = [...data.announcements]
   announcements.sort((aa, ab) => {
@@ -146,7 +146,7 @@ const Announcements = () => {
       <Box marginTop={theme.sizes.gutters[4]}>
         <Button onClick={showMoreToggle} color={"primary"} size={'sm'} rounded block>show more</Button>
       </Box>
-      <Modal open={showMore} onClose={showMoreToggle} maxWidth={'md'} rounded={"md"} elevation={2}>
+      {showMore && <Modal open={showMore} onClose={showMoreToggle} maxWidth={'md'} rounded={"md"} elevation={2}>
         <ModalHeader closeIcon={<MdClose size={24}/>} text={"Announcements"} elevation={4}
                      onCloseClick={showMoreToggle}/>
         <ModalContent>
@@ -171,10 +171,10 @@ const Announcements = () => {
             </TabContent>
           </TabContext> : <AnnouncementLoader/>}
         </ModalContent>
-      </Modal>
+      </Modal>}
     </>
   )
-}
+})
 
 const AllAds = ({ads, openAds, handleClose}) => {
   return (
@@ -253,7 +253,8 @@ const Home = () => {
             <Announcements/>
           </GridCell>
         </Grid>
-        <AllAds handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads}/>
+        {openAds && <AllAds handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads}/>}
+
       </Container>
     );
   }
