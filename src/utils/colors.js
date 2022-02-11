@@ -30,15 +30,15 @@ export const hex2rgb = (hex, hasAlpha = false) => {
   }
   let hexLen = hex.length;
   if (hexLen !== 6 && hexLen !== 3 && (hasAlpha && hexLen !== 8)) {
-    throw new Error(`Expected a hex color of length 3 or 6 ( or 8 with alpha) excluding '#', but got length of (${hexLen})`)
+    throw new Error(`Expected a hex of length 3 / 6 (or 8 with alpha) excluding '#', but got (${hexLen})`)
   }
   if (hexLen === 3) { // converts a 3 length hex to 6 (e.g FFF => FFFFFF)
     hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
   }
   let a = 1,
     r = parseInt(hex.slice(0, 2), 16),
-    g = parseInt(hex.slice(0, 2), 16),
-    b = parseInt(hex.slice(0, 2), 16)
+    g = parseInt(hex.slice(2, 4), 16),
+    b = parseInt(hex.slice(4, 6), 16)
 
   if (hasAlpha) {
     a = +(`0x${hex.slice(6)}` / 255).toFixed(2)
