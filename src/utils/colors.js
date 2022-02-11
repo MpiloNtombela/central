@@ -14,7 +14,6 @@ export const rgb2hex = (r, g, b, a = 1) => {
   let alpha = Math.round(a * 255).toString(16);
   if (alpha.length === 1)
     alpha = "0" + alpha;
-  console.log(`#${hexR}${hexG}${hexB}${alpha}`)
   return `#${hexR}${hexG}${hexB}${alpha}`
 }
 
