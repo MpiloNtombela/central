@@ -201,7 +201,7 @@ const Home = () => {
         <Grid gridSpacing={2}>
           <GridCell colsLg={7} colsXl={8}>
             <Card>
-              <Table captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead color={'secondary'} striped tableSize={'lg'} headColor={"primary"}>
+              <Table isHover captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead striped tableSize={'lg'} headColor={"secondary"}>
                 <THead>
                   <TableRow>
                     <TableHead>Latest Ads</TableHead>
