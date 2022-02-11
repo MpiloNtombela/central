@@ -1,3 +1,5 @@
+import {contrastColor} from "./colors";
+
 const commonTheme = {
   palette: {
     primary: {
@@ -5,48 +7,49 @@ const commonTheme = {
       light: "hsl(218, 100%, 60%)",
       dark: "hsl(218, 100%, 30%)",
       glass: "hsla(218, 100%, 60%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(218, 100%, 50%)", true).color,
     },
     secondary: {
       main: "hsl(260,100%, 50%)",
       light: "hsl(260, 100%, 60%)",
       dark: "hsl(260, 100%, 30%)",
       glass: "hsla(260, 100%, 60%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(260,100%, 50%)", true).color,
     },
     success: {
       main: "hsl(117,100%, 35%)",
       light: "hsl(115, 100%, 45%)",
       dark: "hsl(115, 100%, 25%)",
       glass: "hsla(115, 100%, 45%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(117,100%, 35%)", true).color,
     },
     danger: {
       main: "hsl(0, 100%, 50%)",
       light: "hsl(0, 100%, 60%)",
       dark: "hsl(0, 100%, 30%)",
       glass: "hsla(0, 100%, 60%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(0, 100%, 50%)", true).color,
     },
     warning: {
       main: "hsl(20, 100%, 50%)",
       light: "hsl(20, 100%, 60%)",
       dark: "hsl(20, 100%, 30%)",
       glass: "hsla(20, 100%, 60%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(20, 100%, 50%)", true).color,
     },
     info: {
       main: "hsl(210, 100%, 50%)",
       light: "hsl(210, 100%, 60%)",
       dark: "hsl(210, 100%, 30%)",
       glass: "hsla(210, 100%, 60%, .45)",
-      contrastText: "hsl(0, 0%, 95%)",
+      contrastText: contrastColor("hsl(210, 100%, 50%)", true).color,
     },
-    muted: {
+    dark: {
       main: "hsl(0,0%,50%)",
       light: "hsl(0,0%,75%)",
       dark: "hsl(0,0%,45%)",
       glass: "hsla(0,0%,75%, .45)",
+      contrastText: contrastColor("hsl(0,0%,50%)", true).color,
     }
   },
   breakpoints: {
