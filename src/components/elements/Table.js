@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import React from 'react';
-import {contrastColor} from "../../utils/colors";
 
 const StyledTableHead = styled.th`
   box-sizing: border-box;
@@ -39,12 +38,13 @@ const StyledTable = styled.table`
 
   ${StyledTHead} ${StyledTableRow} {
     background: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.dark : 'none'};
+    color: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.contrast.dark : 'inherit'};
   }
 
   ${StyledTBody} ${StyledTableRow} {
     &:nth-of-type(odd) {
-      background: ${({striped, color, theme}) => striped ? theme.palette[color]?.light : 'none'};
-      color: ${({striped, color, theme}) => striped ? theme.palette[color]?.contrastText : 'inherit'};
+      background: ${({striped, color, theme}) => striped ? theme.palette[color]?.glass : 'none'};
+      color: ${({striped, color, theme}) => striped ? theme.palette[color]?.contrast.glass : 'inherit'};
     }
 
     &:hover {
@@ -53,8 +53,8 @@ const StyledTable = styled.table`
                        isHover,
                        color,
                        theme
-                     }) => isHover && color ? theme.palette[color]?.glass : theme.palette.dark.glass};
-      color: ${({color, theme}) => color ? contrastColor(theme.palette[color]?.glass, true).color : 'inherit'};
+                     }) => isHover ? color ? theme.palette[color]?.glass : theme.palette.dark.glass : ''};
+      color: ${({color, theme}) => color ? theme.palette[color]?.contrast.glass : 'inherit'};
     }
   }
 
@@ -66,7 +66,6 @@ const StyledTable = styled.table`
     padding: 0 ${({theme}) => theme.sizes.gutters[2]};
     text-align: ${({contentAlign}) => contentAlign};
     text-transform: ${({capHead}) => capHead ? 'uppercase' : 'capitalize'};
-    color: ${({headColor, theme}) => headColor ? theme.palette[headColor]?.contrastText : 'inherit'};
   }
 
   ${StyledTableData} {
