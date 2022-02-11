@@ -122,13 +122,26 @@ export const stringToColor = (value) => {
 /**
  * @description a util func that calc a suitable b/w contrast for a given hex color (e.g #FFFFFF => #000000)
  * @param {string} hex - hex color (e.g #00FF00)
+ * @param {string} hsl - hsl color value (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%)
  * @returns {{contrast: number, color: string}} object
  */
-export const contrastColor = (hex) => {
-  let {r, g, b} = hex2rgb(hex)
-  let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
-  return {
-    contrast: contrast,
-    color: contrast > 150 ? "#000000" : "#FFFFFF"
+export const contrastColor = (hex = '', hsl = '') => {
+  if (hex.trim().length === 0 && hsl.trim().length === 0) {
+    throw new Error(`Expected a hex or hls color, but got neither`)
+  }
+  if (hex.trim().length) {
+    let {r, g, b} = hex2rgb(hex)
+    let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
+    return {
+      contrast: contrast,
+      color: contrast > 150 ? "#000000" : "#FFFFFF"
+    }
+  } else {
+    let {r, g, b} = hsl2rgb(hsl)
+    let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
+    return {
+      contrast: contrast,
+      color: contrast > 150 ? "#000000" : "#FFFFFF"
+    }
   }
 }
