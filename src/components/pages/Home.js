@@ -114,7 +114,8 @@ const AnnouncementLoader = () => {
 
 const Announcements = () => {
   const data = useDataContext()
-  const announcements = [...data.announcements.sort((aa, ab) => {
+  const announcements = [...data.announcements]
+  announcements.sort((aa, ab) => {
     if (aa.pinned && ab.pinned) {
       return ab.importantScore - aa.importantScore
     } else if (aa.pinned) {
@@ -124,7 +125,7 @@ const Announcements = () => {
     } else {
       return ab.importantScore - aa.importantScore
     }
-  })]
+  })
   const [showMore, setShowMore] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const theme = useTheme()
@@ -175,19 +176,6 @@ const Announcements = () => {
   )
 }
 
-/*
-* <Box
-                      isHover
-                      hoverColor={theme.palette.primary.glass}
-                      style={{
-                        border: `1px solid ${idx % 2 === 0 ? theme.palette.dark.glass : 'transparent'}`,
-                        borderRadius: '.25rem'
-                      }}
-                      key={ad.id}
-                      padding={theme.sizes.gutters[2]}>
-                      <Text>{ad.title}</Text>
-                    </Box>*/
-
 const Home = () => {
     const [openAds, setOpenAds] = useState(false)
     const {ads} = useDataContext()
@@ -201,7 +189,9 @@ const Home = () => {
         <Grid gridSpacing={2}>
           <GridCell colsLg={7} colsXl={8}>
             <Card>
-              <Table isHover captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead striped tableSize={'lg'} headColor={"secondary"}>
+              <Table striped isHover capHead captionText={`10 of ${ads.length} ads`} captionSide={'bottom'}
+                     headColor={'secondary'}
+                     tableSize={'lg'}>
                 <THead>
                   <TableRow>
                     <TableHead>Latest Ads</TableHead>
@@ -212,8 +202,7 @@ const Home = () => {
                     return (
                       <TableRow key={ad.id}>
                         <TableData>{ad.title}</TableData>
-                      </TableRow>
-                    )
+                      </TableRow>)
                   })}
                 </TBody>
               </Table>
@@ -230,8 +219,9 @@ const Home = () => {
         <Modal open={openAds} onClose={handleOpenAdsToggle} maxWidth={'lg'} scrollOverlay={false}>
           <ModalHeader sticky text={'Latest Ads'} onCloseClick={handleOpenAdsToggle}/>
           <ModalContent>
-            <Table responsive capHead captionText={'Latest Ads'} captionSide={'bottom'} headColor={'secondary'}
-                   tableSize={'lg'} bordered>
+            <Table responsive isHover capHead captionText={`${ads.length} of ${ads.length} ads`} captionSide={'bottom'}
+                   headColor={'secondary'}
+                   tableSize={'lg'} bordered color={'secondary'}>
               <THead>
                 <TableRow>
                   {Object.keys(ads[0])?.map((key, idx) => {
@@ -239,7 +229,6 @@ const Home = () => {
                       return <TableHead key={idx}>{caseOut(key)}</TableHead>
                     }
                   })}
-                  <TableHead>Action</TableHead>
                 </TableRow>
               </THead>
               <TBody>
@@ -252,7 +241,6 @@ const Home = () => {
                         }
                       })
                     }
-                    <TableData><Button size={'sm'} rounded color={'info'}>view add</Button></TableData>
                   </TableRow>)
                 })}
               </TBody>
