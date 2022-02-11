@@ -129,6 +129,7 @@ const Table = ({
                    tableSize={tableSize}
                    bordered={bordered}
                    captionSide={captionSide}
+                   isHover={isHover}
                    capHead={capHead}>
         {children}
         <StyledCaption>{captionText}</StyledCaption>
