@@ -138,6 +138,6 @@ export const contrastColor = (color, isHSL = false) => {
   let contrast = (r * 0.299) + (g * 0.587) + (b * 0.114)
   return {
     contrast: contrast,
-    color: contrast > 150 ? "#000000" : "#FFFFFF"
+    color: contrast > 150 ? "#1c1c1c" : "#ececec"
   }
 }
