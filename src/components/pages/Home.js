@@ -180,7 +180,7 @@ const Announcements = () => {
                       isHover
                       hoverColor={theme.palette.primary.glass}
                       style={{
-                        border: `1px solid ${idx % 2 === 0 ? theme.palette.muted.glass : 'transparent'}`,
+                        border: `1px solid ${idx % 2 === 0 ? theme.palette.dark.glass : 'transparent'}`,
                         borderRadius: '.25rem'
                       }}
                       key={ad.id}
@@ -201,7 +201,7 @@ const Home = () => {
         <Grid gridSpacing={2}>
           <GridCell colsLg={7} colsXl={8}>
             <Card>
-              <Table captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead color={'muted'} striped tableSize={'lg'} headColor={"primary"}>
+              <Table captionText={`10 of ${ads.length} Ads`} captionSide={'bottom'} capHead color={'secondary'} striped tableSize={'lg'} headColor={"primary"}>
                 <THead>
                   <TableRow>
                     <TableHead>Latest Ads</TableHead>
