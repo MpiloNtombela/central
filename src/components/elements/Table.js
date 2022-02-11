@@ -113,6 +113,7 @@ const Table = ({
                    captionSide={captionSide}
                    capHead={capHead}>
         {children}
+        <StyledCaption>{captionText}</StyledCaption>
       </StyledTable>
     );
   }
@@ -139,8 +140,8 @@ TFoot.propTypes = {
 }
 
 Table.propTypes = {
-  color: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info"]),
-  headColor: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info"]),
+  color: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info", 'muted']),
+  headColor: PropTypes.oneOf(["primary", "secondary", "success", "warning", "danger", "info", "muted"]),
   contentAlign: PropTypes.oneOf(['start', 'center', 'end']),
   tableSize: PropTypes.oneOf(['sm', 'lg']),
   children: PropTypes.node,
