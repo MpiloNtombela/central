@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import React from "react";
 
-export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, block, disabled}) => {
+export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, block, disabled, elevation}) => {
   const b = theme.palette;
   const c = b[color];
 
@@ -19,7 +19,7 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
     font-weight: 500;
     line-height: 1.5;
     border: 2px solid ${disabled ? '#888' : c.main};
-    border-radius: ${rounded ? "9999rem" : theme.sizes.radius};
+    border-radius: ${rounded ? "9999rem" : theme.sizes.radius.sm};
     font-size: 0.875rem;
     box-sizing: border-box;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -27,7 +27,7 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
     text-align: center;
     white-space: nowrap;
     letter-spacing: 0.02857em;
-    box-shadow: 0 0 5px 0 hsla(0, 0%, 0%, .5);
+    box-shadow: 0 0 5px 0 hsla(0, 0%, 0%,.${elevation});
     min-width: ${block ? '100%' : '64px'};
 
     &:hover {
@@ -46,7 +46,7 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
       color: ${outlined ? '#888' : '#ccc'};
       cursor: default;
       border-color: #888;
-      box-shadow: 0 0 2px 0 hsla(0, 0%, 0%, .35);
+      box-shadow: 0 0 2px 0 hsla(0, 0%, 0%,.${elevation});
       opacity: 1;
     }
 
@@ -55,7 +55,7 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
               ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
               : c.dark)
       };
-      box-shadow: 0 0 .75rem ${c.dark};
+      box-shadow: 0 0 .5rem ${c.dark};
       border-color: ${c.dark}
     }
   `
@@ -69,6 +69,7 @@ const Button = ({
                   color = "primary",
                   size = "md",
                   type = "button",
+                  elevation = 2,
                   gradient,
                   outlined,
                   block,
@@ -89,6 +90,7 @@ const Button = ({
       onClick={onClick}
       block={block}
       disabled={disabled}
+      elevation={elevation}
       type={type}>
       <span>{children}</span>
     </StyledButton>
@@ -100,6 +102,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(["sm", "md"]),
   type: PropTypes.oneOf(["button", "submit", "reset"]),
   gradient: PropTypes.bool,
+  elevation: PropTypes.oneOf([0, 1, 2, 3, 4, 5]),
   outlined: PropTypes.bool,
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,

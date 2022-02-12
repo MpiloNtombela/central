@@ -29,6 +29,7 @@ Anchor.propTypes = {
 Anchor.defaultProps = {
   color: 'primary',
   renderButton: false,
+  elevation: 2,
 }
 
 export default Anchor
