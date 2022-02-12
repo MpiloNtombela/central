@@ -233,7 +233,7 @@ const dataState = {
       title: "Fantastic Steel Fish",
       category: "Movies",
       price: 681.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 2,
@@ -242,7 +242,7 @@ const dataState = {
       title: "Gorgeous Plastic Cheese",
       category: "Computers",
       price: 480.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 3,
@@ -251,7 +251,7 @@ const dataState = {
       title: "Refined Cotton Pants",
       category: "Automotive",
       price: 229.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 4,
@@ -260,7 +260,7 @@ const dataState = {
       title: "Ergonomic Steel Salad",
       category: "Beauty",
       price: 568.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 5,
@@ -269,7 +269,7 @@ const dataState = {
       title: "Gorgeous Metal Chips",
       category: "Grocery",
       price: 689.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 6,
@@ -278,7 +278,7 @@ const dataState = {
       title: "Unbranded Plastic Gloves",
       category: "Beauty",
       price: 922.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 7,
@@ -287,7 +287,7 @@ const dataState = {
       title: "Handcrafted Rubber Sausages",
       category: "Grocery",
       price: 196.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 8,
@@ -296,7 +296,7 @@ const dataState = {
       title: "Gorgeous Steel Sausages",
       category: "Outdoors",
       price: 881.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 9,
@@ -305,7 +305,7 @@ const dataState = {
       title: "Handmade Fresh Tuna",
       category: "Automotive",
       price: 958.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 10,
@@ -314,7 +314,7 @@ const dataState = {
       title: "Rustic Plastic Shoes",
       category: "Baby",
       price: 148.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 11,
@@ -323,7 +323,7 @@ const dataState = {
       title: "Unbranded Plastic Salad",
       category: "Jewelery",
       price: 623.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 12,
@@ -332,7 +332,7 @@ const dataState = {
       title: "Gorgeous Granite Soap",
       category: "Home",
       price: 574.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 13,
@@ -341,7 +341,7 @@ const dataState = {
       title: "Generic Soft Fish",
       category: "Home",
       price: 711.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 14,
@@ -350,7 +350,7 @@ const dataState = {
       title: "Gorgeous Frozen Pants",
       category: "Jewelery",
       price: 255.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 15,
@@ -359,7 +359,7 @@ const dataState = {
       title: "Incredible Wooden Sausages",
       category: "Beauty",
       price: 232.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 16,
@@ -368,7 +368,7 @@ const dataState = {
       title: "Sleek Frozen Mouse",
       category: "Movies",
       price: 935.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 17,
@@ -377,7 +377,7 @@ const dataState = {
       title: "Rustic Frozen Hat",
       category: "Automotive",
       price: 645.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 18,
@@ -386,7 +386,7 @@ const dataState = {
       title: "Generic Frozen Pizza",
       category: "Games",
       price: 804.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 19,
@@ -395,7 +395,7 @@ const dataState = {
       title: "Handcrafted Granite Fish",
       category: "Beauty",
       price: 168.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     },
     {
       id: 20,
@@ -404,7 +404,7 @@ const dataState = {
       title: "Ergonomic Fresh Bike",
       category: "Electronics",
       price: 508.00,
-      date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+      date: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
     }
   ],
   isLoading: true,
