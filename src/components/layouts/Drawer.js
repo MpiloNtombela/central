@@ -25,7 +25,7 @@ const StyledDrawerOverlay = styled.div(({theme, anchor, open, fixed}) => `
     z-index: ${fixed ? theme.sizes.zIndex.nav - 1 : theme.sizes.zIndex.modal - 1};
     transition: all .55s ease-in-out;
 `)
-const StyledDrawer = styled.div(({theme, anchor, open, width, height, fixed, elevation, rounded}) => `
+const StyledDrawer = styled.div(({theme, anchor, open, width, minHeight, fixed, elevation, rounded}) => `
     position: ${fixed ? 'fixed' : 'absolute'};
     left: ${anchor !== 'right' ? open ? '0' : anchor !== "left" ? "0" : '-100%' : 'unset'};
     right: ${anchor !== 'left' ? open ? '0' : anchor !== "right" ? "0" : '-100%' : 'unset'};
@@ -34,16 +34,27 @@ const StyledDrawer = styled.div(({theme, anchor, open, width, height, fixed, ele
     box-shadow: 0px -5px 20px 0px rgba(0, 0, 0, .${elevation});
     border-top-right-radius: ${anchor === 'bottom' && rounded ? '1.25rem' : 0};
     border-top-left-radius:  ${anchor === 'bottom' && rounded ? '1.25rem' : 0};
-    max-width: ${width ? width : anchor === 'left' || anchor === 'right' ? '315px' : `100%`};
     pointer-events: auto;
     box-sizing: border-box;
     width: ${anchor === 'top' || anchor === 'bottom' ? '100%' : width ? width : 'auto'};
-    height: ${anchor === 'left' || anchor === 'right' ? '100%' : height ? height : 'auto'};
+    min-height: ${anchor === 'left' || anchor === 'right' ? '100%' : minHeight ? minHeight : 'fit-content'};
     background: ${theme.background.main};
     transition: all .5s ease-in-out;
 `)
 
-const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, anchor = "left", children}) => {
+const Drawer = ({
+                  open,
+                  fixed,
+                  width,
+                  overlayStyle,
+                  style,
+                  minHeight,
+                  rounded,
+                  onClose,
+                  elevation = 0,
+                  anchor = "left",
+                  children
+                }) => {
 
   const handleClick = (e) => {
     if (fixed) return;
@@ -60,17 +71,17 @@ const Drawer = ({open, fixed, width, height, rounded, onClose, elevation = 0, an
       anchor={anchor}
       open={open}
       fixed={fixed}
-      width={width}
-      height={height}>
+      style={overlayStyle}>
       <StyledDrawer
         data-drawer
         fixed={fixed}
         open={open}
         anchor={anchor}
         width={typeof width === 'number' ? `${width}px` : width}
-        height={typeof height === 'number' ? `${height}px` : height}
+        minHeight={typeof minHeight === 'number' ? `${minHeight}px` : minHeight}
         rounded={rounded}
-        elevation={elevation}>
+        elevation={elevation}
+        style={style}>
         {children}
       </StyledDrawer>
     </StyledDrawerOverlay>
@@ -91,8 +102,10 @@ Drawer.propTypes = {
   open: PropTypes.bool.isRequired,
   rounded: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClose: PropTypes.func.isRequired,
+  style: PropTypes.object,
+  overlayStyle: PropTypes.object,
   children: PropTypes.node,
 }
 
