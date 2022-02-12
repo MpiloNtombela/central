@@ -51,13 +51,17 @@ const Announcement = ({announcement, theme, collapsed}) => {
               return (
                 <Box key={idx} marginLeft={theme.sizes.gutters[2]}>
                   {action.type === 'link' ?
-                    <a style={{
-                      fontWeight: '700',
-                      fontSize: 'small',
-                      textTransform: 'uppercase',
-                      color: theme.palette.primary.main
-                    }}
-                       href={action.destination}>{action.name}</a> :
+                    <Anchor
+                      style={{
+                        fontWeight: '700',
+                        fontSize: 'small',
+                        textTransform: 'uppercase',
+                        color: theme.palette.primary.main
+                      }}
+                      href={action.destination}
+                      target='_blank'>
+                      {action.name}
+                    </Anchor> :
                     <Button size={'sm'} outlined={!action.important} rounded>{action.name}</Button>}
                 </Box>)
             })}
