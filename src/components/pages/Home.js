@@ -5,6 +5,7 @@ import {MdAdminPanelSettings, MdCalendarToday, MdClose, MdPushPin} from "react-i
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import {useDataContext} from "../../hooks/context";
+import Anchor from "../elements/Anchor";
 import Button from "../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../elements/Table";
 import Text from "../elements/Text";
@@ -252,6 +253,13 @@ const Ad = ({ad, theme}) => {
           })}
         </Grid>
       </Box>
+      <Anchor
+        color={'secondary'}
+        renderButton
+        block
+        href={`mailto:${ad.email}?subject=${ad.title} ad&body=Hi ${ad.postedBy}%0d%0a%0d%0aI saw '${ad.title}' Ad and I'm interested in it, if it still available.`}>
+        email ${ad.postedBy}
+      </Anchor>
       <Button color={'danger'} rounded block size={'sm'}>report ad</Button>
     </>
   )
