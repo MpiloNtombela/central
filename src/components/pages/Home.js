@@ -218,6 +218,7 @@ const AllAds = ({ads, openAds, handleClose, isSm, handleAdClick}) => {
 }
 
 const Ad = ({ad, theme}) => {
+  const message = `mailto:${ad.email}?subject=${ad.title} ad&body=Hi ${ad.postedBy}%0d%0a%0d%0aI saw '${ad.title}' Ad and I'm interested in it, if it still available.`
   return (
     <>
       <Text fSize={'medium'} fWeight={'bold'} tColor={theme.palette.info.main}>{ad.title}</Text>
@@ -239,7 +240,7 @@ const Ad = ({ad, theme}) => {
                       {key.toLowerCase() === 'email' && <Text fSize={'.85em'}>
                         <a
                           style={{color: theme.palette.primary.main, fontWeight: 500}}
-                          href={`mailto:${ad[key]}?subject=${ad.title} ad&body=Hi ${ad.postedBy}%0d%0a%0d%0aI saw '${ad.title}' Ad and I'm interested in it, if it still available.`}>
+                          href={message}>
                           {ad[key]}
                         </a>
                       </Text>}
@@ -257,10 +258,14 @@ const Ad = ({ad, theme}) => {
         color={'secondary'}
         renderButton
         block
-        href={`mailto:${ad.email}?subject=${ad.title} ad&body=Hi ${ad.postedBy}%0d%0a%0d%0aI saw '${ad.title}' Ad and I'm interested in it, if it still available.`}>
-        email ${ad.postedBy}
+        rounded
+        size={'sm'}
+        href={message}>
+        email {ad.postedBy}
       </Anchor>
-      <Button color={'danger'} rounded block size={'sm'}>report ad</Button>
+      <Box marginTop={theme.sizes.gutters[2]}>
+        <Button outlined color={'danger'} rounded block size={'sm'}>report ad</Button>
+      </Box>
     </>
   )
 }
@@ -349,7 +354,7 @@ const Home = () => {
       </Grid>
       {openAds &&
       <AllAds handleAdClick={handleOpenAd} handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads} isSm={isSm}/>}
-      <Drawer rounded minHeight={'50%'} width={300} onClose={handleCloseAd}
+      <Drawer rounded minHeight={'60%'} width={300} onClose={handleCloseAd}
               open={openedAd.open}
               anchor={isSm ? 'bottom' : 'right'}
               elevation={4}
