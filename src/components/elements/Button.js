@@ -8,7 +8,7 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
   const c = b[color];
 
   return css`
-    display: block;
+    display: inline-block;
     color: ${!outlined ? c.contrastText : c.main};
     background: ${!outlined ?
             gradient ? `linear-gradient(140deg, ${b.primary.main}, ${b.secondary.main})`
