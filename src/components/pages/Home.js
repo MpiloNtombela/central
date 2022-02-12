@@ -15,6 +15,7 @@ import Collapsible from "../layouts/Collapsible";
 import Container from "../layouts/Container";
 import Drawer from "../layouts/Drawer";
 import Grid, {GridCell} from "../layouts/Grid";
+import Loader from "../layouts/Loader";
 import Modal, {ModalContent, ModalHeader} from "../layouts/Modal";
 import Skeleton from "../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../layouts/Tabs";
@@ -179,9 +180,9 @@ const Announcements = React.memo(function Announcements() {
   )
 })
 
-const AllAds = ({ads, openAds, handleClose}) => {
+const AllAds = ({ads, openAds, handleClose, isSm, handleAdClick}) => {
   return (
-    <Modal open={openAds} onClose={handleClose} maxWidth={'lg'} scrollOverlay={false}>
+    <Modal open={openAds} onClose={handleClose} maxWidth={'lg'} scrollOverlay={isSm}>
       <ModalHeader sticky text={'Latest Ads'} onCloseClick={handleClose}/>
       <ModalContent>
         <Table responsive isHover capHead captionText={`${ads.length} of ${ads.length} ads`} captionSide={'bottom'}
@@ -198,7 +199,7 @@ const AllAds = ({ads, openAds, handleClose}) => {
           </THead>
           <TBody>
             {ads.map((ad) => {
-              return (<TableRow key={ad.id}>
+              return (<TableRow key={ad.id} onClick={() => handleAdClick(ad.id)}>
                 {
                   Object.keys(ad).map((key, idx) => {
                     if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
@@ -217,7 +218,7 @@ const AllAds = ({ads, openAds, handleClose}) => {
 
 const Ad = ({ad, theme}) => {
   return (
-    <Box padding={theme.sizes.gutters[3]}>
+    <>
       <Text fSize={'medium'} fWeight={'bold'} tColor={theme.palette.info.main}>{ad.title}</Text>
       <Box marginTop={theme.sizes.gutters[2]} marginBottom={theme.sizes.gutters[4]}>
         <Grid>
@@ -233,7 +234,16 @@ const Ad = ({ad, theme}) => {
                   </GridCell>
                   <GridCell colsSm={6} colsMd={7}>
                     <Box margin={'.5rem 0'}>
-                      <Text fSize={'.85em'}>{ad[key]}</Text>
+                      {key.toLowerCase() === 'price' && <Text fSize={'.85em'}>R {ad[key]}</Text>}
+                      {key.toLowerCase() === 'email' && <Text fSize={'.85em'}>
+                        <a
+                          style={{color: theme.palette.primary.main, fontWeight: 500}}
+                          href={`mailto:${ad[key]}?subject=${ad.title} ad&body=Hi ${ad.postedBy}%0d%0a%0d%0aI saw '${ad.title}' Ad and I'm interested in it, if it still available.`}>
+                          {ad[key]}
+                        </a>
+                      </Text>}
+                      {key.toLowerCase() !== 'email' && key.toLowerCase() !== 'price' &&
+                      <Text fSize={'.85em'}>{ad[key]}</Text>}
                     </Box>
                   </GridCell>
                 </React.Fragment>
@@ -243,7 +253,7 @@ const Ad = ({ad, theme}) => {
         </Grid>
       </Box>
       <Button color={'danger'} rounded block size={'sm'}>report ad</Button>
-    </Box>
+    </>
   )
 }
 
@@ -283,7 +293,7 @@ const Home = () => {
             draft.isLoading = false
           })
         }
-      }, 2000)
+      }, 3000)
     }
   }
 
@@ -302,8 +312,8 @@ const Home = () => {
       <Grid gridSpacing={2}>
         <GridCell colsLg={7} colsXl={8}>
           <Card>
-            <Table striped isHover capHead captionText={`10 of ${ads.length} ads`} captionSide={'bottom'}
-                   headColor={'secondary'}
+            <Table striped isHover capHead
+                   captionText={`10 of ${ads.length} ads`} captionSide={'bottom'}
                    tableSize={'lg'}>
               <THead>
                 <TableRow>
@@ -329,15 +339,19 @@ const Home = () => {
           <Announcements/>
         </GridCell>
       </Grid>
-      {openAds && <AllAds handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads}/>}
-      <Drawer rounded={isSm} height={isSm ? '60%' : '100%'} width={isSm ? '100%' : 300} onClose={handleCloseAd}
+      {openAds &&
+      <AllAds handleAdClick={handleOpenAd} handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads} isSm={isSm}/>}
+      <Drawer rounded minHeight={'50%'} width={300} onClose={handleCloseAd}
               open={openedAd.open}
-              anchor={isSm ? 'bottom' : 'right'}>
-        {openedAd.isLoading ?
-          <Text fSize={'medium'} fWeight={'bold'}>Loading...</Text>
-          : openedAd.ad ? <Ad ad={openedAd.ad} theme={theme}/>
-            : <Text fSize={'medium'} fWeight={'bold'}>Ad not found</Text>
-        }
+              anchor={isSm ? 'bottom' : 'right'}
+              elevation={4}
+              overlayStyle={{zIndex: theme.sizes.zIndex.modal + 1}}>
+        <Box padding={theme.sizes.gutters[4]} style={{background: 'transparent'}}>
+          {openedAd.isLoading ?
+            <Loader/> : openedAd.ad ? <Ad ad={openedAd.ad} theme={theme}/>
+              : <Text fSize={'medium'} fWeight={'bold'}>Ad not found</Text>
+          }
+        </Box>
       </Drawer>
     </Container>
   );
@@ -354,6 +368,8 @@ AllAds.propTypes = {
   ads: PropTypes.array.isRequired,
   openAds: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleAdClick: PropTypes.func.isRequired,
+  isSm: PropTypes.bool,
 }
 
 Ad.propTypes = {
