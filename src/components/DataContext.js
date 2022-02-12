@@ -232,7 +232,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Fantastic Steel Fish",
       category: "Movies",
-      price: "681.00",
+      price: 681.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -241,7 +241,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Gorgeous Plastic Cheese",
       category: "Computers",
-      price: "480.00",
+      price: 480.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -250,7 +250,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Refined Cotton Pants",
       category: "Automotive",
-      price: "229.00",
+      price: 229.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -259,7 +259,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Ergonomic Steel Salad",
       category: "Beauty",
-      price: "568.00",
+      price: 568.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -268,7 +268,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Gorgeous Metal Chips",
       category: "Grocery",
-      price: "689.00",
+      price: 689.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -277,7 +277,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Unbranded Plastic Gloves",
       category: "Beauty",
-      price: "922.00",
+      price: 922.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -286,7 +286,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Handcrafted Rubber Sausages",
       category: "Grocery",
-      price: "196.00",
+      price: 196.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -295,7 +295,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Gorgeous Steel Sausages",
       category: "Outdoors",
-      price: "881.00",
+      price: 881.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -304,7 +304,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Handmade Fresh Tuna",
       category: "Automotive",
-      price: "958.00",
+      price: 958.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -313,7 +313,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Rustic Plastic Shoes",
       category: "Baby",
-      price: "148.00",
+      price: 148.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -322,7 +322,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Unbranded Plastic Salad",
       category: "Jewelery",
-      price: "623.00",
+      price: 623.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -331,7 +331,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Gorgeous Granite Soap",
       category: "Home",
-      price: "574.00",
+      price: 574.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -340,7 +340,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Generic Soft Fish",
       category: "Home",
-      price: "711.00",
+      price: 711.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -349,7 +349,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Gorgeous Frozen Pants",
       category: "Jewelery",
-      price: "255.00",
+      price: 255.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -358,7 +358,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Incredible Wooden Sausages",
       category: "Beauty",
-      price: "232.00",
+      price: 232.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -367,7 +367,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Sleek Frozen Mouse",
       category: "Movies",
-      price: "935.00",
+      price: 935.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -376,7 +376,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Rustic Frozen Hat",
       category: "Automotive",
-      price: "645.00",
+      price: 645.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -385,7 +385,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Generic Frozen Pizza",
       category: "Games",
-      price: "804.00",
+      price: 804.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -394,7 +394,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Handcrafted Granite Fish",
       category: "Beauty",
-      price: "168.00",
+      price: 168.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     },
     {
@@ -403,7 +403,7 @@ const dataState = {
       email: 'dev@mpilo.live',
       title: "Ergonomic Fresh Bike",
       category: "Electronics",
-      price: "508.00",
+      price: 508.00,
       date: `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
     }
   ],
