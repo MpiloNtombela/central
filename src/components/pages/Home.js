@@ -1,6 +1,6 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {MdAdminPanelSettings, MdCalendarToday, MdCelebration, MdClose, MdPushPin} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useMatch, useNavigate} from "react-router-dom";
@@ -279,23 +279,41 @@ const Ad = ({ad, theme}) => {
 
 const Exclusion = ({open}) => {
   const [show, setShow] = useState(open)
+  const [checking, setChecking] = useState(true)
   const theme = useTheme()
   const navigation = useNavigate()
   const handleClose = () => {
     setShow(false)
     navigation('/')
   }
+  useEffect(() => {
+    // simulating data fetching
+    setTimeout(() => {
+      setChecking(false)
+    }, 3000)
+  }, [])
 
   return (
-    <Modal open={show} onClose={{}} isStatic centerVert>
+    <Modal open={show} onClose={{}} isStatic centerVert rounded={'md'}>
       <ModalContent>
-        <Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
-          <MdCelebration size={36} color={theme.palette.dark.main}/>
-        </Box>
-        <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Seems like you are not excluded this</Text>
-        <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
-          <Button onClick={handleClose} color={'success'} size={'sm'} rounded>ok, close</Button>
-        </Box>
+        {checking ?
+          <Box paddingTop={theme.sizes.gutters[4]} paddingBottom={theme.sizes.gutters[4]}>
+            <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}
+                 style={{height: '2rem'}}>
+              <Loader/>
+            </Box>
+            <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}>
+              <Text tColor={theme.palette.dark.main} fSize={'small'} fWeight={'bold'} tAlign={'center'}>checking
+                status...</Text>
+            </Box>
+          </Box>
+          : <><Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
+            <MdCelebration size={72} color={theme.palette.dark.main}/>
+          </Box>
+            <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>It seems like you are not excluded</Text>
+            <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
+              <Button onClick={handleClose} color={'success'} size={'sm'} rounded>ok, close</Button>
+            </Box></>}
       </ModalContent>
     </Modal>
   )
