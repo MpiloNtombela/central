@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 import {MdAdminPanelSettings, MdCalendarToday, MdClose, MdPushPin} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
+import {useMatch, useNavigate} from "react-router-dom";
 import {useImmer} from "use-immer";
 import {useDataContext} from "../../hooks/context";
+import {useGetSubPath} from "../../hooks/routes";
 import Anchor from "../elements/Anchor";
 import Button from "../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../elements/Table";
@@ -21,6 +23,7 @@ import Modal, {ModalContent, ModalHeader} from "../layouts/Modal";
 import Skeleton from "../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../layouts/Tabs";
 import {caseOut} from "./self/IEnabler";
+import {selfHelp} from "./utils/mainRoutes";
 
 const Announcement = ({announcement, theme, collapsed}) => {
   return (
@@ -274,9 +277,33 @@ const Ad = ({ad, theme}) => {
   )
 }
 
+const Exclusion = ({open}) => {
+  const [show, setShow] = useState(open)
+  const theme = useTheme()
+  const navigation = useNavigate()
+  const handleClose = () => {
+    setShow(false)
+    navigation('/')
+  }
+
+  return (
+    <Modal open={show} onClose={{}} isStatic centerVert>
+      <ModalContent>
+        <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Seems like you are not excluded this</Text>
+        <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
+          <Button onClick={handleClose} color={'success'} size={'sm'} rounded>ok, close</Button>
+        </Box>
+      </ModalContent>
+    </Modal>
+  )
+}
+
 const Home = () => {
   const {ads} = useDataContext()
   const theme = useTheme()
+  const exclusion = useGetSubPath(selfHelp, 'exclusion')
+  const isEx = useMatch(exclusion)
+
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   const [openAds, setOpenAds] = useState(false)
   const [openedAd, setOpenedAd] = useImmer({
@@ -370,6 +397,7 @@ const Home = () => {
           }
         </Box>
       </Drawer>
+      {isEx && <Exclusion open={isEx}/>}
     </Container>
   );
 }
@@ -400,6 +428,10 @@ Ad.propTypes = {
     date: PropTypes.string.isRequired,
   }),
   theme: PropTypes.any
+}
+
+Exclusion.propTypes = {
+  open: PropTypes.bool.isRequired,
 }
 
 export default Home;
