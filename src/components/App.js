@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
+import {useGetSubPath} from "../hooks/routes";
 import DataProvider from "./DataContext";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
+import {selfHelp} from "./pages/utils/mainRoutes";
 import Theme from "./Theme";
 
 const App = () => {
   const [isDark, setMode] = useState(true)
   const [isLoading, setLoading] = useState(true)
+  const ienabler = useGetSubPath(selfHelp, 'ienabler')
+  const reg = useGetSubPath(selfHelp, 'registration')
+  const exclusion = useGetSubPath(selfHelp, 'exclusion')
+
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
     setLoading(false)
@@ -25,8 +31,9 @@ const App = () => {
           <MainNavbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/self-help/exclusion" element={<Home/>}/>
-            <Route path="/self-help/ienabler" element={<IEnabler/>}/>
+            <Route path={exclusion} element={<Home/>}/>
+            <Route path={ienabler} element={<IEnabler/>}/>
+            <Route path={reg} element={<IEnabler/>}/>
           </Routes>
         </HashRouter>
       </Theme>
