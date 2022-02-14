@@ -119,7 +119,7 @@ const dataState = {
     {
       id: 1,
       title: "Checkout my profile",
-      content: "You can also find me or connect with me in these networks I use",
+      content: "You can find my profile on these networks",
       date: "01/01/2022",
       user: 'Mpilo',
       importantScore: 10,
@@ -207,12 +207,34 @@ const dataState = {
       active: Date.now() < Date.parse('02/24/2022')
     },
     {
+      id: 7,
+      title: "Another announcement",
+      content: 'Just another unnecessary announcement to make 😉',
+      date: '10/01/2022',
+      user: 'Communique️',
+      importantScore: 2,
+      actions: [],
+      pinned: false,
+      active: true
+    },
+    {
+      id: 7,
+      title: "Secrete announcement",
+      content: "Well done for clicking 'show more' you would have missed this top secrete announcement🤫😎",
+      date: '13/02/2022',
+      user: 'Secrete',
+      importantScore: 1,
+      actions: [],
+      pinned: false,
+      active: true
+    },
+    {
       id: 6,
       title: "Negative term decision",
       content: `If you received a letter notifying you of negative term decision,
        please follow the action below before attempting to register.`,
       importantScore: 9,
-      user: 'Support dep.',
+      user: 'Stu Support',
       date: '10/01/2022',
       actions: [{
         type: 'button',
