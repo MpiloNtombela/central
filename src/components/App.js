@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import DataProvider from "./DataContext";
-import Button from "./elements/Button";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
@@ -26,6 +25,7 @@ const App = () => {
           <MainNavbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/self-help/exclusion" element={<Home/>}/>
             <Route path="/self-help/ienabler" element={<IEnabler/>}/>
           </Routes>
         </HashRouter>
