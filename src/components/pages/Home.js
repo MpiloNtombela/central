@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
-import {MdAdminPanelSettings, MdCalendarToday, MdClose, MdPushPin} from "react-icons/md";
+import {MdAdminPanelSettings, MdCalendarToday, MdCelebration, MdClose, MdPushPin} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useMatch, useNavigate} from "react-router-dom";
 import {useImmer} from "use-immer";
@@ -289,6 +289,9 @@ const Exclusion = ({open}) => {
   return (
     <Modal open={show} onClose={{}} isStatic centerVert>
       <ModalContent>
+        <Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
+          <MdCelebration size={36} color={theme.palette.dark.main}/>
+        </Box>
         <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Seems like you are not excluded this</Text>
         <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
           <Button onClick={handleClose} color={'success'} size={'sm'} rounded>ok, close</Button>
