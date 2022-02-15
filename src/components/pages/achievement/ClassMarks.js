@@ -18,8 +18,9 @@ const ClassMarks = () => {
   const theme = useTheme()
   return (
     <Container maxWidth={'md'}>
+      <Box marginTop={theme.sizes.gutters[4]}/>
       {[2021, 2020, 2019, 2018].map((yr, idx) => (
-        <Card key={yr} style={{marginTop: theme.sizes.gutters[4], paddingLeft: 0, paddingRight: 0}}>
+        <Card key={yr} style={{marginBottom: theme.sizes.gutters[4], paddingLeft: 0, paddingRight: 0}}>
           <Collapsible collapsed={idx === 0}
                        isHighlighted={false}
                        header={
