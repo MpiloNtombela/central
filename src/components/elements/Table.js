@@ -24,7 +24,7 @@ const StyledTableContainer = styled.div`
   display: flex;
   overflow-x: auto;
   height: fit-content;
-  border-radius: ${({theme}) => theme.sizes.radius.lg};
+  border-radius: ${({theme, rounded}) => rounded ? theme.sizes.radius[rounded] : 0};
 `
 
 const StyledTable = styled.table`
@@ -101,12 +101,13 @@ const Table = ({
                  bordered = false,
                  captionSide = 'bottom',
                  isHover = false,
+                 rounded = 'sm',
                  children,
                }) => {
 
   if (responsive) {
     return (
-      <StyledTableContainer>
+      <StyledTableContainer rounded={rounded}>
         <StyledTable striped={striped}
                      headColor={headColor}
                      color={color}
@@ -171,6 +172,7 @@ Table.propTypes = {
   captionText: PropTypes.string,
   captionSide: PropTypes.oneOf(['top', 'bottom']),
   isHover: PropTypes.bool,
+  rounded: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xxl', false])
 }
 
 export default Table;
