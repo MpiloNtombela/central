@@ -5,5 +5,5 @@
  * @returns {string} path
  */
 export const useGetSubPath = (route, name) => {
-  return route.subRoutes.find(r => r.name.toLowerCase() === name)?.path
+  return route.subRoutes.find(r => r.name.toLowerCase() === name.toLowerCase())?.path
 }
