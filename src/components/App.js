@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {useGetSubPath} from "../hooks/routes";
 import DataProvider from "./DataContext";
+import ClassMarks from "./pages/achievement/ClassMarks";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
-import {selfHelp} from "./pages/utils/mainRoutes";
+import {achievements, selfHelp} from "./pages/utils/mainRoutes";
 import Theme from "./Theme";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   const ienabler = useGetSubPath(selfHelp, 'ienabler')
   const reg = useGetSubPath(selfHelp, 'registration')
   const exclusion = useGetSubPath(selfHelp, 'exclusion')
+  const cMarks = useGetSubPath(achievements, 'Class Marks')
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -34,6 +36,7 @@ const App = () => {
             <Route path={exclusion} element={<Home/>}/>
             <Route path={ienabler} element={<IEnabler/>}/>
             <Route path={reg} element={<IEnabler/>}/>
+            <Route path={cMarks} element={<ClassMarks/>}/>
           </Routes>
         </HashRouter>
       </Theme>
