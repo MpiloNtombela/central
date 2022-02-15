@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import Grid, {GridCell} from "./Grid";
 
 
@@ -48,7 +48,6 @@ const StyledCollapsibleContent = styled.div`
     max-height: 100vh;
     opacity: 1;
     overflow: auto;
-    padding: ${({theme}) => theme.sizes.gutters[2]};
   }
 `
 
