@@ -1,6 +1,6 @@
 import {useTheme} from "@emotion/react";
 import React from 'react';
-import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
+import Table, {TableData, TableHead, TableRow, TBody, TFoot, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
@@ -32,33 +32,50 @@ const ClassMarks = () => {
                          </Box>}
                        marginBottom={theme.sizes.gutters[4]}>
             <TabContext>
-              <Tabs isFixed selectedTab={2}>
-                {[1, 2].map((sem) => (
-                  <Tab key={sem} value={sem}>Semester {sem}</Tab>
-                ))}
-              </Tabs>
+              <Box paddingLeft={theme.sizes.gutters[2]} paddingRight={theme.sizes.gutters[2]}>
+                <Tabs isFixed selectedTab={2}>
+                  {[1, 2].map((sem) => (
+                    <Tab key={sem} value={sem}>Semester {sem}</Tab>
+                  ))}
+                </Tabs>
+              </Box>
               {[1, 2].map(sem => (
                 <TabContent key={sem} value={sem}>
-                  {[1, 2, 3, 4].map((module) => (
-                    <Table striped key={module} tableSize={'lg'} headColor={'info'} responsive>
+                  {[1, 2, 3, 4].map((module) => {
+                    let finalMark = 0;
+                    return (<Table striped key={module} tableSize={'lg'} headColor={'info'} responsive>
                       <THead>
                         <TableRow>
-                          <TableHead cols>{yr}:{sem}</TableHead>
-                          <TableHead>MODL{module}</TableHead>
+                          <TableHead>{yr}:{sem}</TableHead>
+                          <TableHead>MPLO{3 - idx}{sem}{module}</TableHead>
                           <TableHead>The long name of the module</TableHead>
                           <TableHead>Marks</TableHead>
                         </TableRow>
                       </THead>
                       <TBody>
-                        {[1, 2, 3, 4].map((test) => (
-                          <TableRow key={test}>
-                            <TableData colSpan={3}>Test {test}</TableData>
-                            <TableData>{randMark(test, 100)}</TableData>
-                          </TableRow>
-                        ))}
+                        {[1, 2, 3, 4].map((test) => {
+                          const mark = randMark(test, 100)
+                          finalMark += mark
+                          return (
+                            <TableRow key={test}>
+                              <TableData colSpan={3}>Test {test}</TableData>
+                              <TableData>{mark}</TableData>
+                            </TableRow>
+                          )
+                        })}
                       </TBody>
-                    </Table>
-                  ))}
+                      <TFoot>
+                        <TableRow style={{
+                          background: theme.palette[finalMark < 200 ? 'danger' : 'success']?.main,
+                          color: theme.palette[finalMark < 200 ? 'danger' : 'success']?.contrast.main,
+                          fontWeight: 'bold'
+                        }}>
+                          <TableData colSpan={3}>Class Mark</TableData>
+                          <TableData>{Math.floor((finalMark / 400) * 100)}</TableData>
+                        </TableRow>
+                      </TFoot>
+                    </Table>)
+                  })}
                 </TabContent>
               ))}
             </TabContext>
