@@ -3,6 +3,7 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import {useGetSubPath} from "../hooks/routes";
 import DataProvider from "./DataContext";
 import ClassMarks from "./pages/achievement/ClassMarks";
+import FinalMark from "./pages/achievement/FinalMarks";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
@@ -16,6 +17,7 @@ const App = () => {
   const reg = useGetSubPath(selfHelp, 'registration')
   const exclusion = useGetSubPath(selfHelp, 'exclusion')
   const cMarks = useGetSubPath(achievements, 'Class Marks')
+  const fMarks = useGetSubPath(achievements, 'Final Marks')
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -37,6 +39,7 @@ const App = () => {
             <Route path={ienabler} element={<IEnabler/>}/>
             <Route path={reg} element={<IEnabler/>}/>
             <Route path={cMarks} element={<ClassMarks/>}/>
+            <Route path={fMarks} element={<FinalMark/>}/>
           </Routes>
         </HashRouter>
       </Theme>
