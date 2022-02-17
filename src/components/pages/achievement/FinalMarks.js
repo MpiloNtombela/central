@@ -85,6 +85,18 @@ const Semester = ({yr, sem, theme}) => {
             <Text tColor={theme.palette.info.contrast.dark} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>Mpilo
               Commendation</Text>
           </Box>}
+        {risk &&
+          <Box
+            padding={theme.sizes.gutters[2]}
+            marginBottom={theme.sizes.gutters[2]}
+            style={{
+              background: theme.palette.warning.main,
+              borderRadius: theme.sizes.radius.sm
+            }}>
+            <Text tColor={theme.palette.warning.contrast.main} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>
+              unsatisfactory academic performance [at risk]
+            </Text>
+          </Box>}
         <Table striped tableSize={'lg'} headColor={'info'} responsive>
           <THead>
             <TableRow>
