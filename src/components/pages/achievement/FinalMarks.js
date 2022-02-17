@@ -24,21 +24,27 @@ const FinalContext = React.createContext()
 const FinalDispatch = React.createContext()
 
 const UPDATE_DATA = 'UPDATE_DATA'
+const ADD_PASS = 'ADD_PASS'
+const ADD_FAIL = 'ADD_FAIL'
 
 const initData = {
-  risks: 0,
-  deans: 0,
-  failed: 0,
-  passed: 0
+  risks: [],
+  deans: [],
+  failed: [],
+  passed: [],
 }
 
-const finalReducer = (draft, action) => {
-  switch (action.type) {
+const finalReducer = (draft, {payload, type}) => {
+  switch (type) {
     case UPDATE_DATA:
-      draft.deans += action.payload.deans
-      draft.risks += action.payload.risks
-      draft.failed += action.payload.failed
-      draft.passed += action.payload.passed
+      payload.deans && draft.deans.push(payload.deans)
+      payload.risks && draft.risks.push(payload.risks)
+      break
+    case ADD_FAIL:
+      draft.failed.push(payload)
+      break
+    case ADD_PASS:
+      draft.passed.push(payload)
       break
     default:
       return draft
@@ -46,7 +52,7 @@ const finalReducer = (draft, action) => {
 }
 
 
-const Semester = ({yr, sem, theme}) => {
+const Semester = ({yr, sem, mod, theme}) => {
   const [marks] = useState(randMarks(30, 100))
   const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
   const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= 2)
@@ -57,14 +63,19 @@ const Semester = ({yr, sem, theme}) => {
     setTimeout(() => {
       setLoading(false)
     }, 2500)
-    let fail = marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0)
     dispatch({
       type: UPDATE_DATA,
       payload: {
-        failed: fail,
-        passed: marks.length - fail,
-        risks: risk ? 1 : 0,
-        deans: dean ? 1 : 0
+        risks: risk ? {yr, sem} : false,
+        deans: dean ? {yr, sem} : false,
+      }
+    })
+    marks.forEach((mark, idx) => {
+      const mod = `MPLO${yr - 2018}${sem}${idx}`
+      if (mark < 50) {
+        dispatch({type: ADD_FAIL, payload: mod})
+      } else {
+        dispatch({type: ADD_PASS, payload: mod})
       }
     })
   }, [])
@@ -113,7 +124,7 @@ const Semester = ({yr, sem, theme}) => {
               return (
                 <TableRow key={idx}>
                   <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>MPLO{yr - 2018}{sem}{idx}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>The long name of module</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
