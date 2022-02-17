@@ -23,31 +23,22 @@ const randMarks = (min, max, len = 4) => {
 const FinalContext = React.createContext()
 const FinalDispatch = React.createContext()
 
-const ADD_DEAN = 'ADD_DEAN'
-const ADD_PASS = 'ADD_PASS'
-const ADD_FAIL = 'ADD_FAIL'
-const ADD_RISK = 'ADD_RISK'
+const UPDATE_DATA = 'UPDATE_DATA'
 
 const initData = {
   risks: 0,
   deans: 0,
-  fails: 0,
+  failed: 0,
   passed: 0
 }
 
 const finalReducer = (draft, action) => {
   switch (action.type) {
-    case ADD_DEAN:
-      draft.deans += action.payload
-      break
-    case ADD_PASS:
-      draft.passed += action.payload
-      break
-    case ADD_FAIL:
-      draft.pass += action.payload
-      break
-    case ADD_RISK:
-      draft.risks += action.payload
+    case UPDATE_DATA:
+      draft.deans += action.payload.deans
+      draft.risks += action.payload.risks
+      draft.failed += action.payload.failed
+      draft.passed += action.payload.passed
       break
     default:
       return draft
@@ -58,7 +49,7 @@ const finalReducer = (draft, action) => {
 const Semester = ({yr, sem, theme}) => {
   const [marks] = useState(randMarks(30, 100))
   const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
-  const [risk, setRisk] = useState(false)
+  const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= 2)
   const [loading, setLoading] = useState(true)
   const dispatch = useContext(FinalDispatch);
 
@@ -67,24 +58,15 @@ const Semester = ({yr, sem, theme}) => {
       setLoading(false)
     }, 2500)
     let fail = marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0)
-    setRisk(fail >= 2)
     dispatch({
-      type: ADD_PASS,
-      payload: marks.length - fail
+      type: UPDATE_DATA,
+      payload: {
+        failed: fail,
+        passed: marks.length - fail,
+        risks: risk ? 1 : 0,
+        deans: dean ? 1 : 0
+      }
     })
-    dispatch({
-      type: ADD_FAIL,
-      payload: fail
-    })
-    dispatch({
-      type: ADD_DEAN,
-      payload: dean ? 1 : 0
-    })
-    dispatch({
-      type: ADD_RISK,
-      payload: risk ? 1 : 0
-    })
-
   }, [])
 
   if (loading) {
@@ -139,9 +121,10 @@ const Semester = ({yr, sem, theme}) => {
 const FinalMark = () => {
   const theme = useTheme()
   const [finalData, dispatch] = useImmerReducer(finalReducer, initData)
+
   return (
-    <FinalContext.provider value={finalData}>
-      <FinalDispatch.provider value={dispatch}>
+    <FinalContext.Provider value={finalData}>
+      <FinalDispatch.Provider value={dispatch}>
         <Container maxWidth={'md'}>
           <Box marginTop={theme.sizes.gutters[4]}/>
           {[2021, 2020, 2019, 2018].map((yr, idx) => (
@@ -176,8 +159,8 @@ const FinalMark = () => {
             </Card>
           ))}
         </Container>
-      </FinalDispatch.provider>
-    </FinalContext.provider>
+      </FinalDispatch.Provider>
+    </FinalContext.Provider>
   );
 };
 
