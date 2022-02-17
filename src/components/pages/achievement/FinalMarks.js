@@ -1,5 +1,5 @@
 import {useTheme} from "@emotion/react";
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useImmerReducer} from "use-immer";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
@@ -26,9 +26,10 @@ const FinalDispatch = React.createContext()
 const ADD_DEAN = 'ADD_DEAN'
 const ADD_PASS = 'ADD_PASS'
 const ADD_FAIL = 'ADD_FAIL'
+const ADD_RISK = 'ADD_RISK'
 
 const initData = {
-  risks: false,
+  risks: 0,
   deans: 0,
   fails: 0,
   passed: 0
@@ -37,25 +38,52 @@ const initData = {
 const finalReducer = (draft, action) => {
   switch (action.type) {
     case ADD_DEAN:
-      draft.deans = action.payload
+      draft.deans += action.payload
       break
     case ADD_PASS:
-      draft.passed = action.payload
+      draft.passed += action.payload
       break
     case ADD_FAIL:
-      draft.pass = action.payload
+      draft.pass += action.payload
       break
+    case ADD_RISK:
+      draft.risks += action.payload
+      break
+    default:
+      return draft
   }
 }
 
 
 const Semester = ({yr, sem, theme}) => {
   const [marks] = useState(randMarks(30, 100))
+  const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
+  const [risk, setRisk] = useState(false)
   const [loading, setLoading] = useState(true)
+  const dispatch = useContext(FinalDispatch);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 2500)
+    let fail = marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0)
+    setRisk(fail >= 2)
+    dispatch({
+      type: ADD_PASS,
+      payload: marks.length - fail
+    })
+    dispatch({
+      type: ADD_FAIL,
+      payload: fail
+    })
+    dispatch({
+      type: ADD_DEAN,
+      payload: dean ? 1 : 0
+    })
+    dispatch({
+      type: ADD_RISK,
+      payload: risk ? 1 : 0
+    })
 
   }, [])
 
@@ -64,7 +92,7 @@ const Semester = ({yr, sem, theme}) => {
   } else {
     return (
       <>
-        {(marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60) &&
+        {dean &&
           <Box
             padding={theme.sizes.gutters[2]}
             marginBottom={theme.sizes.gutters[2]}
