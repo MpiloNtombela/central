@@ -1,5 +1,5 @@
 import {useTheme} from "@emotion/react";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
@@ -8,10 +8,72 @@ import Collapsible from "../../layouts/Collapsible";
 import Container from "../../layouts/Container";
 import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 
-const randMark = (min, max) => {
+const randMarks = (min, max, len = 4) => {
   min = Math.ceil(min)
   max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
+  let marx = []
+  for (let x = 0; x < len; x++) {
+    marx.push(Math.floor(Math.random() * (max - min + 1)) + min)
+  }
+  return marx
+}
+
+const Semester = ({yr, sem, theme}) => {
+  const marks = randMarks(30, 100)
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 2500)
+  }, [])
+
+  if (loading) {
+    return <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Loading...</Text>
+  } else {
+    return (
+      <>
+        {(marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60) &&
+          <Box
+            padding={theme.sizes.gutters[2]}
+            marginBottom={theme.sizes.gutters[2]}
+            style={{
+              background: theme.palette.info.dark,
+              borderRadius: theme.sizes.radius.sm
+            }}>
+            <Text tColor={theme.palette.info.contrast.dark} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>Mpilo
+              Commendation</Text>
+          </Box>}
+        <Table striped tableSize={'lg'} headColor={'info'} responsive>
+          <THead>
+            <TableRow>
+              <TableHead>Sem</TableHead>
+              <TableHead>Module</TableHead>
+              <TableHead>Desc</TableHead>
+              <TableHead>Mark</TableHead>
+              <TableHead>Result</TableHead>
+              <TableHead>Explanation</TableHead>
+            </TableRow>
+          </THead>
+          <TBody>
+            {marks.map((mark, idx) => {
+              return (
+                <TableRow key={idx}>
+                  <TableData>{yr}:{sem}</TableData>
+                  <TableData>MPLO{yr - 2018}{sem}{idx}</TableData>
+                  <TableData>The long name of module</TableData>
+                  <TableData>{mark}</TableData>
+                  <TableData>{mark < 50 ? 'F' : 'P'}</TableData>
+                  <TableData>
+                    {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
+                  </TableData>
+                </TableRow>
+              )
+            })}
+          </TBody>
+        </Table>
+      </>
+    )
+  }
 }
 
 const FinalMark = () => {
@@ -40,40 +102,12 @@ const FinalMark = () => {
                   ))}
                 </Tabs>
               </Box>
-              {[1, 2].map(sem => (
-                <TabContent key={sem} value={sem}>
-                  {[1].map((module) => {
-                    return (
-                      <Table striped key={module} tableSize={'lg'} headColor={'info'} responsive>
-                        <THead>
-                          <TableRow>
-                            <TableHead>Sem</TableHead>
-                            <TableHead>Module</TableHead>
-                            <TableHead>Desc</TableHead>
-                            <TableHead>Mark</TableHead>
-                            <TableHead>Result</TableHead>
-                            <TableHead>Explanation</TableHead>
-                          </TableRow>
-                        </THead>
-                        <TBody>
-                          {[1, 2, 3, 4].map((test, idx) => {
-                            const mark = randMark(test, 100)
-                            return (
-                              <TableRow key={test}>
-                                <TableData>{yr}:{sem}</TableData>
-                                <TableData>MPLO{yr - 2018}{sem}{idx}</TableData>
-                                <TableData>The long name of module</TableData>
-                                <TableData>{mark}</TableData>
-                                <TableData>{mark < 50 ? 'F' : 'P'}</TableData>
-                                <TableData>{mark > 85 ? 'Certificate of Merit' : mark < 50 ? 'Fail' : 'Pass'}</TableData>
-                              </TableRow>
-                            )
-                          })}
-                        </TBody>
-                      </Table>)
-                  })}
-                </TabContent>
-              ))}
+              {[1, 2].map(sem => {
+                return (
+                  <TabContent key={sem} value={sem}>
+                    <Semester yr={yr} sem={sem} theme={theme}/>
+                  </TabContent>)
+              })}
             </TabContext>
           </Collapsible>
         </Card>
