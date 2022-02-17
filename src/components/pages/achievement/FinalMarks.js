@@ -112,12 +112,12 @@ const Semester = ({yr, sem, theme}) => {
             {marks.map((mark, idx) => {
               return (
                 <TableRow key={idx}>
-                  <TableData>{yr}:{sem}</TableData>
-                  <TableData>MPLO{yr - 2018}{sem}{idx}</TableData>
-                  <TableData>The long name of module</TableData>
-                  <TableData>{mark}</TableData>
-                  <TableData>{mark < 50 ? 'F' : 'P'}</TableData>
-                  <TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>MPLO{yr - 2018}{sem}{idx}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of module</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>
                     {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
                   </TableData>
                 </TableRow>
