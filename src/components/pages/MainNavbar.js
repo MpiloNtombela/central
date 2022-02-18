@@ -1,9 +1,10 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
-import {MdArrowDropDown} from "react-icons/md";
 import {FaSignOutAlt} from "react-icons/fa";
+import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
+import Xe from "../../../public/Xe.png"
 import {useDataContext} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
@@ -12,15 +13,14 @@ import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
 import Text from "../elements/Text";
 import Box from "../layouts/Box";
 import Chip from "../layouts/Chip";
-import Grid, {GridCell} from "../layouts/Grid";
 import DropMenu, {Menu} from "../layouts/DropMenu";
+import Grid, {GridCell} from "../layouts/Grid";
 import {achievements, admin, selfHelp} from "./utils/mainRoutes";
-import Xe from "../../../public/Xe.png"
 
 const NavRoute = ({route, isBreak}) => {
   return (
     <NavbarItem>
-      <DropMenu frost>
+      <DropMenu>
         <IconText stack={!isBreak} iconStyle={{marginRight: isBreak ? '.5rem' : '0'}} align={'center'}
                   text={route.name} icon={route.icon} textSize={isBreak ? '1rem' : "small"}/>
         <Menu>

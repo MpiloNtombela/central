@@ -278,7 +278,12 @@ const FinalMark = () => {
           ))}
         </Container>
         <Box position={'fixed'} bottom={theme.sizes.gutters[4]} right={theme.sizes.gutters[4]}>
-          <Button disabled={loading} onClick={handleToggleOverview} size={'md'} color={'secondary'}>Overview</Button>
+          <Button
+            disabled={loading}
+            onClick={handleToggleOverview}
+            size={'md'}
+            style={{background: theme.palette.secondary.glass}}
+            color={'secondary'}>Overview</Button>
         </Box>
         <DataOverviewDrawer handleClose={handleToggleOverview} open={openOverview} theme={theme}/>
       </FinalDispatch.Provider>
