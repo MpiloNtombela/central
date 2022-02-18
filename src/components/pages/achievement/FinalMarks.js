@@ -1,12 +1,17 @@
 import {useTheme} from "@emotion/react";
+import PropTypes from "prop-types";
 import React, {useContext, useEffect, useState} from 'react';
+import {useMediaQuery} from "react-responsive";
 import {useImmerReducer} from "use-immer";
+import Button from "../../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
+import Chip from "../../layouts/Chip";
 import Collapsible from "../../layouts/Collapsible";
 import Container from "../../layouts/Container";
+import Drawer from "../../layouts/Drawer";
 import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 
 const randMarks = (min, max, len = 4) => {
@@ -101,11 +106,11 @@ const Semester = ({yr, sem, mod, theme}) => {
             padding={theme.sizes.gutters[2]}
             marginBottom={theme.sizes.gutters[2]}
             style={{
-              background: theme.palette.warning.main,
+              background: theme.palette.warning.light,
               borderRadius: theme.sizes.radius.sm
             }}>
-            <Text tColor={theme.palette.warning.contrast.main} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>
-              unsatisfactory academic performance [at risk]
+            <Text tColor={theme.palette.warning.contrast.light} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>
+              unsatisfactory academic results
             </Text>
           </Box>}
         <Table striped tableSize={'lg'} headColor={'info'} responsive>
@@ -121,11 +126,12 @@ const Semester = ({yr, sem, mod, theme}) => {
           </THead>
           <TBody>
             {marks.map((mark, idx) => {
+              const mod = `MPLO${yr - 2018}${sem}${idx}`
               return (
                 <TableRow key={idx}>
                   <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of module</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
                   <TableData style={{whiteSpace: 'nowrap'}}>
@@ -141,9 +147,79 @@ const Semester = ({yr, sem, mod, theme}) => {
   }
 }
 
+const DataOverview = ({data, title, theme, dataFor}) => {
+  return (
+    <Box marginTop={theme.sizes.gutters[4]}>
+      <Text fSize={'small'} fWeight={'bold'} tAlign={'center'}>{title}</Text>
+      <Box marginTop={theme.sizes.gutters[2]} display={'flex'} style={{flexWrap: 'wrap'}}
+           justifyContent={'center'}>
+        {data.map((x, idx) => {
+          if (dataFor === 'deans' || dataFor === 'risks') {
+            return (
+              <Box key={idx} margin={theme.sizes.gutters[1]} display={'inline'}>
+                <Chip color={dataFor === 'deans' ? 'info' : 'warning'} text={`${x.yr}:${x.sem}`}/>
+              </Box>
+            )
+          } else {
+            return (
+              <Box key={idx} margin={theme.sizes.gutters[1]} display={'inline'}>
+                <Chip color={dataFor === 'passed' ? 'success' : 'danger'} text={x}/>
+              </Box>
+            )
+          }
+        })}
+      </Box>
+    </Box>
+  )
+}
+
+const DataOverviewDrawer = ({open, handleClose, theme}) => {
+  const {deans, risks, passed, failed} = useContext(FinalContext)
+  const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
+
+  return (
+    <Drawer rounded={isSm}
+            onClose={handleClose}
+            open={open}
+            width={'310px'}
+            style={{maxHeight: '80%'}}
+            elevation={4}
+            anchor={isSm ? 'bottom' : 'right'}>
+      <Container style={{
+        overflowY: 'auto',
+        maxHeight: '70vh',
+        background: 'transparent',
+        padding: `${theme.sizes.gutters[4]} 0`
+      }}>
+        <Text fSize={'x-large'} tAlign={'center'} fWeight={'bold'}>Academic overview</Text>
+        <Box
+          padding={theme.sizes.gutters[2]}
+          margin={theme.sizes.gutters[3]}
+          style={{
+            background: theme.palette.info.glass,
+            borderRadius: theme.sizes.radius.xxl
+          }}>
+          <Text tColor={theme.palette.info.contrast.glass} fWeight={'bold'} fSize={'small'} tAlign={'center'}>
+            points obtained: {passed.length * 16} / {(passed.length + failed.length) * 16}
+          </Text>
+        </Box>
+        {deans.length > 0 && <DataOverview data={deans} dataFor={'deans'} title={'Mpilo Commendation'} theme={theme}/>}
+        {passed.length > 0 && <DataOverview data={passed} dataFor={'passed'} title={'Passed Modules'} theme={theme}/>}
+        {failed.length > 0 && <DataOverview data={failed} dataFor={'failed'} title={'Failed Modules'} theme={theme}/>}
+        {risks.length > 0 && <DataOverview data={risks} dataFor={'risks'} title={'Risk Semesters'} theme={theme}/>}
+      </Container>
+    </Drawer>
+  )
+}
+
 const FinalMark = () => {
   const theme = useTheme()
   const [finalData, dispatch] = useImmerReducer(finalReducer, initData)
+  const [openOverview, setOpenOverview] = useState(false)
+
+  const handleToggleOverview = () => {
+    setOpenOverview(!openOverview)
+  }
 
   return (
     <FinalContext.Provider value={finalData}>
@@ -182,9 +258,27 @@ const FinalMark = () => {
             </Card>
           ))}
         </Container>
+        <Box position={'fixed'} bottom={theme.sizes.gutters[4]} right={theme.sizes.gutters[4]}>
+          <Button onClick={handleToggleOverview} size={'md'} color={'secondary'}>Overview</Button>
+        </Box>
+        <DataOverviewDrawer handleClose={handleToggleOverview} open={openOverview} theme={theme}/>
       </FinalDispatch.Provider>
     </FinalContext.Provider>
   );
 };
+
+DataOverviewDrawer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  theme: PropTypes.any
+}
+
+DataOverview.propTypes = {
+  data: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  theme: PropTypes.any.isRequired,
+  dataFor: PropTypes.string.isRequired,
+}
+
 
 export default FinalMark;
