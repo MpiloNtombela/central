@@ -66,7 +66,7 @@ const dataState = {
       description: "Bachelor of Science (CSIT)",
       preference: 6,
       status: "Unsuccessful",
-      collage: "Collage of Arg, Eng & Science",
+      college: "Collage of Arg, Eng & Science",
       code: "caes"
     },
     {
@@ -75,7 +75,7 @@ const dataState = {
       description: "Bachelor of Art",
       preference: 5,
       status: "Accept Offer",
-      collage: "Collage of Humanities",
+      college: "Collage of Humanities",
       code: "coh"
     },
     {
@@ -84,7 +84,7 @@ const dataState = {
       description: "BEd (Teacher Education)",
       preference: 4,
       status: "Programme Full",
-      collage: "Collage of Humanities",
+      college: "Collage of Humanities",
       code: "coh"
     },
     {
@@ -92,8 +92,8 @@ const dataState = {
       qualification: "BSS",
       description: "Bachelor of Social Science",
       preference: 1,
-      status: "Accepted Offer",
-      collage: "Collage of Humanities",
+      status: "Accept Offer",
+      college: "Collage of Humanities",
       code: "coh"
     },
     {
@@ -102,7 +102,7 @@ const dataState = {
       description: "Bachelor of Commerce Honours in IST",
       preference: 1,
       status: "Firm Offer",
-      collage: "Collage of Law & Man Studies",
+      college: "Collage of Law & Man Studies",
       code: "clms"
     },
     {
@@ -111,7 +111,7 @@ const dataState = {
       description: "Master of Techno King😏",
       preference: 1,
       status: "Pending",
-      collage: "Collage of Gotham",
+      college: "Collage of Gotham",
       code: "cog"
     },
   ],
