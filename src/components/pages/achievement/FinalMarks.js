@@ -131,8 +131,8 @@ const DataOverviewDrawer = ({open, handleClose, theme}) => {
 }
 
 const Semester = ({yr, sem, theme, isLoading}) => {
-  const [marks] = useState(randMarks(30, 100, yr === 2018 ? 2 : 4))
-  const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
+  const [marks] = useState(randMarks(60, 100, yr === 2018 ? 2 : 4))
+  const [dean] = useState((marks.reduce((a, b) => a + b) / (marks.length < 4 ? 400 : (marks.length * 100))) * 100 >= 75 && marks.every(x => x >= 60))
   const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= marks.length / 2)
   const dispatch = useContext(FinalDispatch);
 
