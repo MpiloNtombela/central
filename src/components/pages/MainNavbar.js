@@ -68,32 +68,33 @@ const MainNavbar = () => {
         <NavRoute isBreak={isSm} route={achievements}/>
         <NavRoute isBreak={isSm} route={admin}/>
         <NavbarItem style={{display: 'flex', alignItems: 'center'}}>
-            <DropMenu>
-              <Chip avatar={<Image radius={"50%"}
-                                   style={{
-                                     border: `1px solid ${theme.palette.secondary.main}`,
-                                     padding: theme.sizes.gutters[1]
-                                   }} src={Xe} alt={''}/>}
-                    text={student.studentNumber}
-                    outlined color={'secondary'}
-                    endIcon={<MdArrowDropDown size={'1rem'}/>}/>
-              <Menu>
-                <Box onClick={()=>{}} style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
-                  <IconText
-                    icon={<FaSignOutAlt/>}
-                    text={'logout'}
-                    textSize='.75rem'
-                    align={'center'}
-                    iconStyle={{
-                      height: "36px",
-                      width: "36px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}/>
-                </Box>
-              </Menu>
-            </DropMenu>
+          <DropMenu>
+            <Chip avatar={<Image radius={"50%"}
+                                 style={{
+                                   border: `1px solid ${theme.palette.secondary.main}`,
+                                   padding: theme.sizes.gutters[1]
+                                 }} src={Xe} alt={''}/>}
+                  text={student.studentNumber}
+                  outlined color={'secondary'}
+                  endIcon={<MdArrowDropDown size={'1rem'}/>}/>
+            <Menu>
+              <Box onClick={() => {
+              }} style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
+                <IconText
+                  icon={<FaSignOutAlt/>}
+                  text={'logout'}
+                  textSize='.75rem'
+                  align={'center'}
+                  iconStyle={{
+                    height: "36px",
+                    width: "36px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}/>
+              </Box>
+            </Menu>
+          </DropMenu>
         </NavbarItem>
       </NavbarItems>
     </Navbar>
