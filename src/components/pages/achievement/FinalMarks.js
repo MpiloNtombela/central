@@ -131,9 +131,9 @@ const DataOverviewDrawer = ({open, handleClose, theme}) => {
 }
 
 const Semester = ({yr, sem, theme, isLoading}) => {
-  const [marks] = useState(randMarks(30, 100))
+  const [marks] = useState(randMarks(30, 100, yr === 2018 ? 2 : 4))
   const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
-  const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= 2)
+  const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= marks.length / 2)
   const dispatch = useContext(FinalDispatch);
 
   useEffect(() => {
@@ -146,12 +146,10 @@ const Semester = ({yr, sem, theme, isLoading}) => {
     })
     marks.forEach((mark, idx) => {
       const mod = `MPLO${yr - 2018}${sem}${idx}`
-      if (!(yr === 2018 && idx > 1)) {
-        if (mark < 50) {
-          dispatch({type: ADD_FAIL, payload: {mod, star: mark < 50 && mark >= 40}})
-        } else {
-          dispatch({type: ADD_PASS, payload: {mod, star: mark >= 85}})
-        }
+      if (mark < 50) {
+        dispatch({type: ADD_FAIL, payload: {mod, star: mark < 50 && mark >= 40}})
+      } else {
+        dispatch({type: ADD_PASS, payload: {mod, star: mark >= 85}})
       }
     })
   }, [])
@@ -206,20 +204,18 @@ const Semester = ({yr, sem, theme, isLoading}) => {
           <TBody>
             {marks.map((mark, idx) => {
               const mod = `MPLO${yr - 2018}${sem}${idx}`
-              if (!(yr === 2018 && idx > 1)) {
-                return (
-                  <TableRow key={idx}>
-                    <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
-                    <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
-                    <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
-                    <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
-                    <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
-                    <TableData style={{whiteSpace: 'nowrap'}}>
-                      {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
-                    </TableData>
-                  </TableRow>
-                )
-              }
+              return (
+                <TableRow key={idx}>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>
+                    {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
+                  </TableData>
+                </TableRow>
+              )
             })}
           </TBody>
         </Table>
