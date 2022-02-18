@@ -146,10 +146,12 @@ const Semester = ({yr, sem, theme, isLoading}) => {
     })
     marks.forEach((mark, idx) => {
       const mod = `MPLO${yr - 2018}${sem}${idx}`
-      if (mark < 50) {
-        dispatch({type: ADD_FAIL, payload: {mod, star: mark < 50 && mark >= 40}})
-      } else {
-        dispatch({type: ADD_PASS, payload: {mod, star: mark >= 85}})
+      if (!(yr === 2018 && idx > 1)) {
+        if (mark < 50) {
+          dispatch({type: ADD_FAIL, payload: {mod, star: mark < 50 && mark >= 40}})
+        } else {
+          dispatch({type: ADD_PASS, payload: {mod, star: mark >= 85}})
+        }
       }
     })
   }, [])
@@ -204,18 +206,20 @@ const Semester = ({yr, sem, theme, isLoading}) => {
           <TBody>
             {marks.map((mark, idx) => {
               const mod = `MPLO${yr - 2018}${sem}${idx}`
-              return (
-                <TableRow key={idx}>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>
-                    {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
-                  </TableData>
-                </TableRow>
-              )
+              if (!(yr === 2018 && idx > 1)) {
+                return (
+                  <TableRow key={idx}>
+                    <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
+                    <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
+                    <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
+                    <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
+                    <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
+                    <TableData style={{whiteSpace: 'nowrap'}}>
+                      {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
+                    </TableData>
+                  </TableRow>
+                )
+              }
             })}
           </TBody>
         </Table>
