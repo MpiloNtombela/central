@@ -61,6 +61,14 @@ const DataOverview = ({data, title, theme, dataFor}) => {
   return (
     <Box marginTop={theme.sizes.gutters[4]}>
       <Text fSize={'small'} fWeight={'bold'} tAlign={'center'}>{title}</Text>
+      {dataFor === 'passed' &&
+        <Text fSize={'x-small'} tAlign={'center'} fWeight={'bold'} tColor={theme.palette.dark.main}>
+          certificate of merit(*)
+        </Text>}
+      {dataFor === 'failed' &&
+        <Text fSize={'x-small'} tAlign={'center'} fWeight={'bold'} tColor={theme.palette.dark.main}>
+          Supp exam granted(*)
+        </Text>}
       <Box marginTop={theme.sizes.gutters[2]} display={'flex'} style={{flexWrap: 'wrap'}}
            justifyContent={'center'}>
         {data.map((x, idx) => {
@@ -73,7 +81,7 @@ const DataOverview = ({data, title, theme, dataFor}) => {
           } else {
             return (
               <Box key={idx} margin={theme.sizes.gutters[1]} display={'inline'}>
-                <Chip color={dataFor === 'passed' ? 'success' : 'danger'} text={x}/>
+                <Chip color={dataFor === 'passed' ? 'success' : 'danger'} text={`${x.mod}${x.star ? '*' : ''}`}/>
               </Box>
             )
           }
@@ -139,9 +147,9 @@ const Semester = ({yr, sem, theme, isLoading}) => {
     marks.forEach((mark, idx) => {
       const mod = `MPLO${yr - 2018}${sem}${idx}`
       if (mark < 50) {
-        dispatch({type: ADD_FAIL, payload: mod})
+        dispatch({type: ADD_FAIL, payload: {mod, star: mark < 50 && mark >= 40}})
       } else {
-        dispatch({type: ADD_PASS, payload: mod})
+        dispatch({type: ADD_PASS, payload: {mod, star: mark >= 85}})
       }
     })
   }, [])
