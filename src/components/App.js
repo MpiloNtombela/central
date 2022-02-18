@@ -4,10 +4,11 @@ import {useGetSubPath} from "../hooks/routes";
 import DataProvider from "./DataContext";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
+import Registration from "./pages/admin/Registration";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
-import {achievements, selfHelp} from "./pages/utils/mainRoutes";
+import {achievements, admin, selfHelp} from "./pages/utils/mainRoutes";
 import Theme from "./Theme";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
   const exclusion = useGetSubPath(selfHelp, 'exclusion')
   const cMarks = useGetSubPath(achievements, 'Class Marks')
   const fMarks = useGetSubPath(achievements, 'Final Marks')
+  const regHist = useGetSubPath(admin, 'Reg History')
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -40,6 +42,7 @@ const App = () => {
             <Route path={reg} element={<IEnabler/>}/>
             <Route path={cMarks} element={<ClassMarks/>}/>
             <Route path={fMarks} element={<FinalMark/>}/>
+            <Route path={regHist} element={<Registration/>}/>
           </Routes>
         </HashRouter>
       </Theme>
