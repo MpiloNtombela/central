@@ -12,6 +12,7 @@ import Chip from "../../layouts/Chip";
 import Collapsible from "../../layouts/Collapsible";
 import Container from "../../layouts/Container";
 import Drawer from "../../layouts/Drawer";
+import Skeleton from "../../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 
 const randMarks = (min, max, len = 4) => {
@@ -146,7 +147,15 @@ const Semester = ({yr, sem, theme, isLoading}) => {
   }, [])
 
   if (isLoading) {
-    return <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Loading...</Text>
+    return (
+      <>
+        {[1, 2, 3, 4, 5].map(x => (
+          <Box key={x} margin={theme.sizes.gutters[1]}>
+            <Skeleton skeletonType={'text'} style={{height: '2rem'}}/>
+          </Box>
+        ))}
+      </>
+    )
   } else {
     return (
       <>
