@@ -6,6 +6,7 @@ import Button from "../../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
+import Card from "../../layouts/Card";
 import Container from "../../layouts/Container";
 
 const RegisteredQual = ({theme}) => {
@@ -120,14 +121,22 @@ const Registration = () => {
 
   return (
     <Container maxWidth={'lg'}>
+      <Box marginBottom={theme.sizes.gutters[4]}/>
+      <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Registration History</Text>
       <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[2]}>
-        <Text fSize={'large'} fWeight={'bold'}>Registered Qualifications</Text>
+        <Card>
+          <Text fSize={'medium'} fWeight={'bold'}>Registered Qualifications</Text>
+          <Box marginBottom={theme.sizes.gutters[3]}/>
+          <RegisteredQual theme={theme}/>
+        </Card>
       </Box>
-      <RegisteredQual theme={theme}/>
       <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[2]}>
-        <Text fSize={'large'} fWeight={'bold'}>Registered Modules</Text>
+        <Card>
+          <Text fSize={'medium'} fWeight={'bold'}>Registered Modules</Text>
+          <Box marginBottom={theme.sizes.gutters[3]}/>
+          <RegisteredModules theme={theme}/>
+        </Card>
       </Box>
-      <RegisteredModules theme={theme}/>
     </Container>
   );
 };
