@@ -18,7 +18,7 @@ const StyledDrawerOverlay = styled.div(({theme, anchor, open, fixed}) => `
     right: ${!open && anchor === "right" ? "-100%" : "0"};
     left: ${!open && anchor === "left" ? "-100%" : "0"};
     visibility: ${open ? "visible" : "hidden"};
-    background: ${fixed ? "transparent" : "rgba(0, 0, 0, .15)"};
+    background: ${fixed ? "transparent" : "rgba(0, 0, 0, .45)"};
     opacity: ${open ? 1 : 0};
     width: 100%;
     pointer-events: ${fixed ? 'none' : 'auto'};
