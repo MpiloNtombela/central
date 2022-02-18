@@ -56,97 +56,6 @@ const finalReducer = (draft, {payload, type}) => {
   }
 }
 
-
-const Semester = ({yr, sem, mod, theme}) => {
-  const [marks] = useState(randMarks(30, 100))
-  const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
-  const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= 2)
-  const [loading, setLoading] = useState(true)
-  const dispatch = useContext(FinalDispatch);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 2500)
-    dispatch({
-      type: UPDATE_DATA,
-      payload: {
-        risks: risk ? {yr, sem} : false,
-        deans: dean ? {yr, sem} : false,
-      }
-    })
-    marks.forEach((mark, idx) => {
-      const mod = `MPLO${yr - 2018}${sem}${idx}`
-      if (mark < 50) {
-        dispatch({type: ADD_FAIL, payload: mod})
-      } else {
-        dispatch({type: ADD_PASS, payload: mod})
-      }
-    })
-  }, [])
-
-  if (loading) {
-    return <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Loading...</Text>
-  } else {
-    return (
-      <>
-        {dean &&
-          <Box
-            padding={theme.sizes.gutters[2]}
-            marginBottom={theme.sizes.gutters[2]}
-            style={{
-              background: theme.palette.info.dark,
-              borderRadius: theme.sizes.radius.sm
-            }}>
-            <Text tColor={theme.palette.info.contrast.dark} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>Mpilo
-              Commendation</Text>
-          </Box>}
-        {risk &&
-          <Box
-            padding={theme.sizes.gutters[2]}
-            marginBottom={theme.sizes.gutters[2]}
-            style={{
-              background: theme.palette.warning.light,
-              borderRadius: theme.sizes.radius.sm
-            }}>
-            <Text tColor={theme.palette.warning.contrast.light} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>
-              unsatisfactory academic results
-            </Text>
-          </Box>}
-        <Table striped tableSize={'lg'} headColor={'info'} responsive>
-          <THead>
-            <TableRow>
-              <TableHead>Sem</TableHead>
-              <TableHead>Module</TableHead>
-              <TableHead>Desc</TableHead>
-              <TableHead>Mark</TableHead>
-              <TableHead>Result</TableHead>
-              <TableHead>Explanation</TableHead>
-            </TableRow>
-          </THead>
-          <TBody>
-            {marks.map((mark, idx) => {
-              const mod = `MPLO${yr - 2018}${sem}${idx}`
-              return (
-                <TableRow key={idx}>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
-                  <TableData style={{whiteSpace: 'nowrap'}}>
-                    {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
-                  </TableData>
-                </TableRow>
-              )
-            })}
-          </TBody>
-        </Table>
-      </>
-    )
-  }
-}
-
 const DataOverview = ({data, title, theme, dataFor}) => {
   return (
     <Box marginTop={theme.sizes.gutters[4]}>
@@ -212,10 +121,103 @@ const DataOverviewDrawer = ({open, handleClose, theme}) => {
   )
 }
 
+const Semester = ({yr, sem, theme, isLoading}) => {
+  const [marks] = useState(randMarks(30, 100))
+  const [dean] = useState((marks.reduce((a, b) => a + b) / 400) * 100 >= 75 && marks.every(x => x >= 60))
+  const [risk] = useState(marks.reduce((total, x) => (x < 50 ? total + 1 : total), 0) >= 2)
+  const dispatch = useContext(FinalDispatch);
+
+  useEffect(() => {
+    dispatch({
+      type: UPDATE_DATA,
+      payload: {
+        risks: risk ? {yr, sem} : false,
+        deans: dean ? {yr, sem} : false,
+      }
+    })
+    marks.forEach((mark, idx) => {
+      const mod = `MPLO${yr - 2018}${sem}${idx}`
+      if (mark < 50) {
+        dispatch({type: ADD_FAIL, payload: mod})
+      } else {
+        dispatch({type: ADD_PASS, payload: mod})
+      }
+    })
+  }, [])
+
+  if (isLoading) {
+    return <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Loading...</Text>
+  } else {
+    return (
+      <>
+        {dean &&
+          <Box
+            padding={theme.sizes.gutters[2]}
+            marginBottom={theme.sizes.gutters[2]}
+            style={{
+              background: theme.palette.info.dark,
+              borderRadius: theme.sizes.radius.sm
+            }}>
+            <Text tColor={theme.palette.info.contrast.dark} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>Mpilo
+              Commendation</Text>
+          </Box>}
+        {risk &&
+          <Box
+            padding={theme.sizes.gutters[2]}
+            marginBottom={theme.sizes.gutters[2]}
+            style={{
+              background: theme.palette.warning.light,
+              borderRadius: theme.sizes.radius.sm
+            }}>
+            <Text tColor={theme.palette.warning.contrast.light} fWeight={'bold'} fSize={'medium'} tAlign={'center'}>
+              unsatisfactory academic results
+            </Text>
+          </Box>}
+        <Table striped tableSize={'lg'} headColor={'info'} responsive>
+          <THead>
+            <TableRow>
+              <TableHead>Sem</TableHead>
+              <TableHead>Module</TableHead>
+              <TableHead>Desc</TableHead>
+              <TableHead>Mark</TableHead>
+              <TableHead>Result</TableHead>
+              <TableHead>Explanation</TableHead>
+            </TableRow>
+          </THead>
+          <TBody>
+            {marks.map((mark, idx) => {
+              const mod = `MPLO${yr - 2018}${sem}${idx}`
+              return (
+                <TableRow key={idx}>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{yr}:{sem}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mod}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>The long name of a module</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>{mark < 50 ? 'F' : 'P'}</TableData>
+                  <TableData style={{whiteSpace: 'nowrap'}}>
+                    {mark > 85 ? 'Certificate of Merit' : mark < 50 ? mark < 40 ? 'Fail' : 'Supp Granted' : 'Pass'}
+                  </TableData>
+                </TableRow>
+              )
+            })}
+          </TBody>
+        </Table>
+      </>
+    )
+  }
+}
+
 const FinalMark = () => {
   const theme = useTheme()
   const [finalData, dispatch] = useImmerReducer(finalReducer, initData)
   const [openOverview, setOpenOverview] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 2500)
+  }, [])
 
   const handleToggleOverview = () => {
     setOpenOverview(!openOverview)
@@ -250,7 +252,7 @@ const FinalMark = () => {
                   {[1, 2].map(sem => {
                     return (
                       <TabContent key={sem} value={sem}>
-                        <Semester yr={yr} sem={sem} theme={theme}/>
+                        <Semester yr={yr} sem={sem} theme={theme} isLoading={loading}/>
                       </TabContent>)
                   })}
                 </TabContext>
@@ -259,13 +261,20 @@ const FinalMark = () => {
           ))}
         </Container>
         <Box position={'fixed'} bottom={theme.sizes.gutters[4]} right={theme.sizes.gutters[4]}>
-          <Button onClick={handleToggleOverview} size={'md'} color={'secondary'}>Overview</Button>
+          <Button disabled={loading} onClick={handleToggleOverview} size={'md'} color={'secondary'}>Overview</Button>
         </Box>
         <DataOverviewDrawer handleClose={handleToggleOverview} open={openOverview} theme={theme}/>
       </FinalDispatch.Provider>
     </FinalContext.Provider>
   );
 };
+
+Semester.propTypes = {
+  yr: PropTypes.number.isRequired,
+  sem: PropTypes.number.isRequired,
+  theme: PropTypes.any,
+  isLoading: PropTypes.bool,
+}
 
 DataOverviewDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
