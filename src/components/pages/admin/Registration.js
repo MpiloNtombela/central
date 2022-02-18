@@ -1,6 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
-import React from 'react';
+import React, {useState} from 'react';
+import {FaBan} from "react-icons/fa";
 import {useDataContext} from "../../../hooks/context";
 import Button from "../../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../../elements/Table";
@@ -8,6 +9,7 @@ import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Container from "../../layouts/Container";
+import Modal, {ModalContent} from "../../layouts/Modal";
 
 const RegisteredQual = ({theme}) => {
   const data = useDataContext()
@@ -62,63 +64,70 @@ const RegisteredQual = ({theme}) => {
   )
 }
 
-const RegisteredModules = ({theme}) => {
-
+const RegisteredModules = ({theme, handleViewInfo}) => {
   return (
-    <>
-      <Table striped tableSize={'lg'} responsive>
-        <THead>
-          <TableRow style={{background: theme.palette.info.glass}}>
-            <TableHead>Semester</TableHead>
-            <TableHead>Module</TableHead>
-            <TableHead>Module Desc</TableHead>
-            <TableHead>Reg Type</TableHead>
-            <TableHead>Cancellation Date</TableHead>
-            <TableHead>Time Block</TableHead>
-            <TableHead>Module Info</TableHead>
-          </TableRow>
-        </THead>
-        <TBody>
-          {[2021, 2020, 2019, 2018].map((yr) =>
-            [1, 2].map(sem => (
-              <React.Fragment key={yr}>
-                <TableRow style={{background: theme.palette.info.light, height: '1.75rem'}}>
-                  <TableData colSpan={7}>
-                    <Text fSize={'medium'} fWeight={'bold'} tAlign={'center'}>{yr}:{sem}</Text>
-                  </TableData>
-                </TableRow>
-                <>
-                  {[1, 2, 3, 4].map((x) => {
-                    const mod = `MPLO${yr - 2018}${sem}${x}`
-                    if (!(yr === 2018 && x > 2)) {
-                      return (
-                        <TableRow key={x}>
-                          <TableData>{yr}:{sem}</TableData>
-                          <TableData>{mod}</TableData>
-                          <TableData>The long name of a module</TableData>
-                          <TableData>Normal</TableData>
-                          <TableData></TableData>
-                          <TableData>{x % 2 === 0 ? 'F' : 'G'}</TableData>
-                          <TableData>
-                            <Button rounded color={'primary'} size={'sm'} elevation={0}>view info</Button>
-                          </TableData>
-                        </TableRow>
-                      )
-                    }
-                  })}
-                </>
-              </React.Fragment>
-            )))}
-        </TBody>
-      </Table>
-    </>
+    <Table striped tableSize={'lg'} responsive>
+      <THead>
+        <TableRow style={{background: theme.palette.info.glass}}>
+          <TableHead>Semester</TableHead>
+          <TableHead>Module</TableHead>
+          <TableHead>Module Desc</TableHead>
+          <TableHead>Reg Type</TableHead>
+          <TableHead>Cancellation Date</TableHead>
+          <TableHead>Time Block</TableHead>
+          <TableHead>Module Info</TableHead>
+        </TableRow>
+      </THead>
+      <TBody>
+        {[2021, 2020, 2019, 2018].map((yr) =>
+          [1, 2].map(sem => (
+            <React.Fragment key={yr}>
+              <TableRow style={{background: theme.palette.info.light, height: '1.75rem'}}>
+                <TableData colSpan={7}>
+                  <Text fSize={'medium'} fWeight={'bold'} tAlign={'center'}>{yr}:{sem}</Text>
+                </TableData>
+              </TableRow>
+              <>
+                {[1, 2, 3, 4].map((x) => {
+                  const mod = `MPLO${yr - 2018}${sem}${x}`
+                  if (!(yr === 2018 && x > 2)) {
+                    return (
+                      <TableRow key={x}>
+                        <TableData>{yr}:{sem}</TableData>
+                        <TableData>{mod}</TableData>
+                        <TableData>The long name of a module</TableData>
+                        <TableData>Normal</TableData>
+                        <TableData></TableData>
+                        <TableData>{x % 2 === 0 ? 'F' : 'G'}</TableData>
+                        <TableData>
+                          <Button
+                            rounded
+                            color={'primary'}
+                            size={'sm'} elevation={0}
+                            onClick={handleViewInfo}>
+                            view info
+                          </Button>
+                        </TableData>
+                      </TableRow>
+                    )
+                  }
+                })}
+              </>
+            </React.Fragment>
+          )))}
+      </TBody>
+    </Table>
   )
 }
 
 
 const Registration = () => {
   const theme = useTheme()
+  const [open, setOpen] = useState(false)
 
+  const handleModalToggle = () => {
+    setOpen(!open)
+  }
   return (
     <Container maxWidth={'lg'}>
       <Box marginBottom={theme.sizes.gutters[4]}/>
@@ -134,9 +143,20 @@ const Registration = () => {
         <Card>
           <Text fSize={'medium'} fWeight={'bold'}>Registered Modules</Text>
           <Box marginBottom={theme.sizes.gutters[3]}/>
-          <RegisteredModules theme={theme}/>
+          <RegisteredModules theme={theme} handleViewInfo={handleModalToggle}/>
         </Card>
       </Box>
+      <Modal open={open} onClose={handleModalToggle} centerVert>
+        <ModalContent>
+          <Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
+            <FaBan size={72} color={theme.palette.dark.main}/>
+          </Box>
+          <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Oops... currently not available</Text>
+          <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
+            <Button onClick={handleModalToggle} color={'secondary'} size={'sm'} rounded>ok, close it</Button>
+          </Box>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 };
@@ -145,7 +165,8 @@ RegisteredQual.propTypes = {
   theme: PropTypes.any
 }
 RegisteredModules.propTypes = {
-  theme: PropTypes.any
+  theme: PropTypes.any.isRequired,
+  handleViewInfo: PropTypes.func.isRequired,
 }
 
 export default Registration;
