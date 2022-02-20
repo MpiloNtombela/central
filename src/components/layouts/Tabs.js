@@ -222,6 +222,13 @@ export const Tabs = ({
 export const Tab = ({value, style, children, ...rest}) => {
   const dispatch = useContext(TabDispatch);
   const tabData = useContext(TabDataContext)
+  const tabRef = useRef(null)
+
+  useLayoutEffect(() => {
+    if (tabRef.current && tabData.activeTab === value) {
+      tabRef.current.scrollIntoView({behavior: "smooth"})
+    }
+  }, [tabData.activeTab])
 
   const handleTabChange = () => {
     if (tabData.activeTab === value) return;
@@ -229,7 +236,7 @@ export const Tab = ({value, style, children, ...rest}) => {
   }
 
   return (
-    <StyledTab style={style} onClick={handleTabChange} isActive={tabData.activeTab === value} {...rest}>
+    <StyledTab ref={tabRef} style={style} onClick={handleTabChange} isActive={tabData.activeTab === value} {...rest}>
       {children}
     </StyledTab>
   )
