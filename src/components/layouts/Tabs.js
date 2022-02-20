@@ -1,6 +1,7 @@
+import {css} from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import React, {Children, useContext, useLayoutEffect} from 'react';
+import React, {Children, useContext, useLayoutEffect, useRef} from 'react';
 import {useImmerReducer} from "use-immer";
 
 const TabDataContext = React.createContext()
@@ -21,13 +22,55 @@ const tabReducer = (draft, action) => {
   }
 }
 
+const angles = {
+  up: '-135deg',
+  down: '45deg',
+  right: '-45deg',
+  left: '135deg',
+}
+
+const StyledScrollIcon = styled.i`
+  border: solid ${({theme, color}) => color ? color : theme.palette.dark.contrast.glass};
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 5px;
+  transform: rotate(${({arrowPoint}) => angles[arrowPoint]});
+`
+const StyledScrollArrow = ({theme, color}) => css`
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${color ? color : theme.palette.dark.glass};
+  top: 0;
+  bottom: 0;
+  padding: ${theme.sizes.gutters[3]} ${theme.sizes.gutters[2]};
+  list-style: none;
+  border-radius: ${theme.sizes.radius.sm};
+
+  &.hidden {
+    display: none;
+  }
+`
+
+const StyledLeftScrollArrow = styled.ul`
+  ${StyledScrollArrow};
+  left: 0;
+`
+
+const StyledRightScrollArrow = styled.ul`
+  ${StyledScrollArrow};
+  right: 0;
+`
+
 const StyledTab = styled.li`
   padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[4]}`};
-  border-bottom: ${({
-                      isActive,
-                      theme,
-                      indicatorColor
-                    }) => isActive ? `2px solid ${indicatorColor ? indicatorColor : theme.palette.primary.main}` : 'none'};
+  border-bottom: 2px solid;
+  border-bottom-color: ${({
+                            isActive,
+                            theme,
+                            indicatorColor
+                          }) => isActive ? `${indicatorColor ? indicatorColor : theme.palette.primary.main}` : 'transparent'};
   color: ${({
               isActive,
               theme,
@@ -58,6 +101,8 @@ const StyledTabs = styled.ul`
   scrollbar-width: none;
   box-sizing: border-box;
   box-shadow: ${({elevation}) => elevation ? `0px -5px 20px 0px rgba(0, 0, 0, .${elevation})` : 'none'};
+  position: relative;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;
@@ -91,9 +136,22 @@ const TabContext = ({children}) => {
   );
 };
 
-export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, indicatorColor, elevation = 0}) => {
+export const Tabs = ({
+                       isFixed,
+                       selectedTab,
+                       center,
+                       style,
+                       textColor,
+                       indicatorColor,
+                       scrollArrowsBg,
+                       scrollArrowsColor,
+                       showScrollArrows = true,
+                       elevation = 0,
+                       children,
+                     }) => {
   const dispatch = useContext(TabDispatch)
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
+  const tabsEl = useRef(null);
 
   useLayoutEffect(() => {
     if (selectedTab !== false) {
@@ -103,10 +161,44 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
         dispatch({type: CHANGE_TAB, payload: childrenTabs[0]?.props.value})
       }
     }
+    if (tabsEl.current && showScrollArrows) {
+      tabsEl.current.scrollLeft = 1
+    }
   }, [])
+
+  const handleScroll = (e) => {
+    if (!showScrollArrows) return;
+    const tabCont = e.currentTarget
+    const sLeft = tabCont.querySelector('[data-scroll-left]')
+    const sRight = tabCont.querySelector('[data-scroll-right]')
+
+    if (tabCont.scrollLeft < 5) {
+      sLeft.classList.add('hidden')
+    } else {
+      sLeft.classList.remove('hidden')
+    }
+    if (tabCont.scrollLeft >= (tabCont.scrollWidth - tabCont.clientWidth)) {
+      sRight.classList.add('hidden')
+    } else {
+      sRight.classList.remove('hidden')
+    }
+  }
+
+  const handleLeftClick = (e) => {
+    const tabCont = e.currentTarget.parentElement
+    tabCont.scrollLeft -= 75
+  }
+  const handleRightClick = (e) => {
+    const tabCont = e.currentTarget.parentElement
+    tabCont.scrollLeft += 75
+  }
   return (
-    <StyledTabs style={style} isFixed={isFixed}
+    <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
                 tabCount={childrenTabs?.length} center={center} elevation={elevation}>
+      {showScrollArrows &&
+        <StyledLeftScrollArrow onClick={handleLeftClick} color={scrollArrowsBg} data-scroll-left>
+          <StyledScrollIcon color={scrollArrowsColor} arrowPoint='left'/>
+        </StyledLeftScrollArrow>}
       {Children.map(children, (child, idx) => {
         if (child.type === Tab) {
           return React.cloneElement(child,
@@ -119,6 +211,10 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
           return child
         }
       })}
+      {showScrollArrows &&
+        <StyledRightScrollArrow color={scrollArrowsBg} onClick={handleRightClick} data-scroll-right>
+          <StyledScrollIcon color={scrollArrowsColor} arrowPoint='right'/>
+        </StyledRightScrollArrow>}
     </StyledTabs>
   )
 }
@@ -126,6 +222,13 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
 export const Tab = ({value, style, children, ...rest}) => {
   const dispatch = useContext(TabDispatch);
   const tabData = useContext(TabDataContext)
+  const tabRef = useRef(null)
+
+  useLayoutEffect(() => {
+    if (tabRef.current && tabData.activeTab === value) {
+      tabRef.current.scrollIntoView({behavior: "smooth"})
+    }
+  }, [tabData.activeTab])
 
   const handleTabChange = () => {
     if (tabData.activeTab === value) return;
@@ -133,7 +236,7 @@ export const Tab = ({value, style, children, ...rest}) => {
   }
 
   return (
-    <StyledTab style={style} onClick={handleTabChange} isActive={tabData.activeTab === value} {...rest}>
+    <StyledTab ref={tabRef} style={style} onClick={handleTabChange} isActive={tabData.activeTab === value} {...rest}>
       {children}
     </StyledTab>
   )
@@ -160,6 +263,11 @@ Tabs.propTypes = {
   center: PropTypes.bool,
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   style: PropTypes.object,
+  indicatorColor: PropTypes.string,
+  textColor: PropTypes.string,
+  scrollArrowsBg: PropTypes.string,
+  scrollArrowsColor: PropTypes.string,
+  showScrollArrows: PropTypes.bool,
 }
 
 Tab.propTypes = {
