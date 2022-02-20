@@ -4,6 +4,7 @@ import {useGetSubPath} from "../hooks/routes";
 import DataProvider from "./DataContext";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
+import Bio from "./pages/admin/Bio";
 import Registration from "./pages/admin/Registration";
 import Home from "./pages/Home";
 import MainNavbar from "./pages/MainNavbar";
@@ -20,6 +21,7 @@ const App = () => {
   const cMarks = useGetSubPath(achievements, 'Class Marks')
   const fMarks = useGetSubPath(achievements, 'Final Marks')
   const regHist = useGetSubPath(admin, 'Reg History')
+  const bio = useGetSubPath(admin, 'Biographical')
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -43,6 +45,7 @@ const App = () => {
             <Route path={cMarks} element={<ClassMarks/>}/>
             <Route path={fMarks} element={<FinalMark/>}/>
             <Route path={regHist} element={<Registration/>}/>
+            <Route path={bio} element={<Bio/>}/>
           </Routes>
         </HashRouter>
       </Theme>
