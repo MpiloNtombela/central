@@ -15,7 +15,7 @@ import Drawer from "../../layouts/Drawer";
 import Skeleton from "../../layouts/Skeletons";
 import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
 
-const randMarks = (min, max, len = 4) => {
+export const randMarks = (min, max, len = 4) => {
   min = Math.ceil(min)
   max = Math.floor(max)
   let marx = []
