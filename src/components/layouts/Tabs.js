@@ -65,11 +65,12 @@ const StyledRightScrollArrow = styled.ul`
 
 const StyledTab = styled.li`
   padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[4]}`};
-  border-bottom: ${({
-                      isActive,
-                      theme,
-                      indicatorColor
-                    }) => isActive ? `2px solid ${indicatorColor ? indicatorColor : theme.palette.primary.main}` : 'none'};
+  border-bottom: 2px solid;
+  border-bottom-color: ${({
+                            isActive,
+                            theme,
+                            indicatorColor
+                          }) => isActive ? `${indicatorColor ? indicatorColor : theme.palette.primary.main}` : 'transparent'};
   color: ${({
               isActive,
               theme,
