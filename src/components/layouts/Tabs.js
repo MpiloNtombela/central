@@ -22,7 +22,7 @@ const tabReducer = (draft, action) => {
 }
 
 const StyledTab = styled.li`
-  padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[1]}`};
+  padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[4]}`};
   border-bottom: ${({
                       isActive,
                       theme,
@@ -66,6 +66,7 @@ const StyledTabs = styled.ul`
   ${StyledTab} {
     min-width: ${({isFixed, tabCount}) => isFixed ? `calc(100% / ${tabCount})` : 'fit-content'};
     max-width: ${({isFixed, tabCount}) => isFixed ? `calc(100% / ${tabCount})` : 'calc(100% / 2)'};
+    padding: ${({theme}) => `${theme.sizes.gutters[3]} ${theme.sizes.gutters[4]}`};
   }
 `
 
