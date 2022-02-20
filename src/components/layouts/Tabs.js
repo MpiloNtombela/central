@@ -30,18 +30,18 @@ const angles = {
 }
 
 const StyledScrollIcon = styled.i`
-  border: solid ${({theme, color}) => color ? color : theme.color.secondary};
+  border: solid ${({theme, color}) => color ? color : theme.palette.dark.contrast.glass};
   border-width: 0 5px 5px 0;
   display: inline-block;
   padding: 5px;
   transform: rotate(${({arrowPoint}) => angles[arrowPoint]});
 `
-const StyledScrollArrow = ({theme, indicatorColor}) => css`
+const StyledScrollArrow = ({theme, color}) => css`
   position: sticky;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${indicatorColor ? indicatorColor : theme.palette.primary.glass};
+  background: ${color ? color : theme.palette.dark.glass};
   top: 0;
   bottom: 0;
   padding: ${theme.sizes.gutters[3]} ${theme.sizes.gutters[2]};
@@ -135,7 +135,18 @@ const TabContext = ({children}) => {
   );
 };
 
-export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, indicatorColor, elevation = 0}) => {
+export const Tabs = ({
+                       children,
+                       isFixed,
+                       selectedTab,
+                       center,
+                       style,
+                       textColor,
+                       indicatorColor,
+                       scrollArrowsBg,
+                       scrollArrowsColor,
+                       elevation = 0
+                     }) => {
   const dispatch = useContext(TabDispatch)
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
   const tabsEl = useRef(null);
@@ -172,17 +183,17 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
 
   const handleLeftClick = (e) => {
     const tabCont = e.currentTarget.parentElement
-    tabCont.scrollLeft -= 50
+    tabCont.scrollLeft -= 75
   }
   const handleRightClick = (e) => {
     const tabCont = e.currentTarget.parentElement
-    tabCont.scrollLeft += 50
+    tabCont.scrollLeft += 75
   }
   return (
     <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
                 tabCount={childrenTabs?.length} center={center} elevation={elevation}>
-      <StyledLeftScrollArrow onClick={handleLeftClick} color={indicatorColor} data-scroll-left>
-        <StyledScrollIcon color={textColor} arrowPoint='left'/>
+      <StyledLeftScrollArrow onClick={handleLeftClick} color={scrollArrowsBg} data-scroll-left>
+        <StyledScrollIcon color={scrollArrowsColor} arrowPoint='left'/>
       </StyledLeftScrollArrow>
       {Children.map(children, (child, idx) => {
         if (child.type === Tab) {
@@ -196,8 +207,8 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
           return child
         }
       })}
-      <StyledRightScrollArrow onClick={handleRightClick} data-scroll-right>
-        <StyledScrollIcon color={textColor} arrowPoint='right'/>
+      <StyledRightScrollArrow color={scrollArrowsBg} onClick={handleRightClick} data-scroll-right>
+        <StyledScrollIcon color={scrollArrowsColor} arrowPoint='right'/>
       </StyledRightScrollArrow>
     </StyledTabs>
   )
@@ -240,6 +251,10 @@ Tabs.propTypes = {
   center: PropTypes.bool,
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   style: PropTypes.object,
+  indicatorColor: PropTypes.string,
+  textColor: PropTypes.string,
+  scrollArrowsBg: PropTypes.string,
+  scrollArrowsColor: PropTypes.string,
 }
 
 Tab.propTypes = {
