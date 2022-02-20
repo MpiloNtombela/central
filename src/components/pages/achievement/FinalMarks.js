@@ -282,7 +282,6 @@ const FinalMark = () => {
             disabled={loading}
             onClick={handleToggleOverview}
             size={'md'}
-            style={{background: theme.palette.secondary.glass}}
             color={'secondary'}>Overview</Button>
         </Box>
         <DataOverviewDrawer handleClose={handleToggleOverview} open={openOverview} theme={theme}/>
