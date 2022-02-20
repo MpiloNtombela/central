@@ -153,6 +153,23 @@ export const Tabs = ({
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
   const tabsEl = useRef(null);
 
+  const scrollTab = (tabEl) => {
+    if(!tabEl) return
+    const sLeft = tabEl.querySelector('[data-scroll-left]')
+    const sRight = tabEl.querySelector('[data-scroll-right]')
+
+    if (tabEl.scrollLeft < 5) {
+      sLeft.classList.add('hidden')
+    } else {
+      sLeft.classList.remove('hidden')
+    }
+    if (tabEl.scrollLeft >= (tabEl.scrollWidth - tabEl.clientWidth)) {
+      sRight.classList.add('hidden')
+    } else {
+      sRight.classList.remove('hidden')
+    }
+  }
+
   useLayoutEffect(() => {
     if (selectedTab !== false) {
       if (selectedTab && selectedTab !== true) {
@@ -162,26 +179,13 @@ export const Tabs = ({
       }
     }
     if (tabsEl.current && showScrollArrows) {
-      tabsEl.current.scrollLeft = 1
+      scrollTab(tabsEl.current)
     }
   }, [])
 
   const handleScroll = (e) => {
     if (!showScrollArrows) return;
-    const tabCont = e.currentTarget
-    const sLeft = tabCont.querySelector('[data-scroll-left]')
-    const sRight = tabCont.querySelector('[data-scroll-right]')
-
-    if (tabCont.scrollLeft < 5) {
-      sLeft.classList.add('hidden')
-    } else {
-      sLeft.classList.remove('hidden')
-    }
-    if (tabCont.scrollLeft >= (tabCont.scrollWidth - tabCont.clientWidth)) {
-      sRight.classList.add('hidden')
-    } else {
-      sRight.classList.remove('hidden')
-    }
+    scrollTab(e.currentTarget)
   }
 
   const handleLeftClick = (e) => {
