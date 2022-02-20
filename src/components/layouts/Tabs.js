@@ -101,6 +101,7 @@ const StyledTabs = styled.ul`
   box-sizing: border-box;
   box-shadow: ${({elevation}) => elevation ? `0px -5px 20px 0px rgba(0, 0, 0, .${elevation})` : 'none'};
   position: relative;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;
@@ -153,26 +154,34 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
   }, [])
 
   const handleScroll = (e) => {
-    const tabs = e.currentTarget
-    const sLeft = tabs.querySelector('[data-scroll-left]')
-    const sRight = tabs.querySelector('[data-scroll-right]')
-    const scrollPos = tabs.scrollWidth - tabs.clientWidth
+    const tabCont = e.currentTarget
+    const sLeft = tabCont.querySelector('[data-scroll-left]')
+    const sRight = tabCont.querySelector('[data-scroll-right]')
 
-    if (tabs.scrollLeft < 5) {
+    if (tabCont.scrollLeft < 5) {
       sLeft.classList.add('hidden')
     } else {
       sLeft.classList.remove('hidden')
     }
-    if (tabs.scrollLeft >= (tabs.scrollWidth - tabs.clientWidth)) {
+    if (tabCont.scrollLeft >= (tabCont.scrollWidth - tabCont.clientWidth)) {
       sRight.classList.add('hidden')
     } else {
       sRight.classList.remove('hidden')
     }
   }
+
+  const handleLeftClick = (e) => {
+    const tabCont = e.currentTarget.parentElement
+    tabCont.scrollLeft -= 50
+  }
+  const handleRightClick = (e) => {
+    const tabCont = e.currentTarget.parentElement
+    tabCont.scrollLeft += 50
+  }
   return (
-    <StyledTabs ref={tabsEl} onScroll={handleScroll} data-tabs style={style} isFixed={isFixed}
+    <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
                 tabCount={childrenTabs?.length} center={center} elevation={elevation}>
-      <StyledLeftScrollArrow color={indicatorColor} data-scroll-left>
+      <StyledLeftScrollArrow onClick={handleLeftClick} color={indicatorColor} data-scroll-left>
         <StyledScrollIcon color={textColor} arrowPoint='left'/>
       </StyledLeftScrollArrow>
       {Children.map(children, (child, idx) => {
@@ -187,7 +196,7 @@ export const Tabs = ({children, isFixed, selectedTab, center, style, textColor, 
           return child
         }
       })}
-      <StyledRightScrollArrow data-scroll-right>
+      <StyledRightScrollArrow onClick={handleRightClick} data-scroll-right>
         <StyledScrollIcon color={textColor} arrowPoint='right'/>
       </StyledRightScrollArrow>
     </StyledTabs>
