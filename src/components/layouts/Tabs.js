@@ -136,7 +136,6 @@ const TabContext = ({children}) => {
 };
 
 export const Tabs = ({
-                       children,
                        isFixed,
                        selectedTab,
                        center,
@@ -145,7 +144,9 @@ export const Tabs = ({
                        indicatorColor,
                        scrollArrowsBg,
                        scrollArrowsColor,
-                       elevation = 0
+                       showScrollArrows = true,
+                       elevation = 0,
+                       children,
                      }) => {
   const dispatch = useContext(TabDispatch)
   const childrenTabs = Children.toArray(children).filter(child => child.type === Tab)
@@ -159,12 +160,13 @@ export const Tabs = ({
         dispatch({type: CHANGE_TAB, payload: childrenTabs[0]?.props.value})
       }
     }
-    if (tabsEl.current) {
+    if (tabsEl.current && showScrollArrows) {
       tabsEl.current.scrollLeft = 1
     }
   }, [])
 
   const handleScroll = (e) => {
+    if (!showScrollArrows) return;
     const tabCont = e.currentTarget
     const sLeft = tabCont.querySelector('[data-scroll-left]')
     const sRight = tabCont.querySelector('[data-scroll-right]')
@@ -192,9 +194,10 @@ export const Tabs = ({
   return (
     <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
                 tabCount={childrenTabs?.length} center={center} elevation={elevation}>
-      <StyledLeftScrollArrow onClick={handleLeftClick} color={scrollArrowsBg} data-scroll-left>
-        <StyledScrollIcon color={scrollArrowsColor} arrowPoint='left'/>
-      </StyledLeftScrollArrow>
+      {showScrollArrows &&
+        <StyledLeftScrollArrow onClick={handleLeftClick} color={scrollArrowsBg} data-scroll-left>
+          <StyledScrollIcon color={scrollArrowsColor} arrowPoint='left'/>
+        </StyledLeftScrollArrow>}
       {Children.map(children, (child, idx) => {
         if (child.type === Tab) {
           return React.cloneElement(child,
@@ -207,9 +210,10 @@ export const Tabs = ({
           return child
         }
       })}
-      <StyledRightScrollArrow color={scrollArrowsBg} onClick={handleRightClick} data-scroll-right>
-        <StyledScrollIcon color={scrollArrowsColor} arrowPoint='right'/>
-      </StyledRightScrollArrow>
+      {showScrollArrows &&
+        <StyledRightScrollArrow color={scrollArrowsBg} onClick={handleRightClick} data-scroll-right>
+          <StyledScrollIcon color={scrollArrowsColor} arrowPoint='right'/>
+        </StyledRightScrollArrow>}
     </StyledTabs>
   )
 }
@@ -255,6 +259,7 @@ Tabs.propTypes = {
   textColor: PropTypes.string,
   scrollArrowsBg: PropTypes.string,
   scrollArrowsColor: PropTypes.string,
+  showScrollArrows: PropTypes.bool,
 }
 
 Tab.propTypes = {
