@@ -1,5 +1,6 @@
 import {useTheme} from "@emotion/react";
-import React from 'react';
+import PropTypes from "prop-types";
+import React, {useState} from 'react';
 import Table, {TableData, TableHead, TableRow, TBody, TFoot, THead} from "../../elements/Table";
 import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
@@ -7,11 +8,51 @@ import Card from "../../layouts/Card";
 import Collapsible from "../../layouts/Collapsible";
 import Container from "../../layouts/Container";
 import TabContext, {Tab, TabContent, Tabs} from "../../layouts/Tabs";
+import {randMarks} from "./FinalMarks";
 
-const randMark = (min, max) => {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min + 1)) + min
+const Module = ({yr, sem, mod, theme}) => {
+  const [marks] = useState(randMarks(30, 100))
+  const [finalMark] = useState(Math.floor((marks.reduce((a, b) => a + b) / (marks.length * 100)) * 100))
+
+  return (
+    <Table striped tableSize={'lg'} headColor={'info'} responsive>
+      <THead>
+        <TableRow>
+          <TableHead>{yr}:{sem}</TableHead>
+          <TableHead>MPLO{yr - 2018}{sem}{mod}</TableHead>
+          <TableHead>The long name of the module</TableHead>
+          <TableHead>Marks</TableHead>
+        </TableRow>
+      </THead>
+      <TBody>
+        {marks.map((mark, idx) => {
+          return (
+            <TableRow key={idx}>
+              <TableData colSpan={3}>Test {idx + 1}</TableData>
+              <TableData>{mark}</TableData>
+            </TableRow>
+          )
+        })}
+      </TBody>
+      <TFoot>
+        <TableRow style={{
+          background: theme.palette[finalMark < 50 ? 'danger' : 'success']?.main,
+          color: theme.palette[finalMark < 50 ? 'danger' : 'success']?.contrast.main,
+          fontWeight: 'bold'
+        }}>
+          <TableData colSpan={3}>Class Mark</TableData>
+          <TableData>{finalMark}</TableData>
+        </TableRow>
+      </TFoot>
+    </Table>
+  )
+}
+
+Module.propTypes = {
+  yr: PropTypes.number.isRequired,
+  sem: PropTypes.number.isRequired,
+  mod: PropTypes.number.isRequired,
+  theme: PropTypes.any.isRequired
 }
 
 const ClassMarks = () => {
@@ -42,39 +83,11 @@ const ClassMarks = () => {
               {[1, 2].map(sem => (
                 <TabContent key={sem} value={sem}>
                   {[1, 2, 3, 4].map((module) => {
-                    let finalMark = 0;
-                    return (<Table striped key={module} tableSize={'lg'} headColor={'info'} responsive>
-                      <THead>
-                        <TableRow>
-                          <TableHead>{yr}:{sem}</TableHead>
-                          <TableHead>MPLO{3 - idx}{sem}{module}</TableHead>
-                          <TableHead>The long name of the module</TableHead>
-                          <TableHead>Marks</TableHead>
-                        </TableRow>
-                      </THead>
-                      <TBody>
-                        {[1, 2, 3, 4].map((test) => {
-                          const mark = randMark(test, 100)
-                          finalMark += mark
-                          return (
-                            <TableRow key={test}>
-                              <TableData colSpan={3}>Test {test}</TableData>
-                              <TableData>{mark}</TableData>
-                            </TableRow>
-                          )
-                        })}
-                      </TBody>
-                      <TFoot>
-                        <TableRow style={{
-                          background: theme.palette[finalMark < 200 ? 'danger' : 'success']?.main,
-                          color: theme.palette[finalMark < 200 ? 'danger' : 'success']?.contrast.main,
-                          fontWeight: 'bold'
-                        }}>
-                          <TableData colSpan={3}>Class Mark</TableData>
-                          <TableData>{Math.floor((finalMark / 400) * 100)}</TableData>
-                        </TableRow>
-                      </TFoot>
-                    </Table>)
+                    if (!(yr === 2018 && module <= 2)) {
+                      return (
+                        <Module key={module} mod={module} yr={yr} sem={sem} theme={theme}/>
+                      )
+                    }
                   })}
                 </TabContent>
               ))}
