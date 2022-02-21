@@ -101,7 +101,7 @@ const Bio = () => {
           <Text fSize={'large'} fWeight={'bold'} tAlign={'center'}>Your Biographical Details</Text>
         </Box>
         <TabContext>
-          <Tabs isFixed={isLg}>
+          <Tabs isFixed={isLg} elevation={2}>
             <Tab value={'details'}>Personal Details</Tab>
             <Tab value={'matric'}>Matric Data</Tab>
             <Tab value={'contacts'}>Contacts</Tab>
