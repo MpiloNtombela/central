@@ -20,7 +20,6 @@ const StyleNavbarIcon = styled.div`
   align-items: center;
   min-height: ${NAV_HEIGHT}rem;
   max-height: ${NAV_HEIGHT}rem;
-  background: inherit;
   padding: 0 ${({theme}) => theme.sizes.gutters[2]};
 
   &:hover {
@@ -145,6 +144,7 @@ const StyledNavbar = styled.nav`
 
       ${StyleNavbarIcon} {
         display: ${props => props.maxBreak ? 'flex' : 'none'};
+        background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
       }
     }
   }
