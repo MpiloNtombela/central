@@ -178,7 +178,7 @@ export const Tabs = ({
         dispatch({type: CHANGE_TAB, payload: childrenTabs[0]?.props.value})
       }
     }
-    if (tabsEl.current && showScrollArrows) {
+    if (tabsEl.current && showScrollArrows && !isFixed) {
       scrollTab(tabsEl.current)
     }
   }, [])
