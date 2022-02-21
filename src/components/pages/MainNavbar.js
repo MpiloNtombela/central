@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from 'react';
-import {FaSignOutAlt} from "react-icons/fa";
+import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import Xe from "../../../public/Xe.png"
@@ -62,7 +62,8 @@ const MainNavbar = () => {
   const {student} = useDataContext()
   return (
     <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
-            elevation={4} navPosition="sticky-top">
+            elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={<FaTimes size={28}/>}
+            openIcon={<FaBars size={28}/>}>
       <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
