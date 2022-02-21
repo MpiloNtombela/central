@@ -25,10 +25,12 @@ const reducer = (draft, action) => {
       break
     case SETUP_USER:
       draft.student.studentNumber = action.payload["stuNum"];
+      draft.student.contacts.studentEmail = `${action.payload["stuNum"]}@goth.am.bat`
       localStorage.setItem("stuNum", action.payload["stuNum"])
       break;
     case REMOVE_USER:
       draft.student.studentNumber = "";
+      draft.student.contacts.studentEmail = "";
       localStorage.removeItem("stuNum")
       break;
     case SETUP_ALERT:
@@ -55,6 +57,7 @@ const dataState = {
     contacts: {
       phoneNumber: "+77123456789",
       emailAddress: "dev@mpilo.live",
+      studentEmail: '000000000@goth.am.bat',
       postalAddress: "7 Goat Avenue, Gothville 7777",
       studyAddress: "7 Goat Avenue, Gothville 7777",
     },
