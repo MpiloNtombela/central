@@ -154,7 +154,7 @@ export const Tabs = ({
   const tabsEl = useRef(null);
 
   const scrollTab = (tabEl) => {
-    if(!tabEl) return
+    if (!tabEl) return
     const sLeft = tabEl.querySelector('[data-scroll-left]')
     const sRight = tabEl.querySelector('[data-scroll-right]')
 
@@ -190,11 +190,11 @@ export const Tabs = ({
 
   const handleLeftClick = (e) => {
     const tabCont = e.currentTarget.parentElement
-    tabCont.scrollLeft -= 75
+    tabCont.scrollLeft = tabCont.scrollLeft > 75 ? tabCont.scrollLeft - 75 : 0
   }
   const handleRightClick = (e) => {
     const tabCont = e.currentTarget.parentElement
-    tabCont.scrollLeft += 75
+    tabCont.scrollLeft = tabCont.scrollWidth - tabCont.clientWidth <= 0 ? tabCont.clientWidth : tabCont.scrollLeft + 75
   }
   return (
     <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
@@ -230,7 +230,7 @@ export const Tab = ({value, style, children, ...rest}) => {
 
   useLayoutEffect(() => {
     if (tabRef.current && tabData.activeTab === value) {
-      tabRef.current.scrollIntoView({behavior: "smooth"})
+      tabRef.current.scrollIntoView({behavior: "smooth", inline: 'center'})
     }
   }, [tabData.activeTab])
 
