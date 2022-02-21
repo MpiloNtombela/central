@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 import {MdMoneyOff} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
-import Xe from "../../../../public/Xe.png"
+import logo from "../../../../public/logo.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
 import {LOADED, LOADING} from "../../DataContext";
 import Button from '../../elements/Button'
@@ -155,7 +155,7 @@ const IEnabler = () => {
                       <Card shadow>
                         <Box display={"flex"} alignItems={"center"}>
                           <Box>
-                            <Image bordered src={Xe} alt={"profile"} radius="50%" height="70px" width="70px"/>
+                            <Image bordered src={logo} alt={"profile"} radius="50%" height="70px" width="70px"/>
                           </Box>
                           <Box marginLeft={theme.sizes.gutters[2]}>
                             <Box margin={`${theme.sizes.gutters[1]} 0`}>
