@@ -63,7 +63,6 @@ export const NavbarItems = styled.div`
 const StyledNavbarContent = styled.div`
   display: flex;
   position: ${({navStyle}) => navStyle ? navStyle : 'static'};
-  background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
   color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
   min-height: ${NAV_HEIGHT}rem;
   max-height: ${NAV_HEIGHT}rem;
@@ -76,8 +75,13 @@ const StyledNavbarContent = styled.div`
   }
 `
 
-const StyledNavbar = styled.nav`
+const StyledNavbarContainer = styled.div`
   display: flex;
+  margin: 0 auto;
+
+`
+
+const StyledNavbar = styled.nav`
   position: ${({navPosition}) => navPosition === "fixed-top" ? "fixed" : navPosition === "sticky-top" ? "sticky" : "relative"};
   background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
   color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
@@ -87,87 +91,105 @@ const StyledNavbar = styled.nav`
   left: ${({navPosition}) => (navPosition === "fixed-top" || navPosition === "sticky-top") && 0};
   right: ${({navPosition}) => (navPosition === "fixed-top" || navPosition === "sticky-top") && 0};
 
-  @media (max-width: ${({maxBreak, theme}) => maxBreak ? theme.breakpoints[maxBreak] : 0}px) {
+  ${StyledNavbarContainer} {
+    max-width: ${({theme, maxWidth}) => maxWidth ? `${theme.breakpoints[maxWidth]}px}` : '100%'};
+
     ${StyledNavbarContent} {
-      flex-direction: column;
-      align-items: normal;
-    }
-
-    ${NavbarItems} {
-      flex-direction: column;
-      position: absolute;
-      top: ${({open}) => open ? `${NAV_HEIGHT}rem` : '-450%'};
-      left: 0;
-      right: 0;
       background: ${({bgColor, theme}) => bgColor ? bgColor : theme.background.main};
-      color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
-      padding: ${({theme}) => theme.sizes.gutters[2]};
-      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, ${props => (props.navElevation / 2 / 10)});
-      z-index: -1;
     }
 
-    ${NavbarItem} {
-      margin: 0;
-      padding: ${({theme}) => theme.sizes.gutters[2]};
-    }
-
-    ${NavbarLink} {
-      border-radius: ${props => props.theme.sizes.radius.sm};
-
-      &.active {
-        background: ${props => props.theme.palette.primary.main};
-        color: ${props => props.theme.palette.primary.contrastText} !important;
-        mix-blend-mode: normal;
-        ${props => {
-          const {activeCss} = props;
-          return activeCss;
-        }}
+    @media (max-width: ${({maxBreak, theme}) => maxBreak ? theme.breakpoints[maxBreak] : 0}px) {
+      ${StyledNavbarContent} {
+        flex-direction: column;
+        align-items: normal;
       }
-    }
 
-    ${StyledBrand} {
-      min-height: ${NAV_HEIGHT}rem;
-      max-height: ${NAV_HEIGHT}rem;
-      display: flex;
-      align-items: center;
-    }
+      ${NavbarItems} {
+        flex-direction: column;
+        position: absolute;
+        top: ${({open}) => open ? `${NAV_HEIGHT}rem` : '-450%'};
+        left: 0;
+        right: 0;
+        background: inherit;
+        color: ${({textColor, theme}) => textColor ? textColor : theme.color.secondary};
+        padding: ${({theme}) => theme.sizes.gutters[2]};
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, ${props => (props.navElevation / 2 / 10)});
+        z-index: -1;
+      }
 
-    ${StyleNavbarIcon} {
-      display: ${props => props.maxBreak ? 'flex' : 'none'};
+      ${NavbarItem} {
+        margin: 0;
+        padding: ${({theme}) => theme.sizes.gutters[2]};
+      }
+
+      ${NavbarLink} {
+        border-radius: ${props => props.theme.sizes.radius.sm};
+
+        &.active {
+          background: ${props => props.theme.palette.primary.main};
+          color: ${props => props.theme.palette.primary.contrastText} !important;
+          mix-blend-mode: normal;
+          ${props => {
+            const {activeCss} = props;
+            return activeCss;
+          }}
+        }
+      }
+
+      ${StyledBrand} {
+        min-height: ${NAV_HEIGHT}rem;
+        max-height: ${NAV_HEIGHT}rem;
+        display: flex;
+        align-items: center;
+      }
+
+      ${StyleNavbarIcon} {
+        display: ${props => props.maxBreak ? 'flex' : 'none'};
+      }
     }
   }
 
 `
 
 const Navbar = ({
-                  logo = "BRAND",
-                  maxBreak = "sm",
-                  elevation = 0,
-                  openIcon = "MENU",
-                  closeIcon = "CLOSE",
                   extraContentElem,
                   navPosition,
                   style,
                   brandStyle,
                   brandClass,
+                  logo = "BRAND",
+                  maxBreak = "sm",
+                  elevation = 0,
+                  openIcon = "MENU",
+                  closeIcon = "CLOSE",
+                  maxWidth = false,
+                  bgColor,
                   children
                 }) => {
   const [open, setOpen] = useState(false)
 
   return (
-    <StyledNavbar navPosition={navPosition} navElevation={elevation} style={style} maxBreak={maxBreak} open={open}>
-      <StyledNavbarContent navElevation={elevation} open={open}>
-        <StyledBrand style={brandStyle} className={brandClass}>
-          {logo}
-        </StyledBrand>
-        {children}
-      </StyledNavbarContent>
-      <StyledExtraContent>
-        {extraContentElem}
-      </StyledExtraContent>
-      <StyleNavbarIcon onClick={() => setOpen(!open)}>
-        {open ? closeIcon : openIcon}
-      </StyleNavbarIcon>
+    <StyledNavbar navPosition={navPosition}
+                  navElevation={elevation}
+                  style={style}
+                  bgColor={bgColor}
+                  maxBreak={maxBreak}
+                  open={open}
+                  maxWidth={maxWidth}>
+      <StyledNavbarContainer>
+        <StyledNavbarContent navElevation={elevation} open={open}>
+          <StyledBrand style={brandStyle} className={brandClass}>
+            {logo}
+          </StyledBrand>
+          {children}
+        </StyledNavbarContent>
+        <StyledExtraContent>
+          {extraContentElem}
+        </StyledExtraContent>
+        <StyleNavbarIcon onClick={() => setOpen(!open)}>
+          {open ? closeIcon : openIcon}
+        </StyleNavbarIcon>
+      </StyledNavbarContainer>
     </StyledNavbar>
   );
 };
@@ -177,12 +199,14 @@ Navbar.propTypes = {
   elevation: PropTypes.oneOf([0, 1, 2, 3, 4]),
   logo: PropTypes.node,
   maxBreak: PropTypes.oneOf(["sm", "md", "lg", "xl", "xxl", false]),
+  maxWidth: PropTypes.oneOf(["sm", "md", "lg", "xl", false]),
   style: PropTypes.object,
   brandStyle: PropTypes.object,
   brandClass: PropTypes.string,
   extraContentElem: PropTypes.element,
   navPosition: PropTypes.oneOf(["fixed-top", "sticky-top"]),
   closeIcon: PropTypes.node,
+  bgColor: PropTypes.string,
   openIcon: PropTypes.node,
 }
 
