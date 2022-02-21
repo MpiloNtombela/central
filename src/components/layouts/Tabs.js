@@ -100,7 +100,7 @@ const StyledTabs = styled.ul`
   overflow-x: auto;
   scrollbar-width: none;
   box-sizing: border-box;
-  box-shadow: ${({elevation}) => elevation ? `0px -5px 20px 0px rgba(0, 0, 0, .${elevation})` : 'none'};
+  box-shadow: ${({elevation}) => elevation ? `0 4px 2px -2px rgba(0, 0, 0, .${elevation})` : 'none'};
   position: relative;
   scroll-behavior: smooth;
 
