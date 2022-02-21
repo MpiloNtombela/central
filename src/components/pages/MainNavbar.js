@@ -1,10 +1,11 @@
 import {useTheme} from "@emotion/react";
+import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import React from 'react';
+import logo from "../../../public/logo.png"
 import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
-import Xe from "../../../public/Xe.png"
 import {useDataContext} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
@@ -16,6 +17,31 @@ import Chip from "../layouts/Chip";
 import DropMenu, {Menu} from "../layouts/DropMenu";
 import Grid, {GridCell} from "../layouts/Grid";
 import {achievements, admin, selfHelp} from "./utils/mainRoutes";
+
+
+const StyledLogo = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
+`
+
+const StyledWordMark = styled.span`
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: .25rem;
+  color: red
+`
+
+const MainLogo = () => (
+  <StyledLogo>
+    <Image height={'30'} src={logo} alt="logo"/>
+    <StyledWordMark>Central</StyledWordMark>
+  </StyledLogo>
+)
 
 const NavRoute = ({route, isBreak}) => {
   return (
@@ -61,7 +87,7 @@ const MainNavbar = () => {
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   const {student} = useDataContext()
   return (
-    <Navbar maxBreak={"sm"} logo={<Text fSize={"large"} tColor={"red"} fWeight={"bold"}>MPILO</Text>}
+    <Navbar maxBreak={"sm"} logo={<MainLogo/>}
             elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={<FaTimes size={28}/>}
             openIcon={<FaBars size={28}/>}>
       <NavbarItems>
@@ -74,7 +100,7 @@ const MainNavbar = () => {
                                  style={{
                                    border: `1px solid ${theme.palette.secondary.main}`,
                                    padding: theme.sizes.gutters[1]
-                                 }} src={Xe} alt={''}/>}
+                                 }} src={logo} alt={''}/>}
                   text={student.studentNumber}
                   outlined color={'secondary'}
                   endIcon={<MdArrowDropDown size={'1rem'}/>}/>
