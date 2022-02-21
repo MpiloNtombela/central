@@ -230,7 +230,7 @@ export const Tab = ({value, style, children, ...rest}) => {
 
   useLayoutEffect(() => {
     if (tabRef.current && tabData.activeTab === value) {
-      tabRef.current.scrollIntoView({behavior: "smooth", inline: 'center'})
+      tabRef.current.scrollIntoView()
     }
   }, [tabData.activeTab])
 
