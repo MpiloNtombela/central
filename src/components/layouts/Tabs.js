@@ -199,7 +199,7 @@ export const Tabs = ({
   return (
     <StyledTabs ref={tabsEl} onScroll={handleScroll} style={style} isFixed={isFixed}
                 tabCount={childrenTabs?.length} center={center} elevation={elevation}>
-      {showScrollArrows &&
+      {showScrollArrows && !isFixed &&
         <StyledLeftScrollArrow onClick={handleLeftClick} color={scrollArrowsBg} data-scroll-left>
           <StyledScrollIcon color={scrollArrowsColor} arrowPoint='left'/>
         </StyledLeftScrollArrow>}
@@ -215,7 +215,7 @@ export const Tabs = ({
           return child
         }
       })}
-      {showScrollArrows &&
+      {showScrollArrows && !isFixed &&
         <StyledRightScrollArrow color={scrollArrowsBg} onClick={handleRightClick} data-scroll-right>
           <StyledScrollIcon color={scrollArrowsColor} arrowPoint='right'/>
         </StyledRightScrollArrow>}
@@ -227,12 +227,6 @@ export const Tab = ({value, style, children, ...rest}) => {
   const dispatch = useContext(TabDispatch);
   const tabData = useContext(TabDataContext)
   const tabRef = useRef(null)
-
-  useLayoutEffect(() => {
-    if (tabRef.current && tabData.activeTab === value) {
-      tabRef.current.scrollIntoView()
-    }
-  }, [tabData.activeTab])
 
   const handleTabChange = () => {
     if (tabData.activeTab === value) return;
