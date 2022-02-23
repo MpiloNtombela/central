@@ -1,9 +1,7 @@
-import { keyframes } from "@emotion/react";
+import {keyframes} from "@emotion/react";
 import styled from "@emotion/styled";
-import React from "react";
 import PropTypes from "prop-types";
-import Card from "./Card";
-import Grid, { GridCell } from "./Grid";
+import React from "react";
 
 const animate = keyframes`
   0% {
@@ -93,58 +91,6 @@ const Skeleton = ({
     </StyledSkeleton>
   );
 };
-
-export const SkeletonContent = () => {
-  return (
-    <Card>
-      <Skeleton style={{ width: "35%" }} />
-      <Skeleton />
-      <Skeleton style={{ width: "90%" }} />
-      <Grid>
-        <GridCell colsSm={8} />
-        <GridCell colsSm={4}>
-          <Skeleton skeletonType="rect" rectWidth="100%" rectHeight=".5rem" />
-        </GridCell>
-      </Grid>
-    </Card>
-  );
-};
-
-export const SkeletonForm = () => {
-  return (
-    <Card>
-      <Skeleton style={{ width: "65%" }} />
-      <Skeleton skeletonType="rect" rectWidth="100%" rectHeight="3.75rem" />
-      <Grid>
-        <GridCell colsSm={9} />
-        <GridCell colsSm={3}>
-          <Skeleton
-            skeletonType="rect"
-            rectWidth="100%"
-            rectHeight="2rem"
-            style={{ borderRadius: "9999rem" }}
-          />
-        </GridCell>
-      </Grid>
-      <Grid style={{ marginTop: "1.5rem" }}>
-        <GridCell colsSm={1} />
-        <GridCell colsSm={1}>
-          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
-          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
-          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
-          <Skeleton skeletonType="rect" rectWidth=".75rem" rectHeight=".75rem" />
-        </GridCell>
-        <GridCell colsSm={8}>
-          <Skeleton />
-          <Skeleton style={{ width: "80%" }} />
-          <Skeleton style={{ width: "95%" }} />
-          <Skeleton style={{ width: "85%" }} />
-        </GridCell>
-      </Grid>
-    </Card>
-  );
-};
-
 Skeleton.propTypes = {
   skeletonType: PropTypes.oneOf(["text", "header", "img", "avatar", "rect"]),
   skeletonSize: PropTypes.number,
