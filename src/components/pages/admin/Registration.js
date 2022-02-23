@@ -9,6 +9,7 @@ import Text from "../../elements/Text";
 import Box from "../../layouts/Box";
 import Card from "../../layouts/Card";
 import Container from "../../layouts/Container";
+import Loader from "../../layouts/Loader";
 import Modal, {ModalContent} from "../../layouts/Modal";
 
 const RegisteredQual = ({theme}) => {
@@ -124,9 +125,14 @@ const RegisteredModules = ({theme, handleViewInfo}) => {
 const Registration = () => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
+  const [load, setLoad] = useState(true)
 
   const handleModalToggle = () => {
     setOpen(!open)
+    setLoad(true)
+    setTimeout(() => {
+      setLoad(false)
+    }, 2000)
   }
   return (
     <Container maxWidth={'lg'}>
@@ -148,13 +154,14 @@ const Registration = () => {
       </Box>
       <Modal open={open} onClose={handleModalToggle} centerVert>
         <ModalContent>
-          <Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
-            <FaBan size={72} color={theme.palette.dark.main}/>
-          </Box>
-          <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Oops... currently not available</Text>
-          <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
-            <Button onClick={handleModalToggle} color={'secondary'} size={'sm'} rounded>ok, close it</Button>
-          </Box>
+          {load ? <Loader/> :
+            <><Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
+              <FaBan size={72} color={theme.palette.dark.main}/>
+            </Box>
+              <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Oops... currently not available</Text>
+              <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
+                <Button onClick={handleModalToggle} color={'secondary'} size={'sm'} rounded>ok, close it</Button>
+              </Box></>}
         </ModalContent>
       </Modal>
     </Container>
