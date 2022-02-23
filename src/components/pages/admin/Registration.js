@@ -132,7 +132,7 @@ const Registration = () => {
     setLoad(true)
     setTimeout(() => {
       setLoad(false)
-    }, 2000)
+    }, 2500)
   }
   return (
     <Container maxWidth={'lg'}>
@@ -154,8 +154,19 @@ const Registration = () => {
       </Box>
       <Modal open={open} onClose={handleModalToggle} centerVert>
         <ModalContent>
-          {load ? <Loader/> :
-            <><Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
+          {load ?
+            <Box paddingTop={theme.sizes.gutters[4]} paddingBottom={theme.sizes.gutters[4]}>
+              <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}
+                   style={{height: '2rem'}}>
+                <Loader/>
+              </Box>
+              <Box marginTop={theme.sizes.gutters[4]} marginBottom={theme.sizes.gutters[4]}>
+                <Text tColor={theme.palette.dark.main} fSize={'small'} fWeight={'bold'} tAlign={'center'}>
+                  Getting Info...
+                </Text>
+              </Box>
+            </Box>
+            : <><Box marginBottom={theme.sizes.gutters[4]} display={'flex'} justifyContent={'center'}>
               <FaBan size={72} color={theme.palette.dark.main}/>
             </Box>
               <Text tAlign={'center'} fSize={'large'} fWeight={'bold'}>Oops... currently not available</Text>
