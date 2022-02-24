@@ -131,7 +131,9 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
 
   return (
     <StyledCalContainer rounded={rounded} bordered={bordered}>
-      <Box marginY={theme.sizes.gutters[4]}>
+      <Box
+        position={'sticky'} top={'0'}
+        style={{background: 'inherit'}}>
         <Grid justifyGrid={'center'} alignGrid={'center'}>
           <GridCell colsSm={3}>
             <Button onClick={handlePrev} block size={'sm'}>prev</Button>
@@ -145,16 +147,16 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
             <Button onClick={handleNext} block size={'sm'}>next</Button>
           </GridCell>
         </Grid>
+        <StyledHead>
+          <StyledCol>SUN</StyledCol>
+          <StyledCol>MON</StyledCol>
+          <StyledCol>TUE</StyledCol>
+          <StyledCol>WED</StyledCol>
+          <StyledCol>THU</StyledCol>
+          <StyledCol>FRI</StyledCol>
+          <StyledCol>SAT</StyledCol>
+        </StyledHead>
       </Box>
-      <StyledHead>
-        <StyledCol>SUN</StyledCol>
-        <StyledCol>MON</StyledCol>
-        <StyledCol>TUE</StyledCol>
-        <StyledCol>WED</StyledCol>
-        <StyledCol>THU</StyledCol>
-        <StyledCol>FRI</StyledCol>
-        <StyledCol>SAT</StyledCol>
-      </StyledHead>
       <StyledCalDays>
         {!loading &&
           <>
