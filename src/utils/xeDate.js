@@ -133,6 +133,21 @@ class XeDate extends Date {
   }
 
   /**
+   * @returns {number} - the day the month start (0-6), where 0 is Sunday
+   */
+  getMonthStartDay() {
+    return XeDate.create(this.getFullYear(), this.month(), 1).getDay()
+  }
+
+  /**
+   * @returns {number} - day the month ends (0-6), where 0 is Sunday
+   */
+  getMonthEndDay() {
+    let x = XeDate.create(this.getFullYear(), this.month(), 1).add('month', 1).day()
+    return x === 0 ? 6 : x - 1
+  }
+
+  /**
    * @description checks whether a year is a leap year
    * @returns {boolean}
    */
