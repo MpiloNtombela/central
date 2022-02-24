@@ -106,6 +106,15 @@ class XeDate extends Date {
     }
   }
 
+
+  /**
+   * @description clones a XeDate obj
+   * @returns {XeDate} - new cloned XeDate object
+   */
+  clone() {
+    return XeDate.create(this.getFullYear(), this.month(), this.getDate())
+  }
+
   /**
    * @description gets number of days in a month given year and month (static)
    * @param {number} year - year
@@ -142,9 +151,9 @@ class XeDate extends Date {
    */
   toFormattedString({name = false, long = false, day = true, sep = ' '}) {
     if (name) {
-      return `${day && this.day(name, long) && ' - '}${this.getDate()}${sep}${this.month(name, long)}${sep}${this.getFullYear()}`
+      return `${day && this.day(name, long) + ' - '}${this.getDate()}${sep}${this.month(name, long)}${sep}${this.getFullYear()}`
     } else {
-      return `${day && this.day() && ' - '}${this.getDate()}${sep}${this.month()}${sep}${this.getFullYear()}`
+      return `${day && this.day(name, long) + ' - '}${this.getDate()}${sep}${this.month()}${sep}${this.getFullYear()}`
     }
   }
 }
