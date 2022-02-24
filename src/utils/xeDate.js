@@ -1,0 +1,3 @@
+class XeDate extends Date {
+
+}
