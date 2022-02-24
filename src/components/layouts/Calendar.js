@@ -1,7 +1,11 @@
-import {css} from "@emotion/react";
+import {css, useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import React, {useEffect, useState} from 'react';
 import XeDate from "../../utils/xeDate";
+import Button from "../elements/Button";
+import Text from "../elements/Text";
+import Box from "./Box";
+import Grid, {GridCell} from "./Grid";
 
 const CalStyles = css`
   display: flex;
@@ -15,16 +19,15 @@ const CalStyles = css`
 `
 
 const StyledCol = styled.div`
+  background: ${({bgColor}) => bgColor ? bgColor : 'inherit'};
+  color: ${({color}) => color ? color : 'inherit'};
   width: calc(100% / 7);
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid grey;
-  border-right: 1px solid grey;
   font-size: .85em;
   user-select: none;
-  background: ${({theme, wkEnd}) => wkEnd ? theme.palette.dark.glass : 'inherit'};
 `
 const StyledHead = styled.div`
   ${CalStyles};
@@ -59,66 +62,92 @@ const StyledCalContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   background: ${({theme}) => theme.background.main};
-  border: 1px solid grey;
-  border-bottom: 0;
+  border-top: ${({bordered}) => bordered ? '1px solid grey' : 0};
+  border-left: ${({bordered}) => bordered ? '1px solid grey' : 0};
   border-right: 0;
+  border-bottom: 0;
   font-size: 16px;
+
+  ${StyledCol} {
+    border-bottom: ${({bordered}) => bordered ? '1px solid grey' : 0};
+    border-right: ${({bordered}) => bordered ? '1px solid grey' : 0};
+    border-radius: ${({rounded}) => rounded ? '50%' : '0'};
+  }
 `
 
-const Calendar = () => {
-  const initDate = new XeDate()
+const Calendar = ({year, month, day, rounded, bordered}) => {
+  const theme = useTheme()
+  let initDate = new XeDate()
+  if (year && month) {
+    initDate = XeDate.create(year, month)
+  }
   const [prevDates, setPrevDates] = useState([])
   const [dates, setDates] = useState([])
   const [nextDates, setNextDates] = useState([])
   const [loading, setLoading] = useState(true)
-  const [currentDate, setCurrentDate] = useState({
-    date: initDate.getDate(),
-    month: initDate.month(),
-    year: initDate.getFullYear()
-  })
-
-
-  const getStartDay = (yr, month, date) => {
-    return XeDate.create(yr, month, date).getDay()
-  }
-
-  const getPrevDate = (yr, month) => {
-    let x = XeDate.create(yr, month)
-    x.sub('month', 1)
-    return x
-  }
+  const [currentDate, setCurrentDate] = useState(initDate)
 
   useEffect(() => {
     let _prev = [],
       _dates = [],
       _nextDates = []
     setLoading(true)
-    const xdate = XeDate.create(currentDate.year, currentDate.month, currentDate.date)
+    setNextDates([])
+    setPrevDates([])
+    console.log(currentDate)
 
-    const startDay = getStartDay(currentDate.year, currentDate.month)
-    const prev = getPrevDate(currentDate.year, currentDate.month)
+    let startDay = currentDate.getMonthStartDay()
+    let prev = currentDate.clone().sub('month', 1)
     let prevMonthNumDays = prev.numOfDays()
-    let numOfDays = xdate.numOfDays()
     if (startDay > 0) {
       for (let x = 0; x < startDay; x++) {
         _prev.unshift(prevMonthNumDays - x)
       }
       setPrevDates(_prev)
     }
-    if (6 - xdate.getMonthEndDay() > 0) {
-      for (let x = 1; x <= (6 - xdate.getMonthEndDay()); x++) {
+
+    console.log(6 - currentDate.getMonthEndDay())
+
+    if ((6 - currentDate.getMonthEndDay()) > 0) {
+      for (let x = 1; x <= (6 - currentDate.getMonthEndDay()); x++) {
         _nextDates.push(x)
       }
       setNextDates(_nextDates)
     }
+
+    let numOfDays = currentDate.numOfDays()
     for (let x = 1; x <= numOfDays; x++) {
-      _dates.push(x)
+      let date = XeDate.create(currentDate.getFullYear(), currentDate.month(), x)
+      _dates.push(date)
     }
     setDates(_dates)
     setLoading(false)
-  }, [])
+  }, [currentDate])
+
+  const handlePrev = () => {
+    setCurrentDate(currentDate.clone().sub('month', 1))
+  }
+  const handleNext = () => {
+    setCurrentDate(currentDate.clone().add('month', 1))
+  }
+
   return (
-    <StyledCalContainer>
+    <StyledCalContainer rounded={rounded} bordered={bordered}>
+      <Box marginY={theme.sizes.gutters[4]}>
+        <Grid justifyGrid={'center'} alignGrid={'center'}>
+          <GridCell colsSm={3}>
+            <Button onClick={handlePrev} block size={'sm'}>prev</Button>
+          </GridCell>
+          <GridCell colsSm={6}>
+            <Text tAlign={'center'} fSize={'medium'} fWeight={'bold'}>
+              {currentDate.month(true, true)} {currentDate.getFullYear()}
+            </Text>
+          </GridCell>
+          <GridCell colsSm={3}>
+            <Button onClick={handleNext} block size={'sm'}>next</Button>
+          </GridCell>
+        </Grid>
+      </Box>
       <StyledHead>
         <StyledCol>SUN</StyledCol>
         <StyledCol>MON</StyledCol>
@@ -134,7 +163,14 @@ const Calendar = () => {
             {prevDates.length > 0 && prevDates.map((date, idx) =>
               <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
             )}
-            {dates.map((date, idx) => <StyledCol key={idx}>{date}</StyledCol>)}
+            {dates.map((date, idx) => {
+              const xdate = new XeDate()
+              if (xdate.equal(date)) {
+                return <StyledCol color={'#fff'} bgColor={'dodgerblue'} key={idx}>{date.getDate()}</StyledCol>
+              } else {
+                return <StyledCol key={idx}>{date.getDate()}</StyledCol>
+              }
+            })}
             {nextDates.map((date, idx) =>
               <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
             )}
