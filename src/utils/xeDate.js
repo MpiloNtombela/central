@@ -153,6 +153,7 @@ class XeDate extends Date {
    * @returns {boolean} -
    */
   equal(date) {
+    date = new XeDate(date)
     return this.getFullYear() === date.getFullYear() && this.month() === date.month() && this.getDate() === date.getDate()
   }
 
