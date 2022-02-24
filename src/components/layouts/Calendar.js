@@ -31,7 +31,7 @@ const StyledCol = styled.div`
 `
 const StyledHead = styled.div`
   ${CalStyles};
-  font-weight: bold;
+  font-weight: 900;
   text-transform: uppercase;
   position: sticky;
   top: 0;
@@ -40,6 +40,7 @@ const StyledHead = styled.div`
 
   ${StyledCol} {
     padding: .5rem .25rem;
+    font-size: .95em;
   }
 `
 
@@ -62,15 +63,12 @@ const StyledCalContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   background: ${({theme}) => theme.background.main};
-  border-top: ${({bordered}) => bordered ? '1px solid grey' : 0};
-  border-left: ${({bordered}) => bordered ? '1px solid grey' : 0};
-  border-right: 0;
-  border-bottom: 0;
   font-size: 16px;
 
-  ${StyledCol} {
-    border-bottom: ${({bordered}) => bordered ? '1px solid grey' : 0};
-    border-right: ${({bordered}) => bordered ? '1px solid grey' : 0};
+  ${StyledCalDays} ${StyledCol} {
+    border: ${({bordered}) => bordered ? '1px solid grey' : 0};
+    border-bottom: ${({rounded}) => !rounded ? '1px solid grey' : 0};
+    border-right: ${({rounded}) => !rounded ? '1px solid grey' : 0};
     border-radius: ${({rounded}) => rounded ? '50%' : '0'};
   }
 `
@@ -160,19 +158,33 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
       <StyledCalDays>
         {!loading &&
           <>
-            {prevDates.length > 0 && prevDates.map((date, idx) =>
-              <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
-            )}
+            {prevDates.length > 0 && prevDates.map((date, idx) => (
+              <StyledCol
+                key={idx}
+                style={{fontStyle: 'italic'}}
+                bgColor={bordered ? theme.palette.dark.light : 'transparent'}
+                color={bordered ? theme.palette.dark.dark : theme.color.secondary}>
+                {date}
+              </StyledCol>
+            ))}
             {dates.map((date, idx) => {
-              const xdate = new XeDate()
-              if (xdate.equal(date)) {
-                return <StyledCol color={'#fff'} bgColor={'dodgerblue'} key={idx}>{date.getDate()}</StyledCol>
-              } else {
-                return <StyledCol key={idx}>{date.getDate()}</StyledCol>
-              }
+              const eq = new XeDate().equal(date)
+              return <StyledCol
+                key={idx}
+                color={eq ? theme.palette.secondary.contrast.dark : theme.color.main}
+                bgColor={eq ? theme.palette.secondary.main : 'transparent'}
+                style={{fontWeight: 500}}>
+                {date.getDate()}
+              </StyledCol>
             })}
-            {nextDates.map((date, idx) =>
-              <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
+            {nextDates.length > 0 && nextDates.map((date, idx) =>
+              (<StyledCol
+                key={idx}
+                bgColor={bordered ? theme.palette.dark.light : 'transparent'}
+                color={bordered ? theme.palette.dark.dark : theme.color.secondary}
+                style={{fontStyle: 'italic'}}>
+                {date}
+              </StyledCol>)
             )}
           </>}
       </StyledCalDays>
