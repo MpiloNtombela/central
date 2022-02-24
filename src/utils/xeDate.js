@@ -148,6 +148,15 @@ class XeDate extends Date {
   }
 
   /**
+   * @description checks if the given date is equal to current date
+   * @param {XeDate} date
+   * @returns {boolean} -
+   */
+  equal(date) {
+    return this.getFullYear() === date.getFullYear() && this.month() === date.month() && this.getDate() === date.getDate()
+  }
+
+  /**
    * @description checks whether a year is a leap year
    * @returns {boolean}
    */
