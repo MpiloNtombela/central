@@ -16,7 +16,7 @@ class XeDate extends Date {
    * @param {boolean} long - if true uses full day name (e.g. Tuesday) else short name (e.g. Tue)
    * @returns {string[]} array of days
    */
-  static getDays(long = false) {
+  static getDaysByNames(long = false) {
     if (long) {
       return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     } else {
@@ -29,7 +29,7 @@ class XeDate extends Date {
    * @param {boolean} long - if true uses full month name (e.g. October) else short name (e.g. Oct)
    * @returns {string[]} array of months
    */
-  static getMonths(long = false) {
+  static getMonthsByNames(long = false) {
     if (long) {
       return [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -48,7 +48,7 @@ class XeDate extends Date {
    */
   day(name = false, long = false) {
     if (name) {
-      return XeDate.getDays(long)[this.getDay()]
+      return XeDate.getDaysByNames(long)[this.getDay()]
     } else {
       return this.getDay()
     }
@@ -62,7 +62,7 @@ class XeDate extends Date {
    */
   month(name = false, long = false) {
     if (name) {
-      return XeDate.getMonths(long)[this.getMonth()]
+      return XeDate.getMonthsByNames(long)[this.getMonth()]
     } else {
       return this.getMonth() + 1
     }
