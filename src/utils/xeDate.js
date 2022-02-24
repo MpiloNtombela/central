@@ -3,7 +3,7 @@ class XeDate extends Date {
   /**
    * @description creates a new date obj without headache of month and indexes
    * @param {number} year - year number
-   * @param {number} month - month number
+   * @param {number} month - month number (1-12)
    * @param {number} date - date number
    * @returns {XeDate} date - XeDate obj
    */
@@ -44,7 +44,7 @@ class XeDate extends Date {
    * @description gets day of a date
    * @param {boolean} name - whether to return day name
    * @param {boolean} long - whether to return a long or short day name
-   * @returns {string|number}
+   * @returns {string|number} - a day by name or number (0-6) where 0 is Sunday
    */
   day(name = false, long = false) {
     if (name) {
@@ -58,7 +58,7 @@ class XeDate extends Date {
    * @description gets month of a date
    * @param {boolean} name - whether to return month name
    * @param {boolean} long - whether to return a long or short month name
-   * @returns {string|number}
+   * @returns {string|number} - a month by name or number (1-12)
    */
   month(name = false, long = false) {
     if (name) {
@@ -104,6 +104,23 @@ class XeDate extends Date {
       default:
         return new XeDate()
     }
+  }
+
+  /**
+   * @description gets number of days in a month given year and month (static)
+   * @param {number} year - year
+   * @param {number} month - month (1-12)
+   * @returns {number}
+   */
+  static getNumOfDays(year, month) {
+    return new Date(year, month, 0).getDate()
+  }
+
+  /**
+   * @returns {number} - number of days
+   */
+  numOfDays() {
+    return new XeDate(this.getFullYear(), this.month(), 0).getDate()
   }
 
   /**
