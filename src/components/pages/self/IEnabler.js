@@ -203,8 +203,16 @@ const IEnabler = () => {
                                       tColor={"grey"}>{caseOut(key).toUpperCase()}</Text>
                               </Box>
                             } v={
-                              <Box margin={'.5rem 0'}>
-                                <Text fSize={'.85em'}>{contacts[key]}</Text>
+                              <Box padding={'.75rem .25rem'}
+                                   style={{
+                                     borderRadius: theme.sizes.radius.sm,
+                                     maxWidth: 'calc(100%)',
+                                   }}>
+                                <Text style={{
+                                  whiteSpace: 'nowrap',
+                                  textOverflow: 'ellipsis',
+                                  overflow: 'hidden',
+                                }} fSize={'.85em'}>{contacts[key]}</Text>
                               </Box>
                             }/>
                           )
@@ -229,7 +237,8 @@ const IEnabler = () => {
             <TabContent value={"applications"}>
               {applicationsData.map((application) => {
                 return (
-                  <Card key={application.qualification} style={{margin: `${theme.sizes.gutters[2]} auto`}} maxWidth={"md"}>
+                  <Card key={application.qualification} style={{margin: `${theme.sizes.gutters[2]} auto`}}
+                        maxWidth={"md"}>
                     <Text fWeight={'bold'}
                           fSize={"medium"}>{application.description} - ({application.qualification})</Text>
                     <Grid>
@@ -250,15 +259,15 @@ const IEnabler = () => {
                       })}
                     </Grid>
                     {application.status.toLowerCase().trim() === "firm offer" &&
-                    <Box display={"flex"} justifyContent={"flex-end"}>
-                      <Button rounded size={"sm"} outlined color={"danger"}
-                              style={{marginRight: theme.sizes.gutters[1]}}>
-                        reject
-                      </Button>
-                      <Button rounded size={"sm"} color={"info"} style={{marginLeft: theme.sizes.gutters[1]}}>
-                        Accept
-                      </Button>
-                    </Box>}
+                      <Box display={"flex"} justifyContent={"flex-end"}>
+                        <Button rounded size={"sm"} outlined color={"danger"}
+                                style={{marginRight: theme.sizes.gutters[1]}}>
+                          reject
+                        </Button>
+                        <Button rounded size={"sm"} color={"info"} style={{marginLeft: theme.sizes.gutters[1]}}>
+                          Accept
+                        </Button>
+                      </Box>}
                   </Card>
                 )
               })}
