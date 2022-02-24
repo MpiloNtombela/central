@@ -4,15 +4,15 @@ import React from "react";
 
 export const BoxStyled = styled.div`
   margin: ${props => props.margin};
-  margin-top: ${props => props.marginTop};
-  margin-bottom: ${props => props.marginBottom};
-  margin-left: ${props => props.marginLeft};
-  margin-right: ${props => props.marginRight};
+  margin-top: ${props => props.marginTop || props.marginY};
+  margin-bottom: ${props => props.marginBottom || props.marginY};
+  margin-left: ${props => props.marginLeft || props.marginX};
+  margin-right: ${props => props.marginRight || props.marginX};
   padding: ${props => props.padding};
-  padding-top: ${props => props.paddingTop};
-  padding-bottom: ${props => props.paddingBottom};
-  padding-left: ${props => props.paddingLeft};
-  padding-right: ${props => props.paddingRight};
+  padding-top: ${props => props.paddingTop || props.paddingY};
+  padding-bottom: ${props => props.paddingBottom || props.paddingY};
+  padding-left: ${props => props.paddingLeft || props.paddingX};
+  padding-right: ${props => props.paddingRight || props.paddingX};
   width: ${props => props.width};
   height: ${props => props.height};
   max-width: ${props => props.maxWidth};
@@ -28,8 +28,8 @@ export const BoxStyled = styled.div`
 
   &:hover {
     background: ${({hoverColor, isHover, theme}) => isHover ? hoverColor
-            ? hoverColor
-            : theme.background.glass
+                    ? hoverColor
+                    : theme.background.glass
             : 'inherit'};
     cursor: ${({isHover, onClick}) => onClick || isHover ? 'pointer' : 'default'};
   }
@@ -38,11 +38,15 @@ export const BoxStyled = styled.div`
 
 const Box = ({
                margin,
+               marginX,
+               marginY,
                marginTop,
                marginBottom,
                marginLeft,
                marginRight,
                padding,
+               paddingX,
+               paddingY,
                paddingTop,
                paddingBottom,
                paddingLeft,
@@ -68,11 +72,15 @@ const Box = ({
   return (
     <BoxStyled
       margin={margin}
+      marginX={marginX}
+      marginY={marginY}
       marginTop={marginTop}
       marginBottom={marginBottom}
       marginLeft={marginLeft}
       marginRight={marginRight}
       padding={padding}
+      paddingX={paddingX}
+      paddingY={paddingY}
       paddingTop={paddingTop}
       paddingBottom={paddingBottom}
       paddingLeft={paddingLeft}
@@ -100,11 +108,15 @@ const Box = ({
 // prop types for the box component
 Box.propTypes = {
   margin: PropTypes.string,
+  marginX: PropTypes.string,
+  marginY: PropTypes.string,
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
   marginLeft: PropTypes.string,
   marginRight: PropTypes.string,
   padding: PropTypes.string,
+  paddingX: PropTypes.string,
+  paddingY: PropTypes.string,
   paddingTop: PropTypes.string,
   paddingBottom: PropTypes.string,
   paddingLeft: PropTypes.string,
