@@ -58,6 +58,34 @@ class XeDate extends Date {
   }
 
   /**
+   * @description util func to add date, month or year
+   * @param {string} type - type to add (can be date, month, year)
+   * @param {number} num - a positive number to subtract
+   * @returns {XeDate} date -  new XeDate object
+   */
+  add(type, num) {
+    switch (type) {
+      case ('date' || 'd'):
+        return new XeDate(this.setDate(this.getDate() + num))
+      case ('month' || 'm'):
+        return new XeDate(this.setMonth(this.getMonth() + num))
+      case ("year" || 'y'):
+        return new XeDate(this.setFullYear(this.getFullYear() + num))
+      default:
+        return new XeDate()
+    }
+  }
+
+  /**
+   * @description checks whether a year is a leap year
+   * @returns {boolean}
+   */
+  isLeapYear() {
+    let yr = this.getFullYear()
+    return yr % 400 === 0 && yr % 100 === 0 ? true : yr % 4 === 0 && yr % 100 !== 0;
+  }
+
+  /**
    * @description a human friendly formatted date
    * @param {boolean} name - if true (day and month) will be in name format (e.g. Tue | Oct)
    * @param long - if true (day and month) will be in long name format (e.g. Tuesday | October)
