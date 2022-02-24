@@ -1,6 +1,17 @@
 class XeDate extends Date {
 
   /**
+   * @description creates a new date obj without headache of month and indexes
+   * @param {number} year - year number
+   * @param {number} month - month number
+   * @param {number} date - date number
+   * @returns {XeDate} date - XeDate obj
+   */
+  static create(year, month, date = 1) {
+    return new XeDate(year, month - 1, date)
+  }
+
+  /**
    * @description method to get days name
    * @param {boolean} long - if true uses full day name (e.g. Tuesday) else short name (e.g. Tue)
    * @returns {string[]} array of days
