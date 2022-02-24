@@ -77,6 +77,25 @@ class XeDate extends Date {
   }
 
   /**
+   * @description util func to subtract date, month or year
+   * @param {string} type - type to subtract (can be date, month, year)
+   * @param {number} num - a positive number to subtract
+   * @returns {XeDate} date -  new XeDate object
+   */
+  sub(type, num) {
+    switch (type) {
+      case ('date' || 'd'):
+        return new XeDate(this.setDate(this.getDate() - num))
+      case ('month' || 'm'):
+        return new XeDate(this.setMonth(this.getMonth() - num))
+      case ("year" || 'y'):
+        return new XeDate(this.setFullYear(this.getFullYear() - num))
+      default:
+        return new XeDate()
+    }
+  }
+
+  /**
    * @description checks whether a year is a leap year
    * @returns {boolean}
    */
