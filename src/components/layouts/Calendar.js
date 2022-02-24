@@ -65,6 +65,12 @@ const StyledCalContainer = styled.div`
 `
 
 const Calendar = () => {
+  const currentDate = new Date()
+  const [date, setDate] = useState({
+    date: currentDate.getDate(),
+    month: currentDate.getMonth() + 1,
+    year: currentDate.getFullYear()
+  })
   const [dates, setDates] = useState([])
   const [loading, setLoading] = useState(true)
   const getDaysInMonth = (yr, month) => {
@@ -74,12 +80,27 @@ const Calendar = () => {
     return new Date(yr, month - 1, 1).getDay()
   }
 
+  const subMonth = ({yr, month, date = 1, numMonths = 1}) => {
+    month -= 1
+    let x = new Date(yr, month, date)
+    x.setMonth(month - numMonths)
+    return x
+  }
+
+  const getPrevDate = (yr, month) => {
+    let x = subMonth({yr, month, numMonths: 1})
+    return {year: x.getFullYear(), month: x.getMonth() + 1, date: x.getDate(), day: x.getDay()}
+  }
+
   useEffect(() => {
     let _dates = []
     setLoading(true)
-    const startDay = getStartDay(2022, 1)
-    let prevMonth = getDaysInMonth(2021, 12)
-    let currentMonth = getDaysInMonth(2022, 1)
+    const startDay = getStartDay(date.year, date.month)
+    let prev = getPrevDate(date.year, date.month)
+    console.log(prev)
+    let prevMonth = getDaysInMonth(prev.year, prev.month)
+    let currentMonth = getDaysInMonth(date.year, date.month)
+
     for (let x = 0; x < startDay; x++) {
       _dates.unshift(prevMonth - x)
     }

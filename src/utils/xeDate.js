@@ -120,3 +120,5 @@ class XeDate extends Date {
     }
   }
 }
+
+export default XeDate
