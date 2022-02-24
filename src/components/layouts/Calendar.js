@@ -1,6 +1,7 @@
 import {css} from "@emotion/react";
 import styled from "@emotion/styled";
 import React, {useEffect, useState} from 'react';
+import XeDate from "../../utils/xeDate";
 
 const CalStyles = css`
   display: flex;
@@ -65,46 +66,52 @@ const StyledCalContainer = styled.div`
 `
 
 const Calendar = () => {
-  const currentDate = new Date()
-  const [date, setDate] = useState({
-    date: currentDate.getDate(),
-    month: currentDate.getMonth() + 1,
-    year: currentDate.getFullYear()
-  })
+  const initDate = new XeDate()
+  const [prevDates, setPrevDates] = useState([])
   const [dates, setDates] = useState([])
+  const [nextDates, setNextDates] = useState([])
   const [loading, setLoading] = useState(true)
-  const getDaysInMonth = (yr, month) => {
-    return new Date(yr, month, 0).getDate()
-  }
-  const getStartDay = (yr, month) => {
-    return new Date(yr, month - 1, 1).getDay()
-  }
+  const [currentDate, setCurrentDate] = useState({
+    date: initDate.getDate(),
+    month: initDate.month(),
+    year: initDate.getFullYear()
+  })
 
-  const subMonth = ({yr, month, date = 1, numMonths = 1}) => {
-    month -= 1
-    let x = new Date(yr, month, date)
-    x.setMonth(month - numMonths)
-    return x
+
+  const getStartDay = (yr, month, date) => {
+    return XeDate.create(yr, month, date).getDay()
   }
 
   const getPrevDate = (yr, month) => {
-    let x = subMonth({yr, month, numMonths: 1})
-    return {year: x.getFullYear(), month: x.getMonth() + 1, date: x.getDate(), day: x.getDay()}
+    let x = XeDate.create(yr, month)
+    x.sub('month', 1)
+    return x
   }
 
   useEffect(() => {
-    let _dates = []
+    let _prev = [],
+      _dates = [],
+      _nextDates = []
     setLoading(true)
-    const startDay = getStartDay(date.year, date.month)
-    let prev = getPrevDate(date.year, date.month)
-    console.log(prev)
-    let prevMonth = getDaysInMonth(prev.year, prev.month)
-    let currentMonth = getDaysInMonth(date.year, date.month)
+    const xdate = XeDate.create(currentDate.year, currentDate.month, currentDate.date)
 
-    for (let x = 0; x < startDay; x++) {
-      _dates.unshift(prevMonth - x)
+    const startDay = getStartDay(currentDate.year, currentDate.month)
+    const prev = getPrevDate(currentDate.year, currentDate.month)
+    let prevMonthNumDays = prev.numOfDays()
+    let numOfDays = xdate.numOfDays()
+    if (startDay > 0) {
+      for (let x = 0; x < startDay; x++) {
+        _prev.unshift(prevMonthNumDays - x)
+      }
+      setPrevDates(_prev)
     }
-    for (let x = 1; x <= currentMonth; x++) {
+    if (6 - xdate.getMonthEndDay() > 0) {
+      for (let x = 1; x <= (6 - xdate.getMonthEndDay()); x++) {
+        _nextDates.push(x)
+      }
+      setNextDates(_nextDates)
+    }
+    for (let x = 1; x <= numOfDays; x++) {
       _dates.push(x)
     }
     setDates(_dates)
@@ -113,20 +120,24 @@ const Calendar = () => {
   return (
     <StyledCalContainer>
       <StyledHead>
-        <StyledCol wkEnd>SUN</StyledCol>
+        <StyledCol>SUN</StyledCol>
         <StyledCol>MON</StyledCol>
         <StyledCol>TUE</StyledCol>
         <StyledCol>WED</StyledCol>
         <StyledCol>THU</StyledCol>
         <StyledCol>FRI</StyledCol>
-        <StyledCol wkEnd>SAT</StyledCol>
+        <StyledCol>SAT</StyledCol>
       </StyledHead>
       <StyledCalDays>
         {!loading &&
           <>
-            {dates.map((date, idx) => {
-              return <StyledCol key={idx}>{date}</StyledCol>
-            })}
+            {prevDates.length > 0 && prevDates.map((date, idx) =>
+              <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
+            )}
+            {dates.map((date, idx) => <StyledCol key={idx}>{date}</StyledCol>)}
+            {nextDates.map((date, idx) =>
+              <StyledCol bgColor={'transparent'} color={'grey'} key={idx}>{date}</StyledCol>
+            )}
           </>}
       </StyledCalDays>
     </StyledCalContainer>
