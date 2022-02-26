@@ -1,12 +1,12 @@
 import {useTheme} from "@emotion/react";
 import PropTypes from 'prop-types'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {MdMoneyOff} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import logo from "../../../../public/logo.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
-import {LOADED, LOADING, SETUP_ALERT} from "../../DataContext";
+import {SETUP_ALERT} from "../../DataContext";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
@@ -92,8 +92,8 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
 }
 
 const IEnabler = () => {
-
-  const {student, applications, isLoading} = useDataContext()
+  const [isLoading, setIsLoading] = useState(true)
+  const {student, applications} = useDataContext()
   const applicationsData = [...applications].sort((a, b) => b.year - a.year || a.preference - b.preference)
   const dispatch = useDataDispatch()
   const {contacts} = student;
@@ -108,9 +108,9 @@ const IEnabler = () => {
   })
 
   useEffect(() => {
-    dispatch({type: LOADING})
+    setIsLoading(true)
     setTimeout(() => {
-      dispatch({type: LOADED})
+      setIsLoading(false)
     }, 2500)
   }, [])
 
