@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
+import {useAuth} from "../hooks/auth";
 import {useDataContext, useDataDispatch} from "../hooks/context";
 import {useGetSubPath} from "../hooks/routes";
-import {CLEAR_ALERT} from "./DataContext";
+import {CLEAR_ALERT, LOADED} from "./DataContext";
 import Snackbar from "./layouts/Snackbar";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
@@ -13,6 +14,7 @@ import Login from "./pages/Login";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
 import {achievements, admin, selfHelp} from "./pages/utils/mainRoutes";
+import PrivateRoute from "./PrivateRoute";
 import Theme from "./Theme";
 
 const App = () => {
@@ -27,6 +29,15 @@ const App = () => {
   const bio = useGetSubPath(admin, 'Biographical')
   const {alert} = useDataContext()
   const dispatch = useDataDispatch()
+  const auth = useAuth()
+
+  useEffect(() => {
+    let stuNum = localStorage.getItem("stuNum");
+    auth.setUser(stuNum)
+    setTimeout(() => {
+      dispatch({type: LOADED})
+    }, 2000);
+  }, [])
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -47,15 +58,15 @@ const App = () => {
       <HashRouter>
         <MainNavbar/>
         <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={ <Login /> } />
-          <Route path={exclusion} element={<Home/>}/>
-          <Route path={ienabler} element={<IEnabler/>}/>
-          <Route path={reg} element={<IEnabler/>}/>
-          <Route path={cMarks} element={<ClassMarks/>}/>
-          <Route path={fMarks} element={<FinalMark/>}/>
-          <Route path={regHist} element={<Registration/>}/>
-          <Route path={bio} element={<Bio/>}/>
+          <Route path="/" element={<PrivateRoute><Home/></PrivateRoute>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path={exclusion} element={<PrivateRoute><Home/></PrivateRoute>}/>
+          <Route path={ienabler} element={<PrivateRoute><IEnabler/></PrivateRoute>}/>
+          <Route path={reg} element={<PrivateRoute><IEnabler/></PrivateRoute>}/>
+          <Route path={cMarks} element={<PrivateRoute><ClassMarks/></PrivateRoute>}/>
+          <Route path={fMarks} element={<PrivateRoute><FinalMark/></PrivateRoute>}/>
+          <Route path={regHist} element={<PrivateRoute><Registration/></PrivateRoute>}/>
+          <Route path={bio} element={<PrivateRoute><Bio/></PrivateRoute>}/>
         </Routes>
       </HashRouter>
       <Snackbar open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
