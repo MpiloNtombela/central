@@ -6,7 +6,7 @@ import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import logo from "../../../../public/logo.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
-import {LOADED, LOADING} from "../../DataContext";
+import {LOADED, LOADING, SETUP_ALERT} from "../../DataContext";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
@@ -114,6 +114,11 @@ const IEnabler = () => {
     }, 2500)
   }, [])
 
+  const handleOpen = () => {
+    setDrawerOpt(draft => {
+      draft.open = true
+    })
+  }
   const handleClose = () => {
     setDrawerOpt(draft => {
       draft.open = false
@@ -123,6 +128,16 @@ const IEnabler = () => {
   const changeAnchor = () => {
     setDrawerOpt(draft => {
       draft.anchor = drawerOpt.anchor === "left" ? "right" : "left"
+    })
+  }
+
+  const handleUpdateClick = () => {
+    dispatch({
+      type: SETUP_ALERT,
+      payload: {
+        message: "can't update info at this moment",
+        status: 'info'
+      }
     })
   }
 
@@ -220,7 +235,7 @@ const IEnabler = () => {
                       </Grid>
                     </Box>
                     <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
-                      <Button color={'primary'} rounded size="sm">update details</Button>
+                      <Button onClick={handleUpdateClick} color={'primary'} rounded size="sm">update details</Button>
                     </Box>
                   </Card>
                   <Box margin={`${theme.sizes.gutters[2]} auto`}>
@@ -281,6 +296,15 @@ const IEnabler = () => {
                 Record</Text>
             </TabContent>
           </TabContext>
+          {!isLg &&
+            <Button
+              onClick={handleOpen}
+              style={{
+                position: 'fixed',
+                bottom: `1rem`,
+                right: drawerOpt.anchor === 'left' ? '1rem' : 'unset',
+                left: drawerOpt.anchor === 'right' ? '1rem' : 'unset',
+              }} color={'secondary'}>menu</Button>}
         </Container>
       </DrawerContainer>
     )
