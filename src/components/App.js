@@ -9,6 +9,7 @@ import FinalMark from "./pages/achievement/FinalMarks";
 import Bio from "./pages/admin/Bio";
 import Registration from "./pages/admin/Registration";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
 import {achievements, admin, selfHelp} from "./pages/utils/mainRoutes";
@@ -47,6 +48,7 @@ const App = () => {
         <MainNavbar/>
         <Routes>
           <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={ <Login /> } />
           <Route path={exclusion} element={<Home/>}/>
           <Route path={ienabler} element={<IEnabler/>}/>
           <Route path={reg} element={<IEnabler/>}/>
