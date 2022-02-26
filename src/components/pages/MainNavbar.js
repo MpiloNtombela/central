@@ -2,16 +2,16 @@ import {useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import React from 'react';
-import logo from "../../../public/logo.png"
 import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
+import logo from "../../../public/logo.png"
+import {useAuth} from "../../hooks/auth";
 import {useDataContext} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
 import IconText from "../elements/IconText";
 import Image from "../elements/Image";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
-import Text from "../elements/Text";
 import Box from "../layouts/Box";
 import Chip from "../layouts/Chip";
 import DropMenu, {Menu} from "../layouts/DropMenu";
@@ -44,6 +44,7 @@ const MainLogo = () => (
 )
 
 const NavRoute = ({route, isBreak}) => {
+
   return (
     <NavbarItem>
       <DropMenu>
@@ -85,12 +86,14 @@ const NavRoute = ({route, isBreak}) => {
 const MainNavbar = () => {
   const theme = useTheme()
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
-  const {student} = useDataContext()
+  const {student: {studentNumber}} = useDataContext();
+  const {removeUser} = useAuth()
+
   return (
     <Navbar maxBreak={"sm"} logo={<MainLogo/>}
             elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={<FaTimes size={28}/>}
             openIcon={<FaBars size={28}/>}>
-      <NavbarItems>
+      {studentNumber && <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
         <NavRoute isBreak={isSm} route={admin}/>
@@ -101,12 +104,12 @@ const MainNavbar = () => {
                                    border: `1px solid ${theme.palette.secondary.main}`,
                                    padding: theme.sizes.gutters[1]
                                  }} src={logo} alt={''}/>}
-                  text={student.studentNumber}
+                  text={studentNumber}
                   outlined color={'secondary'}
                   endIcon={<MdArrowDropDown size={'1rem'}/>}/>
             <Menu>
-              <Box onClick={() => {
-              }} style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
+              <Box onClick={removeUser}
+                   style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
                 <IconText
                   icon={<FaSignOutAlt/>}
                   text={'logout'}
@@ -123,7 +126,7 @@ const MainNavbar = () => {
             </Menu>
           </DropMenu>
         </NavbarItem>
-      </NavbarItems>
+      </NavbarItems>}
     </Navbar>
   );
 };
