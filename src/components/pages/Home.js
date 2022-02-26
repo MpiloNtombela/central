@@ -5,8 +5,9 @@ import {MdAdminPanelSettings, MdCalendarToday, MdCelebration, MdClose, MdPushPin
 import {useMediaQuery} from "react-responsive";
 import {useMatch, useNavigate} from "react-router-dom";
 import {useImmer} from "use-immer";
-import {useDataContext} from "../../hooks/context";
+import {useDataContext, useDataDispatch} from "../../hooks/context";
 import {useGetSubPath} from "../../hooks/routes";
+import {SETUP_ALERT} from "../DataContext";
 import Anchor from "../elements/Anchor";
 import Button from "../elements/Button";
 import Table, {TableData, TableHead, TableRow, TBody, THead} from "../elements/Table";
@@ -26,6 +27,19 @@ import {caseOut} from "./self/IEnabler";
 import {selfHelp} from "./utils/mainRoutes";
 
 const Announcement = ({announcement, theme, collapsed}) => {
+
+  const dispatch = useDataDispatch()
+
+  const handleMessage = (message) => {
+    dispatch({
+      type: SETUP_ALERT,
+      payload: {
+        message: message,
+        status: 'info'
+      }
+    })
+  }
+
   return (
     <Box margin={`${theme.sizes.gutters[2]} 0`}>
       <Card>
@@ -38,37 +52,40 @@ const Announcement = ({announcement, theme, collapsed}) => {
                 tColor={theme.color.secondary}>{announcement?.content}</Text>
           <Box display={'flex'} marginTop={theme.sizes.gutters[4]}>
             {announcement.user &&
-            <Box marginRight={theme.sizes.gutters[1]}>
-              <Chip avatar={announcement.user.toLowerCase() === "mpilo" ? <MdAdminPanelSettings size={'.75rem'}/> :
-                <Text fSize={'.75rem'}>🤷‍♂️</Text>} text={announcement.user} textSize={'.7rem'}/>
-            </Box>}
+              <Box marginRight={theme.sizes.gutters[1]}>
+                <Chip avatar={announcement.user.toLowerCase() === "mpilo" ? <MdAdminPanelSettings size={'.75rem'}/> :
+                  <Text fSize={'.75rem'}>🤷‍♂️</Text>} text={announcement.user} textSize={'.7rem'}/>
+              </Box>}
             {announcement.pinned &&
-            <Box marginRight={theme.sizes.gutters[1]}>
-              <Chip avatar={<MdPushPin size={'.75rem'}/>} text={'pinned'} textSize={'.7rem'}/>
-            </Box>}
+              <Box marginRight={theme.sizes.gutters[1]}>
+                <Chip avatar={<MdPushPin size={'.75rem'}/>} text={'pinned'} textSize={'.7rem'}/>
+              </Box>}
             {<Chip avatar={<MdCalendarToday size={'.75rem'}/>} text={announcement.date} textSize={'.7rem'}/>}
           </Box>
           {announcement?.actions.length > 0 &&
-          <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
-            {announcement?.actions.map((action, idx) => {
-              return (
-                <Box key={idx} marginLeft={theme.sizes.gutters[2]}>
-                  {action.type === 'link' ?
-                    <Anchor
-                      style={{
-                        fontWeight: '700',
-                        fontSize: 'small',
-                        textTransform: 'uppercase',
-                        color: theme.palette.primary.main
-                      }}
-                      href={action.destination}
-                      target='_blank'>
-                      {action.name}
-                    </Anchor> :
-                    <Button size={'sm'} outlined={!action.important} rounded>{action.name}</Button>}
-                </Box>)
-            })}
-          </Box>}
+            <Box display={'flex'} justifyContent={'flex-end'} marginTop={theme.sizes.gutters[4]}>
+              {announcement?.actions.map((action, idx) => {
+                return (
+                  <Box key={idx} marginLeft={theme.sizes.gutters[2]}>
+                    {action.type === 'link' ?
+                      <Anchor
+                        style={{
+                          fontWeight: '700',
+                          fontSize: 'small',
+                          textTransform: 'uppercase',
+                          color: theme.palette.primary.main
+                        }}
+                        href={action.destination}
+                        target='_blank'>
+                        {action.name}
+                      </Anchor> :
+                      <Button size={'sm'} onClick={() => {
+                        action.message && handleMessage(action.message)
+                      }} outlined={!action.important}
+                              rounded>{action.name}</Button>}
+                  </Box>)
+              })}
+            </Box>}
         </Collapsible>
       </Card>
     </Box>
@@ -252,7 +269,7 @@ const Ad = ({ad, theme}) => {
                         </a>
                       </Text>}
                       {key.toLowerCase() !== 'email' && key.toLowerCase() !== 'price' &&
-                      <Text fSize={'.85em'}>{ad[key]}</Text>}
+                        <Text fSize={'.85em'}>{ad[key]}</Text>}
                     </Box>
                   </GridCell>
                 </React.Fragment>
@@ -405,7 +422,8 @@ const Home = () => {
         </GridCell>
       </Grid>
       {openAds &&
-      <AllAds handleAdClick={handleOpenAd} handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads} isSm={isSm}/>}
+        <AllAds handleAdClick={handleOpenAd} handleClose={handleOpenAdsToggle} openAds={openAds} ads={ads}
+                isSm={isSm}/>}
       <Drawer rounded minHeight={'60%'} width={300} onClose={handleCloseAd}
               open={openedAd.open}
               anchor={isSm ? 'bottom' : 'right'}
