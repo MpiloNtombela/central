@@ -68,7 +68,6 @@ const getPosition = (pos) => {
 
 const StyledMessage = styled.span`
   display: block;
-  text-align: justify;
 `
 
 const StyledClose = styled.div`
@@ -84,6 +83,7 @@ const StyledClose = styled.div`
   width: 16px;
   height: 16px;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     opacity: 1;
