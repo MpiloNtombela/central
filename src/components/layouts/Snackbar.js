@@ -55,6 +55,14 @@ const getPosition = (pos) => {
         right: edge,
         t: '0'
       }
+    default:
+      return {
+        left: '50%',
+        bottom: `${NAV_HEIGHT}rem`,
+        top: 'unset',
+        right: 'unset',
+        t: '-50%'
+      }
   }
 }
 
@@ -147,7 +155,7 @@ const StyledSnackbar = styled.div`
 const Snackbar = ({open, text, type = 'default', position = 'bottom-center', closeAfter = 0, onClose}) => {
 
   useEffect(() => {
-    if (closeAfter > 0) {
+    if (closeAfter > 0 && onClose) {
       setTimeout(() => {
         onClose()
       }, closeAfter)
