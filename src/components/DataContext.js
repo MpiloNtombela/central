@@ -46,7 +46,7 @@ const reducer = (draft, action) => {
 
 const dataState = {
   student: {
-    studentNumber: "000000000",
+    studentNumber: "",
     firstName: "John",
     lastName: "Doe",
     gender: "Male",
@@ -57,7 +57,7 @@ const dataState = {
     contacts: {
       phoneNumber: "+77123456789",
       emailAddress: "dev@mpilo.live",
-      studentEmail: '000000000@goth.am.bat',
+      studentEmail: "",
       postalAddress: "7 Goat Avenue, Gothville 7777",
       studyAddress: "7 Goat Avenue, Gothville 7777",
     },
