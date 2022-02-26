@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
+import {useDataContext, useDataDispatch} from "../hooks/context";
 import {useGetSubPath} from "../hooks/routes";
-import DataProvider from "./DataContext";
+import {CLEAR_ALERT} from "./DataContext";
+import Snackbar from "./layouts/Snackbar";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
 import Bio from "./pages/admin/Bio";
@@ -22,6 +24,8 @@ const App = () => {
   const fMarks = useGetSubPath(achievements, 'Final Marks')
   const regHist = useGetSubPath(admin, 'Reg History')
   const bio = useGetSubPath(admin, 'Biographical')
+  const {alert} = useDataContext()
+  const dispatch = useDataDispatch()
 
   useEffect(() => {
     setMode(localStorage.getItem('mode') === 'dark')
@@ -32,24 +36,30 @@ const App = () => {
     setMode(!isDark)
     localStorage.setItem('mode', isDark ? 'light' : 'dark')
   }
+
+  const handleAlertClose = () => {
+    dispatch({type: CLEAR_ALERT})
+  }
+
   return (
-    <DataProvider>
-      <Theme isDark={!isLoading && isDark}>
-        <HashRouter>
-          <MainNavbar/>
-          <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path={exclusion} element={<Home/>}/>
-            <Route path={ienabler} element={<IEnabler/>}/>
-            <Route path={reg} element={<IEnabler/>}/>
-            <Route path={cMarks} element={<ClassMarks/>}/>
-            <Route path={fMarks} element={<FinalMark/>}/>
-            <Route path={regHist} element={<Registration/>}/>
-            <Route path={bio} element={<Bio/>}/>
-          </Routes>
-        </HashRouter>
-      </Theme>
-    </DataProvider>
+    <Theme isDark={!isLoading && isDark}>
+      <HashRouter>
+        <MainNavbar/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path={exclusion} element={<Home/>}/>
+          <Route path={ienabler} element={<IEnabler/>}/>
+          <Route path={reg} element={<IEnabler/>}/>
+          <Route path={cMarks} element={<ClassMarks/>}/>
+          <Route path={fMarks} element={<FinalMark/>}/>
+          <Route path={regHist} element={<Registration/>}/>
+          <Route path={bio} element={<Bio/>}/>
+        </Routes>
+      </HashRouter>
+      <Snackbar open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
+                text={alert.message}
+                type={alert.status ? alert.status : 'default'} onClose={handleAlertClose}/>
+    </Theme>
   );
 }
 
