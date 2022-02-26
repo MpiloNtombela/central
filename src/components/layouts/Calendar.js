@@ -1,6 +1,7 @@
 import {css, useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import React, {useEffect, useState} from 'react';
+import {useMediaQuery} from "react-responsive";
 import XeDate from "../../utils/xeDate";
 import Button from "../elements/Button";
 import Text from "../elements/Text";
@@ -73,8 +74,9 @@ const StyledCalContainer = styled.div`
   }
 `
 
-const Calendar = ({year, month, day, rounded, bordered}) => {
+const Calendar = ({year, month, day, rounded, bordered, onDateClick}) => {
   const theme = useTheme()
+  const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   let initDate = new XeDate()
   if (year && month) {
     initDate = XeDate.create(year, month)
@@ -86,13 +88,10 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
   const [currentDate, setCurrentDate] = useState(initDate)
 
   useEffect(() => {
-    let _prev = [],
-      _dates = [],
-      _nextDates = []
+    let _prev = [], _dates = [], _nextDates = []
     setLoading(true)
     setNextDates([])
     setPrevDates([])
-    console.log(currentDate)
 
     let startDay = currentDate.getMonthStartDay()
     let prev = currentDate.clone().sub('month', 1)
@@ -103,8 +102,6 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
       }
       setPrevDates(_prev)
     }
-
-    console.log(6 - currentDate.getMonthEndDay())
 
     if ((6 - currentDate.getMonthEndDay()) > 0) {
       for (let x = 1; x <= (6 - currentDate.getMonthEndDay()); x++) {
@@ -129,69 +126,68 @@ const Calendar = ({year, month, day, rounded, bordered}) => {
     setCurrentDate(currentDate.clone().add('month', 1))
   }
 
-  return (
-    <StyledCalContainer rounded={rounded} bordered={bordered}>
-      <Box
-        position={'sticky'} top={'0'}
-        style={{background: 'inherit'}}>
-        <Grid justifyGrid={'center'} alignGrid={'center'}>
-          <GridCell colsSm={3}>
-            <Button onClick={handlePrev} block size={'sm'}>prev</Button>
-          </GridCell>
-          <GridCell colsSm={6}>
-            <Text tAlign={'center'} fSize={'medium'} fWeight={'bold'}>
-              {currentDate.month(true, true)} {currentDate.getFullYear()}
-            </Text>
-          </GridCell>
-          <GridCell colsSm={3}>
-            <Button onClick={handleNext} block size={'sm'}>next</Button>
-          </GridCell>
-        </Grid>
-        <StyledHead>
-          <StyledCol>SUN</StyledCol>
-          <StyledCol>MON</StyledCol>
-          <StyledCol>TUE</StyledCol>
-          <StyledCol>WED</StyledCol>
-          <StyledCol>THU</StyledCol>
-          <StyledCol>FRI</StyledCol>
-          <StyledCol>SAT</StyledCol>
-        </StyledHead>
-      </Box>
-      <StyledCalDays>
-        {!loading &&
-          <>
-            {prevDates.length > 0 && prevDates.map((date, idx) => (
-              <StyledCol
-                key={idx}
-                style={{fontStyle: 'italic'}}
-                bgColor={bordered ? theme.palette.dark.light : 'transparent'}
-                color={bordered ? theme.palette.dark.dark : theme.color.secondary}>
-                {date}
-              </StyledCol>
-            ))}
-            {dates.map((date, idx) => {
-              const eq = new XeDate().equal(date)
-              return <StyledCol
-                key={idx}
-                color={eq ? theme.palette.secondary.contrast.dark : theme.color.main}
-                bgColor={eq ? theme.palette.secondary.main : 'transparent'}
-                style={{fontWeight: 500}}>
-                {date.getDate()}
-              </StyledCol>
-            })}
-            {nextDates.length > 0 && nextDates.map((date, idx) =>
-              (<StyledCol
-                key={idx}
-                bgColor={bordered ? theme.palette.dark.light : 'transparent'}
-                color={bordered ? theme.palette.dark.dark : theme.color.secondary}
-                style={{fontStyle: 'italic'}}>
-                {date}
-              </StyledCol>)
-            )}
-          </>}
-      </StyledCalDays>
-    </StyledCalContainer>
-  );
+  const handleDateClick = ({event, date}) => {
+    if (!onDateClick) return;
+    return onDateClick({event, date})
+  }
+
+  return (<StyledCalContainer rounded={rounded} bordered={bordered}>
+    <Box
+      position={'sticky'} top={'0'}
+      style={{background: 'inherit'}}>
+      <Grid justifyGrid={'center'} alignGrid={'center'}>
+        <GridCell colsSm={3}>
+          <Button onClick={handlePrev} block size={'sm'}>prev</Button>
+        </GridCell>
+        <GridCell colsSm={6}>
+          <Text tAlign={'center'} fSize={'medium'} fWeight={'bold'}>
+            {currentDate.month(true, true)} {currentDate.getFullYear()}
+          </Text>
+        </GridCell>
+        <GridCell colsSm={3}>
+          <Button onClick={handleNext} block size={'sm'}>next</Button>
+        </GridCell>
+      </Grid>
+      <StyledHead>
+        <StyledCol>{isSm ? 'S' : 'SUN'}</StyledCol>
+        <StyledCol>{isSm ? 'M' : 'MON'}</StyledCol>
+        <StyledCol>{isSm ? 'T' : 'TUE'}</StyledCol>
+        <StyledCol>{isSm ? 'W' : 'WED'}</StyledCol>
+        <StyledCol>{isSm ? 'T' : 'THU'}</StyledCol>
+        <StyledCol>{isSm ? 'F' : 'FRI'}</StyledCol>
+        <StyledCol>{isSm ? 'S' : 'SAT'}</StyledCol>
+      </StyledHead>
+    </Box>
+    <StyledCalDays>
+      {!loading && <>
+        {prevDates.length > 0 && prevDates.map((date, idx) => (<StyledCol
+          key={idx}
+          style={{fontStyle: 'italic'}}
+          bgColor={bordered ? theme.palette.dark.light : 'transparent'}
+          color={bordered ? theme.palette.dark.dark : theme.color.secondary}>
+          {date}
+        </StyledCol>))}
+        {dates.map((date, idx) => {
+          const eq = new XeDate().equal(date)
+          return <StyledCol
+            key={idx}
+            color={eq ? theme.palette.secondary.contrast.dark : theme.color.main}
+            bgColor={eq ? theme.palette.secondary.main : 'transparent'}
+            style={{fontWeight: 500}}
+            onClick={(event) => handleDateClick({event, date})}>
+            {date.getDate()}
+          </StyledCol>
+        })}
+        {nextDates.length > 0 && nextDates.map((date, idx) => (<StyledCol
+          key={idx}
+          bgColor={bordered ? theme.palette.dark.light : 'transparent'}
+          color={bordered ? theme.palette.dark.dark : theme.color.secondary}
+          style={{fontStyle: 'italic'}}>
+          {date}
+        </StyledCol>))}
+      </>}
+    </StyledCalDays>
+  </StyledCalContainer>);
 };
 
 export default Calendar;
