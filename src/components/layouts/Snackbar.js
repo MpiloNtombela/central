@@ -120,7 +120,7 @@ const StyledSnackbar = styled.div`
   max-width: 350px;
   width: calc(90%);
   min-width: 200px;
-  padding: ${({theme}) => theme.sizes.gutters[2]};
+  padding: ${({theme}) => `${ theme.sizes.gutters[4]} ${theme.sizes.gutters[3]}`};
   margin-top: ${({theme}) => theme.sizes.gutters[2]};
   margin-bottom: ${({theme}) => theme.sizes.gutters[2]};
   border-radius: ${({theme}) => theme.sizes.radius.md};
