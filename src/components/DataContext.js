@@ -39,7 +39,7 @@ const reducer = (draft, action) => {
       break;
     case CLEAR_ALERT:
       draft.alert.message = "";
-      draft.alert.status = null
+      draft.alert.status = ''
       break;
   }
 }
@@ -157,12 +157,12 @@ const dataState = {
         destination: null,
         message: 'the matter has been resolved'
       }],
-      active: Date.now() < Date.parse('07/02/2022')
+      active: Date.now() < Date.parse('02/28/2022')
     },
     {
       id: 3,
       title: "inactive message",
-      content: "Just to showcase an inactive announcement, in case you saw this project before the 07/20/2022",
+      content: "Just to showcase an inactive announcement, in case you saw this project before the 02/28/2022",
       date: "03/02/2022",
       user: null,
       importantScore: 1,
@@ -173,7 +173,7 @@ const dataState = {
     {
       id: 4,
       title: "Zoom event invite",
-      content: "You are kindly invited to inauguration of a newly found prof. of Techno kings😏 on the 04/20/2022",
+      content: "You are kindly invited to inauguration of a newly found prof. of Techno kings😏 on the 28/02/2022",
       date: "01/02/2022",
       user: 'Communique️',
       importantScore: 2,
@@ -191,23 +191,23 @@ const dataState = {
           name: 'RSVP now',
           destination: null,
           important: true,
-          message: 'Event already passed'
+          message: 'Event full: RSVP closed'
         },
 
       ],
-      active: false
+      active: Date.now() < Date.parse('02/28/2022')
     },
     {
       id: 5,
       title: "Registration closing date",
-      content: `All registration processes closes on the 24/02/2022 , 
+      content: `All registration processes closes on 04/03/2022 , 
       unless otherwise a formal notice from the institution stating the extension.`,
       date: '10/01/2022',
       user: 'Communique️',
       importantScore: 8,
       actions: [],
-      pinned: true,
-      active: Date.now() < Date.parse('02/24/2022')
+      pinned: Date.now() < Date.parse('03/05/2022'),
+      active: Date.now() < Date.parse('03/05/2022')
     },
     {
       id: 7,
@@ -246,8 +246,8 @@ const dataState = {
         important: true,
         message: 'you do not have any negative term decision'
       }],
-      pinned: true,
-      active: Date.now() < Date.parse('02/24/2022')
+      pinned: Date.now() < Date.parse('03/05/2022'),
+      active: Date.now() < Date.parse('03/05/2022')
     }
   ],
   ads: [
@@ -435,7 +435,7 @@ const dataState = {
   isLoading: true,
   alert: {
     message: "",
-    status: null
+    status: ''
   },
 }
 
