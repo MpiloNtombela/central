@@ -131,12 +131,12 @@ const IEnabler = () => {
     })
   }
 
-  const handleUpdateClick = () => {
+  const handleMessage = (msg, status) => {
     dispatch({
       type: SETUP_ALERT,
       payload: {
-        message: "can't update info at this moment",
-        status: 'info'
+        message: msg,
+        status: status
       }
     })
   }
@@ -153,7 +153,7 @@ const IEnabler = () => {
                 fixed={isLg} onClose={handleClose}>
           <SideNav fixed={isLg} anchor={drawerOpt.anchor} changeAnchor={changeAnchor}/>
         </Drawer>
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" style={{paddingBottom: '1.75rem'}}>
           <TabContext>
             <Tabs center isFixed>
               <Tab value={"details"}>Details</Tab>
@@ -235,7 +235,11 @@ const IEnabler = () => {
                       </Grid>
                     </Box>
                     <Box marginTop={theme.sizes.gutters[3]} display={'flex'} justifyContent={'flex-end'}>
-                      <Button onClick={handleUpdateClick} color={'primary'} rounded size="sm">update details</Button>
+                      <Button
+                        onClick={() => handleMessage('update details button', 'info')}
+                        color={'primary'}
+                        rounded
+                        size="sm">update details</Button>
                     </Box>
                   </Card>
                   <Box margin={`${theme.sizes.gutters[2]} auto`}>
@@ -275,11 +279,20 @@ const IEnabler = () => {
                     </Grid>
                     {application.status.toLowerCase().trim() === "firm offer" &&
                       <Box display={"flex"} justifyContent={"flex-end"}>
-                        <Button rounded size={"sm"} outlined color={"danger"}
-                                style={{marginRight: theme.sizes.gutters[1]}}>
+                        <Button
+                          onClick={() => handleMessage('reject offer button', 'danger')}
+                          rounded
+                          size={"sm"}
+                          outlined color={"danger"}
+                          style={{marginRight: theme.sizes.gutters[1]}}>
                           reject
                         </Button>
-                        <Button rounded size={"sm"} color={"info"} style={{marginLeft: theme.sizes.gutters[1]}}>
+                        <Button
+                          onClick={() => handleMessage('accept offer button', 'success')}
+                          rounded
+                          size={"sm"}
+                          color={"info"}
+                          style={{marginLeft: theme.sizes.gutters[1]}}>
                           Accept
                         </Button>
                       </Box>}
@@ -302,8 +315,8 @@ const IEnabler = () => {
               style={{
                 position: 'fixed',
                 bottom: `1rem`,
-                right: drawerOpt.anchor === 'left' ? '1rem' : 'unset',
-                left: drawerOpt.anchor === 'right' ? '1rem' : 'unset',
+                right: drawerOpt.anchor === 'left' ? '1.25rem' : 'unset',
+                left: drawerOpt.anchor === 'right' ? '1.25rem' : 'unset',
               }} color={'secondary'}>menu</Button>}
         </Container>
       </DrawerContainer>
