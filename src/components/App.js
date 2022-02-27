@@ -3,7 +3,7 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import {useAuth} from "../hooks/auth";
 import {useDataContext, useDataDispatch} from "../hooks/context";
 import {useGetSubPath} from "../hooks/routes";
-import {CLEAR_ALERT, LOADED} from "./DataContext";
+import {CLEAR_ALERT, LOADED, LOADING} from "./DataContext";
 import Snackbar from "./layouts/Snackbar";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
@@ -32,11 +32,12 @@ const App = () => {
   const auth = useAuth()
 
   useEffect(() => {
+    dispatch({type: LOADING})
     let stuNum = localStorage.getItem("stuNum");
     auth.setUser(stuNum)
     setTimeout(() => {
       dispatch({type: LOADED})
-    }, 2000);
+    }, 3500);
   }, [])
 
   useEffect(() => {
