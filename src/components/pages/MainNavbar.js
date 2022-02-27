@@ -90,7 +90,7 @@ const MainNavbar = () => {
   const {removeUser} = useAuth()
 
   return (
-    <Navbar maxBreak={"sm"} logo={<MainLogo/>}
+    <Navbar maxBreak={"sm"} logo={<NavbarLink to={'/'}><MainLogo/></NavbarLink>}
             elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={studentNumber ? <FaTimes size={28}/> : ''}
             openIcon={studentNumber ? <FaBars size={28}/> : ""}>
       {studentNumber && <NavbarItems>
