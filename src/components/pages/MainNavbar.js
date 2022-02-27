@@ -91,8 +91,8 @@ const MainNavbar = () => {
 
   return (
     <Navbar maxBreak={"sm"} logo={<MainLogo/>}
-            elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={<FaTimes size={28}/>}
-            openIcon={<FaBars size={28}/>}>
+            elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={studentNumber ? <FaTimes size={28}/> : ''}
+            openIcon={studentNumber ? <FaBars size={28}/> : ""}>
       {studentNumber && <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
