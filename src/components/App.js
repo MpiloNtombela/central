@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import MainNavbar from "./pages/MainNavbar";
 import IEnabler from "./pages/self/IEnabler";
 import {achievements, admin, selfHelp} from "./pages/utils/mainRoutes";
-import PrivateRoute from "./PrivateRoute";
+import PrivateRoute, {AnonRoute} from "./PrivateRoute";
 import Theme from "./Theme";
 
 const App = () => {
@@ -60,7 +60,7 @@ const App = () => {
         <MainNavbar/>
         <Routes>
           <Route path="/" element={<PrivateRoute><Home/></PrivateRoute>}/>
-          <Route path="/login" element={<Login/>}/>
+          <Route path="/login" element={<AnonRoute><Login/></AnonRoute>}/>
           <Route path={exclusion} element={<PrivateRoute><Home/></PrivateRoute>}/>
           <Route path={ienabler} element={<PrivateRoute><IEnabler/></PrivateRoute>}/>
           <Route path={reg} element={<PrivateRoute><IEnabler/></PrivateRoute>}/>
