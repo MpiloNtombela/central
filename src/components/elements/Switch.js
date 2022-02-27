@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import PropTypes from "prop-types";
 import React from 'react';
 
 const Slider = styled.span``
@@ -78,17 +79,22 @@ const StyledSwitch = styled.label`
   input:checked:disabled + ${Slider}:before {
     background-color: ${({theme}) => theme.palette.secondary.light};
   }
-
-
 `
 
-const Switch = ({onSwitch, disabled, checked}) => {
+const Switch = ({onSwitch, disabled, checked, ariaLabel}) => {
   return (
     <StyledSwitch>
-      <input onChange={onSwitch} disabled={disabled} checked={checked} type="checkbox"/>
+      <input aria-label={ariaLabel} onChange={onSwitch} disabled={disabled} checked={checked} type="checkbox"/>
       <Slider/>
     </StyledSwitch>
   )
 };
+
+Switch.propTypes = {
+  onSwitch: PropTypes.func,
+  disabled: PropTypes.bool,
+  checked: PropTypes.bool,
+  ariaLabel: PropTypes.string,
+}
 
 export default Switch;
