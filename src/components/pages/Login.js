@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useDataDispatch} from '../../hooks/context'
+import {SETUP_USER} from '../DataContext'
+import Button from '../elements/Button'
 import Text from '../elements/Text'
+import TextField from '../elements/TextField'
 import Card from "../layouts/Card"
 import Container from '../layouts/Container'
-import TextField from '../elements/TextField'
-import Button from '../elements/Button'
-import Grid, { GridCell } from '../layouts/Grid'
-import { useNavigate } from 'react-router-dom'
-import { useDataDispatch } from '../../hooks/context'
-import { SETUP_USER } from '../DataContext'
+import Grid, {GridCell} from '../layouts/Grid'
 
 const Login = () => {
   const [stuNum, setStuNum] = useState('')
@@ -18,8 +18,10 @@ const Login = () => {
   const dispatch = useDataDispatch()
   const navigate = useNavigate()
 
-
-  // generate a student number that starts with 21
+  /**
+   * @description generate a student number that starts with 21
+   * @returns {string}
+   */
   const generateStuNum = () => {
     let stuNum = "21"
     for (let i = 0; i < 7; i++) {
