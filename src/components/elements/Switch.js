@@ -40,7 +40,7 @@ const StyledSwitch = styled.label`
       transition: all .4s;
       transform: translateX(0);
       background-position: center;
-      box-shadow: 0 2px 2px 0 grey;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
     }
   }
 
