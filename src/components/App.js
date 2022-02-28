@@ -40,22 +40,12 @@ const App = () => {
     }, 3500);
   }, [])
 
-  useEffect(() => {
-    setMode(localStorage.getItem('mode') === 'dark')
-    setLoading(false)
-  }, [])
-
-  const handleMode = () => {
-    setMode(!isDark)
-    localStorage.setItem('mode', isDark ? 'light' : 'dark')
-  }
-
   const handleAlertClose = () => {
     dispatch({type: CLEAR_ALERT})
   }
 
   return (
-    <Theme isDark={!isLoading && isDark}>
+    <Theme>
       <HashRouter>
         <MainNavbar/>
         <Routes>
