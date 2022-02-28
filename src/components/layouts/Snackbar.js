@@ -120,7 +120,7 @@ const StyledSnackbar = styled.div`
   max-width: 350px;
   width: calc(90%);
   min-width: 200px;
-  padding: ${({theme}) => `${ theme.sizes.gutters[4]} ${theme.sizes.gutters[3]}`};
+  padding: ${({theme}) => `${theme.sizes.gutters[4]} ${theme.sizes.gutters[3]}`};
   margin-top: ${({theme}) => theme.sizes.gutters[2]};
   margin-bottom: ${({theme}) => theme.sizes.gutters[2]};
   border-radius: ${({theme}) => theme.sizes.radius.md};
@@ -147,15 +147,15 @@ const StyledSnackbar = styled.div`
 
 `
 
-const Snackbar = ({open, text, type = 'default', position = 'bottom-center', autoClose = true, onClose}) => {
+const Snackbar = ({open, text, type = 'default', position = 'bottom-center', autoHideDuration = null, onClose}) => {
 
   useEffect(() => {
-    if (autoClose && onClose && open) {
+    if (autoHideDuration && autoHideDuration > 0 && onClose && open) {
       setTimeout(() => {
         onClose()
-      }, 7000)
+      }, autoHideDuration)
     }
-  }, [autoClose, open])
+  }, [autoHideDuration, open])
 
   const handleClose = () => {
     if (onClose) {
@@ -177,7 +177,7 @@ Snackbar.propTypes = {
   type: PropTypes.oneOf(['default', 'primary', 'secondary', 'success', 'info', 'warning', 'danger', 'dark']),
   position: PropTypes.oneOf(['bottom-left', 'bottom-center', 'bottom-right', 'top-left', 'top-center', 'top-right']),
   onClose: PropTypes.func,
-  autoClose: PropTypes.bool,
+  autoHideDuration: PropTypes.number,
 }
 
 export default Snackbar;
