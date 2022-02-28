@@ -147,23 +147,30 @@ export const stringToColor = (value) => {
 /**
  * @description a util func that calc a suitable b/w contrast for a given hex color (e.g #FFFFFF => #000000)
  * @returns {{contrast: number, color: string}} object
- * @param {string} color - hex(e.g #000000) or hsl(e.g '0, 0%, 100%') color value
- * @param {boolean} isHSL - if the color provided is HSL (can be 'hsl(0, 0%, 100%)' or '0, 0%, 100%')
- * @param {boolean} hasAlpha - color has alpha value
+ * @param {string} color - hex/hsl/rgb color value
  */
-export const contrastColor = (color, isHSL = false, hasAlpha = false) => {
+export const contrastColor = (color) => {
   if (!color) {
     throw new Error(`Expected a hex or hls color, but got neither`)
   }
   let r, g, b, a;
-  if (!isHSL) {
-    ({r, g, b, a} = hex2rgb(color)) // hex
+  if (color.startsWith('hsl(') || color.startsWith('hsla(')) {
+    ({r, g, b, a} = hsl2rgb(color, color.startsWith('hsla(')))
+  } else if (color.startsWith('#')) {
+    ({r, g, b, a} = hex2rgb(color, color.length === 9))
+  } else if (color.startsWith('rgb(') || color.startsWith('rgba(')) {
+    let reg = /0?\.?\d+/g
+    let [red, green, blue, alp] = color.match(reg)
+    r = parseInt(red)
+    g = parseInt(green)
+    b = parseInt(blue)
+    a = alp ? parseFloat(alp) : 1
   } else {
-    ({r, g, b, a} = hsl2rgb(color, hasAlpha)) //hsl
+    throw new Error(`Expected a real hex/hsl/rgb color, but got (${color})`)
   }
   let contrast = ((r * 299) + (g * 587) + (b * 114)) / 1000
   return {
     contrast: contrast,
-    color: contrast <= 128 ? a < .5 ? 'black' : "#ddd" : "#101010"
+    color: contrast <= 128 ? (a && a < .5) ? "#101010" : "#ddd" : "#101010"
   }
 }
