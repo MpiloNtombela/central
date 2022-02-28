@@ -14,7 +14,7 @@ const App = () => {
     localStorage.setItem('mode', isDark ? 'light' : 'dark')
   }
   return (
-    <Theme isDark={isDark}>
+    <Theme>
       <HashRouter>
         <Routes>
           <Route path="/" element={<Test/>}/>
