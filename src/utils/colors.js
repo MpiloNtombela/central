@@ -164,6 +164,6 @@ export const contrastColor = (color, isHSL = false, hasAlpha = false) => {
   let contrast = ((r * 299) + (g * 587) + (b * 114)) / 1000
   return {
     contrast: contrast,
-    color: contrast <= 128 ? a < .5 ? 'black' : "white" : "black"
+    color: contrast <= 128 ? a < .5 ? 'black' : "#ddd" : "#101010"
   }
 }
