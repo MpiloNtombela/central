@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {useAuth} from "../hooks/auth";
 import {useDataContext, useDataDispatch} from "../hooks/context";
 import {useGetSubPath} from "../hooks/routes";
-import {darkTheme, lightTheme} from "../utils/theme";
-import {CLEAR_ALERT, LOADED, LOADING} from "./DataContext";
+import {createTheme, darkTheme, lightTheme} from "../utils/theme";
+import {CLEAR_ALERT, LOADED, LOADING, themeChoices} from "./DataContext";
 import Snackbar from "./layouts/Snackbar";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
@@ -19,8 +19,9 @@ import PrivateRoute, {AnonRoute} from "./PrivateRoute";
 import Theme from "./Theme";
 
 const App = () => {
-  const [isDark, setMode] = useState(true)
-  const [isLoading, setLoading] = useState(true)
+  const {alert, preferences: {mode, theme: {primary, secondary}}} = useDataContext()
+  const dispatch = useDataDispatch()
+  const auth = useAuth()
   const ienabler = useGetSubPath(selfHelp, 'ienabler')
   const reg = useGetSubPath(selfHelp, 'registration')
   const exclusion = useGetSubPath(selfHelp, 'exclusion')
@@ -28,14 +29,12 @@ const App = () => {
   const fMarks = useGetSubPath(achievements, 'Final Marks')
   const regHist = useGetSubPath(admin, 'Reg History')
   const bio = useGetSubPath(admin, 'Biographical')
-  const {alert, preferences: {mode}} = useDataContext()
-  const dispatch = useDataDispatch()
-  const auth = useAuth()
 
   useEffect(() => {
     dispatch({type: LOADING})
     let stuNum = localStorage.getItem("stuNum");
     auth.setUser(stuNum)
+    console.log('primary', themeChoices[primary].main, 'secondary', themeChoices[secondary].main)
     setTimeout(() => {
       dispatch({type: LOADED})
     }, 3500);
@@ -46,7 +45,15 @@ const App = () => {
   }
 
   return (
-    <Theme theme={mode === 'dark' ? darkTheme() : lightTheme()}>
+    <Theme theme={mode === 'dark' ?
+      darkTheme(createTheme({
+        primary: themeChoices[primary],
+        secondary: themeChoices[secondary]
+      }))
+      : lightTheme(createTheme({
+        primary: themeChoices[primary],
+        secondary: themeChoices[secondary]
+      }))}>
       <HashRouter>
         <MainNavbar/>
         <Routes>
