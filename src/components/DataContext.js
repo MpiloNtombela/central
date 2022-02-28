@@ -8,6 +8,7 @@ export const SETUP_ALERT = "SETUP_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT"
 export const LOADING = "LOADING"
 export const LOADED = "LOADED"
+export const CHANGE_MODE = "CHANGE_MODE"
 
 
 export const DataContext = React.createContext();
@@ -41,6 +42,12 @@ const reducer = (draft, action) => {
       draft.alert.message = "";
       draft.alert.status = ''
       break;
+
+    case CHANGE_MODE:
+      draft.preferences.mode = action.payload
+      break
+    default:
+      return draft
   }
 }
 
@@ -437,6 +444,9 @@ const dataState = {
     message: "",
     status: ''
   },
+  preferences: {
+    mode: 'light',
+  }
 }
 
 const DataProvider = ({children}) => {
