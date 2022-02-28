@@ -45,69 +45,69 @@ const colors = {
   }
 }
 
-const commonTheme = {
+const commonTheme = (colors) => ({
   palette: {
     primary: {
       ...colors.primary,
-      contrastText: contrastColor(colors.primary.main, true).color,
+      contrastText: contrastColor(colors.primary.main).color,
       contrast: {
-        dark: contrastColor(colors.primary.dark, true).color,
-        light: contrastColor(colors.primary.light, true).color,
-        glass: contrastColor(colors.primary.glass, true, true).color
+        dark: contrastColor(colors.primary.dark).color,
+        light: contrastColor(colors.primary.light).color,
+        glass: contrastColor(colors.primary.glass).color
       }
     },
     secondary: {
       ...colors.secondary,
-      contrastText: contrastColor(colors.secondary.main, true).color,
+      contrastText: contrastColor(colors.secondary.main).color,
       contrast: {
-        dark: contrastColor(colors.secondary.dark, true).color,
-        light: contrastColor(colors.secondary.light, true).color,
-        glass: contrastColor(colors.secondary.glass, true, true).color
+        dark: contrastColor(colors.secondary.dark).color,
+        light: contrastColor(colors.secondary.light).color,
+        glass: contrastColor(colors.secondary.glass).color
       }
     },
     success: {
       ...colors.success,
-      contrastText: contrastColor(colors.success.main, true).color,
+      contrastText: contrastColor(colors.success.main).color,
       contrast: {
-        dark: contrastColor(colors.success.dark, true).color,
-        light: contrastColor(colors.success.light, true).color,
-        glass: contrastColor(colors.success.glass, true, true).color
+        dark: contrastColor(colors.success.dark).color,
+        light: contrastColor(colors.success.light).color,
+        glass: contrastColor(colors.success.glass).color
       }
     },
     danger: {
       ...colors.danger,
-      contrastText: contrastColor(colors.danger.main, true).color,
+      contrastText: contrastColor(colors.danger.main).color,
       contrast: {
-        dark: contrastColor(colors.danger.dark, true).color,
-        light: contrastColor(colors.danger.light, true).color,
-        glass: contrastColor(colors.danger.glass, true, true).color
+        dark: contrastColor(colors.danger.dark).color,
+        light: contrastColor(colors.danger.light).color,
+        glass: contrastColor(colors.danger.glass).color
       }
     },
     warning: {
       ...colors.warning,
-      contrastText: contrastColor(colors.warning.main, true).color,
+      contrastText: contrastColor(colors.warning.main).color,
       contrast: {
-        dark: contrastColor(colors.warning.dark, true).color,
-        light: contrastColor(colors.warning.light, true).color,
-        glass: contrastColor(colors.warning.glass, true, true).color
+        dark: contrastColor(colors.warning.dark).color,
+        light: contrastColor(colors.warning.light).color,
+        glass: contrastColor(colors.warning.glass).color
       }
     },
     info: {
       ...colors.info,
-      contrastText: contrastColor(colors.info.main, true).color,
+      contrastText: contrastColor(colors.info.main).color,
       contrast: {
-        dark: contrastColor(colors.info.dark, true).color,
-        light: contrastColor(colors.info.light, true).color,
-        glass: contrastColor(colors.info.glass, true, true).color
+        dark: contrastColor(colors.info.dark).color,
+        light: contrastColor(colors.info.light).color,
+        glass: contrastColor(colors.info.glass).color
       }
     },
     dark: {
       ...colors.dark,
-      contrastText: contrastColor(colors.dark.main, true).color,
+      contrastText: contrastColor(colors.dark.main).color,
       contrast: {
-        dark: contrastColor(colors.dark.dark, true).color,
-        light: contrastColor(colors.dark.light, true).color,
-        glass: contrastColor(colors.dark.glass, true, true).color
+        dark: contrastColor(colors.dark.dark).color,
+        light: contrastColor(colors.dark.light).color,
+        glass: contrastColor(colors.dark.glass).color
       }
     }
   },
@@ -154,9 +154,24 @@ const commonTheme = {
       paragraph: '.9rem'
     }
   },
-};
+})
 
-export const lightTheme = {
+export const createTheme = (theme = colors) => {
+  const colorx = {...colors}
+
+  for (let key of Object.keys(colorx)) {
+    if (theme[key] !== undefined) {
+      for (let k of Object.keys(key)) {
+        if (theme[key][k] !== undefined && colorx[key][k] !== theme[key][k]) {
+          colorx[key][k] = theme[key][k]
+        }
+      }
+    }
+  }
+  return commonTheme(colorx)
+}
+
+export const lightTheme = (theme = createTheme()) => ({
   mode: "light",
   background: {
     main: "hsl(0, 0%, 90%)",
@@ -167,10 +182,10 @@ export const lightTheme = {
     main: "hsl(0, 0%, 20%)",
     secondary: "hsl(0, 0%, 60%)",
   },
-  ...commonTheme,
-};
+  ...theme,
+});
 
-export const darkTheme = {
+export const darkTheme = (theme = createTheme()) => ({
   background: {
     main: "hsl(0, 0%, 20%)",
     secondary: "hsl(0, 0%, 30%)",
@@ -180,5 +195,5 @@ export const darkTheme = {
     main: "hsl(0, 0%, 95%)",
     secondary: "hsl(0, 0%, 70%)",
   },
-  ...commonTheme,
-};
+  ...theme,
+});
