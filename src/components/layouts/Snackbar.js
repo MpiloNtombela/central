@@ -111,7 +111,7 @@ const StyledClose = styled.div`
 const StyledSnackbar = styled.div`
   display: flex;
   position: fixed;
-  background: ${({theme, type}) => type === 'default' ? theme.background.secondary : theme.palette[type].light};
+  background: ${({theme, type}) => type === 'default' ? theme.background.secondary : theme.palette[type].main};
   top: ${({position}) => getPosition(position).top};
   bottom: ${({position}) => getPosition(position).bottom};
   left: ${({position}) => getPosition(position).left};
@@ -134,14 +134,9 @@ const StyledSnackbar = styled.div`
   transform: ${({position}) => `translateX(${getPosition(position).t})`};
   z-index: ${({theme}) => theme.sizes.zIndex.max};
 
-  @supports (backdrop-filter: blur(5px)) {
-    background: ${({theme, type}) => type === 'default' ? theme.background.glass : theme.palette[type].glass};
-    backdrop-filter: blur(.25rem);
-  };
-
   ${StyledMessage} {
     font-weight: 500;
-    color: ${({theme, type}) => type === 'default' ? theme.color.main : theme.palette[type].dark};
+    color: ${({theme, type}) => type === 'default' ? theme.color.main : theme.palette[type].contrastText};
     flex: 2;
   }
 
