@@ -147,15 +147,15 @@ const StyledSnackbar = styled.div`
 
 `
 
-const Snackbar = ({open, text, type = 'default', position = 'bottom-center', closeAfter = 0, onClose}) => {
+const Snackbar = ({open, text, type = 'default', position = 'bottom-center', autoClose = true, onClose}) => {
 
   useEffect(() => {
-    if (closeAfter > 0 && onClose) {
+    if (autoClose && onClose && open) {
       setTimeout(() => {
         onClose()
-      }, closeAfter)
+      }, 7000)
     }
-  }, [closeAfter, open])
+  }, [autoClose, open])
 
   const handleClose = () => {
     if (onClose) {
@@ -177,7 +177,7 @@ Snackbar.propTypes = {
   type: PropTypes.oneOf(['default', 'primary', 'secondary', 'success', 'info', 'warning', 'danger', 'dark']),
   position: PropTypes.oneOf(['bottom-left', 'bottom-center', 'bottom-right', 'top-left', 'top-center', 'top-right']),
   onClose: PropTypes.func,
-  closeAfter: PropTypes.number,
+  autoClose: PropTypes.bool,
 }
 
 export default Snackbar;
