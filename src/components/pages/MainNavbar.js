@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
@@ -10,7 +10,7 @@ import logo from "../../../public/logo.png"
 import {useAuth} from "../../hooks/auth";
 import {useDataContext, useDataDispatch} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
-import {CHANGE_MODE} from "../DataContext";
+import {CHANGE_MODE, CHANGE_THEME, themeChoices} from "../DataContext";
 import IconText from "../elements/IconText";
 import Image from "../elements/Image";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
@@ -89,7 +89,6 @@ const NavRoute = ({route, isBreak}) => {
 
 const MainNavbar = () => {
   const theme = useTheme()
-  const [isDark, setIsDark] = useState(true)
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
   const {student: {studentNumber}, preferences: {mode}} = useDataContext();
   const {removeUser} = useAuth()
@@ -97,9 +96,26 @@ const MainNavbar = () => {
   const dispatch = useDataDispatch()
 
   useLayoutEffect(() => {
+    const m = localStorage.getItem('mode')
+    const p = localStorage.getItem('p')
+    const s = localStorage.getItem('s')
+    const temp = {
+      primary: null,
+      secondary: null
+    }
+    if (p && themeChoices[p] !== undefined) {
+      temp["primary"] = p
+    }
+    if (s && themeChoices[s] !== undefined) {
+      temp["secondary"] = s
+    }
     dispatch({
       type: CHANGE_MODE,
-      payload: localStorage.getItem('mode') === 'dark' ? 'dark' : 'light'
+      payload: m === 'dark' ? 'dark' : 'light'
+    })
+    dispatch({
+      type: CHANGE_THEME,
+      payload: temp
     })
   })
 
@@ -111,6 +127,13 @@ const MainNavbar = () => {
     localStorage.setItem('mode', mode === 'dark' ? 'light' : 'dark')
   }
 
+  const handleChangePrimary = (color) => {
+    dispatch({
+      type: CHANGE_MODE,
+      payload: {primary: color}
+    })
+    localStorage.setItem('p', color)
+  }
 
   return (
     <Navbar maxBreak={"sm"} logo={<Link to={'/'}><MainLogo/></Link>}
@@ -134,6 +157,25 @@ const MainNavbar = () => {
               <Box display={'flex'} justifyContent={'space-between'} marginY={theme.sizes.gutters[3]}>
                 <Text fWeight={'500'}>Dark Mode</Text>
                 <Switch onSwitch={handleMode} checked={mode === 'dark'} ariaLabel={`switch ${mode}`}/>
+              </Box>
+              <Box marginY={theme.sizes.gutters[3]}>
+                <Text fSize={'small'} fWeight={'500'} tColor={theme.color.secondary}>Change theme</Text>
+                <Box marginY={theme.sizes.gutters[2]} display={'flex'} justifyContent={'space-between'}>
+                  {Object.keys(themeChoices).map(key => (
+                    <Box key={key}
+                         isHover
+                         height={'2rem'}
+                         width={'2rem'}
+                         onClick={() => handleChangePrimary(key)}
+                         style={{
+                           background: themeChoices[key].main,
+                           borderRadius: theme.sizes.radius.sm,
+                           boxShadow: '0 0 .25rem 0 rgba(0, 0, 0, .5)'
+                         }}/>
+                  ))}
+                </Box>
+                <Text fSize={'x-small'} tAlign={'center'} tColor={theme.color.secondary}>dbl click to change
+                  secondary</Text>
               </Box>
               <Box onClick={removeUser}
                    style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
