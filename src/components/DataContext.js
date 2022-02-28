@@ -9,6 +9,7 @@ export const CLEAR_ALERT = "CLEAR_ALERT"
 export const LOADING = "LOADING"
 export const LOADED = "LOADED"
 export const CHANGE_MODE = "CHANGE_MODE"
+export const CHANGE_ANCHOR = "CHANGE_ANCHOR"
 
 
 export const DataContext = React.createContext();
@@ -42,9 +43,12 @@ const reducer = (draft, action) => {
       draft.alert.message = "";
       draft.alert.status = ''
       break;
-
     case CHANGE_MODE:
       draft.preferences.mode = action.payload
+      break
+    case CHANGE_ANCHOR:
+      draft.preferences.anchor = action.payload
+      localStorage.setItem("anchor", action.payload)
       break
     default:
       return draft
@@ -446,6 +450,7 @@ const dataState = {
   },
   preferences: {
     mode: 'light',
+    anchor: 'left',
   }
 }
 

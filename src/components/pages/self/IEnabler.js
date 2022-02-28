@@ -6,7 +6,7 @@ import {useMediaQuery} from "react-responsive";
 import {useImmer} from "use-immer";
 import logo from "../../../../public/logo.png"
 import {useDataContext, useDataDispatch} from "../../../hooks/context";
-import {SETUP_ALERT} from "../../DataContext";
+import {CHANGE_ANCHOR, SETUP_ALERT} from "../../DataContext";
 import Button from '../../elements/Button'
 import IconText from "../../elements/IconText";
 import Image from "../../elements/Image";
@@ -45,7 +45,7 @@ KeyValuePair.propTypes = {
   v: PropTypes.node.isRequired,
 }
 
-const SideNav = ({anchor, changeAnchor, fixed}) => {
+const SideNav = ({fixed, anchor}) => {
   const theme = useTheme()
   const dispatch = useDataDispatch()
 
@@ -56,6 +56,13 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
         message: `clicked on ${r}`,
         status: 'info'
       }
+    })
+  }
+
+  const handleAnchorChange = () => {
+    dispatch({
+      type: CHANGE_ANCHOR,
+      payload: anchor === 'left' ? 'right' : 'left'
     })
   }
 
@@ -72,7 +79,8 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
                              bgColor={theme.background.main}>
                   {route.subRoutes.map((sRoute, idx) => {
                     return (
-                      <Box onClick={()=> dispatchMessage(sRoute.name)} key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                      <Box onClick={() => dispatchMessage(sRoute.name)} key={idx}
+                           padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
                            hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
                         <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
                                   textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
@@ -83,7 +91,8 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
               )
             } else {
               return (
-                <Box onClick={()=> dispatchMessage(route.name)} key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                <Box onClick={() => dispatchMessage(route.name)} key={idx}
+                     padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
                      hoverColor={theme.palette.primary.main}
                      style={{
                        borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
@@ -97,7 +106,7 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
         )}
       </Box>
       <Box position={'absolute'} bottom={'.25rem'} left={'0'} right={'0'} display={'flex'} justifyContent={'center'}>
-        <Button onClick={changeAnchor} size={'sm'} rounded color='secondary'>change side</Button>
+        <Button onClick={handleAnchorChange} size={'sm'} rounded color='secondary'>change side</Button>
       </Box>
     </Box>
   )
@@ -105,7 +114,7 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
 
 const IEnabler = () => {
   const [isLoading, setIsLoading] = useState(true)
-  const {student, applications} = useDataContext()
+  const {student, applications, preferences: {anchor}} = useDataContext()
   const applicationsData = [...applications].sort((a, b) => b.year - a.year || a.preference - b.preference)
   const dispatch = useDataDispatch()
   const {contacts} = student;
@@ -114,12 +123,15 @@ const IEnabler = () => {
 
   const [drawerOpt, setDrawerOpt] = useImmer({
     width: 250,
-    anchor: 'left',
     open: true,
     fixed: false
   })
 
   useEffect(() => {
+    dispatch({
+      type: CHANGE_ANCHOR,
+      payload: localStorage.getItem('anchor') === 'right' ? 'right' : 'left'
+    })
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
@@ -137,12 +149,6 @@ const IEnabler = () => {
     })
   }
 
-  const changeAnchor = () => {
-    setDrawerOpt(draft => {
-      draft.anchor = drawerOpt.anchor === "left" ? "right" : "left"
-    })
-  }
-
   const handleMessage = (msg, status) => {
     dispatch({
       type: SETUP_ALERT,
@@ -154,16 +160,16 @@ const IEnabler = () => {
   }
 
   if (isLoading) {
-    return <IEnablerLoader fixed={isLg} drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={drawerOpt.anchor}
+    return <IEnablerLoader fixed={isLg} drawerOpen={drawerOpt.open || isLg} isLg={isLg} drawerAnchor={anchor}
                            drawerWidth={drawerOpt.width}/>
   } else {
     return (
       <DrawerContainer drawerOpen={drawerOpt.open || isLg} drawerFixed={isLg} drawerWidth={drawerOpt.width}
-                       drawerAnchor={drawerOpt.anchor}>
-        <Drawer elevation={3} rounded anchor={drawerOpt.anchor} height={drawerOpt.width} width={drawerOpt.width}
+                       drawerAnchor={anchor}>
+        <Drawer elevation={3} rounded anchor={anchor} height={drawerOpt.width} width={drawerOpt.width}
                 open={drawerOpt.open || isLg}
                 fixed={isLg} onClose={handleClose}>
-          <SideNav fixed={isLg} anchor={drawerOpt.anchor} changeAnchor={changeAnchor}/>
+          <SideNav fixed={isLg} anchor={anchor}/>
         </Drawer>
         <Container maxWidth="xl" style={{paddingBottom: '1.75rem'}}>
           <TabContext>
@@ -327,8 +333,8 @@ const IEnabler = () => {
               style={{
                 position: 'fixed',
                 bottom: `1rem`,
-                right: drawerOpt.anchor === 'left' ? '1.25rem' : 'unset',
-                left: drawerOpt.anchor === 'right' ? '1.25rem' : 'unset',
+                right: anchor === 'left' ? '1.25rem' : 'unset',
+                left: anchor === 'right' ? '1.25rem' : 'unset',
               }} color={'secondary'}>menu</Button>}
         </Container>
       </DrawerContainer>
@@ -338,8 +344,6 @@ const IEnabler = () => {
 
 IEnabler.propTypes = {}
 SideNav.propTypes = {
-  anchor: PropTypes.oneOf(["top", "left", "bottom", "right"]),
-  changeAnchor: PropTypes.func,
   fixed: PropTypes.bool,
 }
 export default IEnabler
