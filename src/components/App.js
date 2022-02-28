@@ -60,7 +60,7 @@ const App = () => {
           <Route path={bio} element={<PrivateRoute><Bio/></PrivateRoute>}/>
         </Routes>
       </HashRouter>
-      <Snackbar open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
+      <Snackbar autoHideDuration={3500} open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
                 text={alert.message}
                 type={alert.status ? alert.status : 'default'} onClose={handleAlertClose}/>
     </Theme>

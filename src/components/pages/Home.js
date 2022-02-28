@@ -169,7 +169,7 @@ const Announcements = React.memo(function Announcements() {
     <>
       {announcements.filter(a => a.active).slice(0, 5).map((announcement, idx) => {
         return (
-          <Announcement key={announcement.id} announcement={announcement} collapsed={idx === 0} theme={theme}/>
+          <Announcement key={idx} announcement={announcement} collapsed={idx === 0} theme={theme}/>
         )
       })}
       <Box marginTop={theme.sizes.gutters[4]}>
@@ -187,14 +187,14 @@ const Announcements = React.memo(function Announcements() {
             <TabContent value={'latest'}>
               {announcements.filter(a => a.active).map((announcement, idx) => {
                 return (
-                  <Announcement key={announcement.id} announcement={announcement} collapsed={idx === 0} theme={theme}/>
+                  <Announcement key={idx} announcement={announcement} collapsed={idx === 0} theme={theme}/>
                 )
               })}
             </TabContent>
             <TabContent value={'previous'}>
               {announcements.filter(a => !a.active).map((announcement, idx) => {
                 return (
-                  <Announcement key={announcement.id} announcement={announcement} collapsed={idx === 0} theme={theme}/>
+                  <Announcement key={idx} announcement={announcement} collapsed={idx === 0} theme={theme}/>
                 )
               })}
             </TabContent>
@@ -223,8 +223,8 @@ const AllAds = ({ads, openAds, handleClose, isSm, handleAdClick}) => {
             </TableRow>
           </THead>
           <TBody>
-            {ads.map((ad) => {
-              return (<TableRow key={ad.id} onClick={() => handleAdClick(ad.id)}>
+            {ads.map((ad, idx) => {
+              return (<TableRow key={idx} onClick={() => handleAdClick(ad.id)}>
                 {
                   Object.keys(ad).map((key, idx) => {
                     if (key.toLowerCase() !== 'id' && key.toLowerCase() !== 'postedby' && key.toLowerCase() !== 'email') {
@@ -403,9 +403,9 @@ const Home = () => {
                 </TableRow>
               </THead>
               <TBody>
-                {ads.slice(0, 10).map((ad) => {
+                {ads.slice(0, 10).map((ad, idx) => {
                   return (
-                    <TableRow key={ad.id} onClick={() => handleOpenAd(ad.id)}>
+                    <TableRow key={idx} onClick={() => handleOpenAd(ad.id)}>
                       <TableData>{ad.title}</TableData>
                     </TableRow>)
                 })}

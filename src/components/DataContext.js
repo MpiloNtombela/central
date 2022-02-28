@@ -217,7 +217,7 @@ const dataState = {
       active: Date.now() < Date.parse('03/05/2022')
     },
     {
-      id: 7,
+      id: 6,
       title: "Another announcement",
       content: 'Just another unnecessary announcement to make 😉',
       date: '10/01/2022',
@@ -239,7 +239,7 @@ const dataState = {
       active: true
     },
     {
-      id: 6,
+      id: 8,
       title: "Negative term decision",
       content: `If you received a letter notifying you of negative term decision,
        please follow the action below before attempting to register.`,
