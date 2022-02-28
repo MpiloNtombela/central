@@ -47,6 +47,18 @@ KeyValuePair.propTypes = {
 
 const SideNav = ({anchor, changeAnchor, fixed}) => {
   const theme = useTheme()
+  const dispatch = useDataDispatch()
+
+  const dispatchMessage = (r) => {
+    dispatch({
+      type: SETUP_ALERT,
+      payload: {
+        message: `clicked on ${r}`,
+        status: 'info'
+      }
+    })
+  }
+
   return (
     <Box position='relative' height='100%' paddingBottom='3rem' paddingTop={fixed ? `${NAV_HEIGHT}rem` : 'unset'}
          style={{boxSizing: 'border-box'}}>
@@ -60,7 +72,7 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
                              bgColor={theme.background.main}>
                   {route.subRoutes.map((sRoute, idx) => {
                     return (
-                      <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                      <Box onClick={()=> dispatchMessage(sRoute.name)} key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
                            hoverColor={theme.background.glass} style={{borderRadius: '99999rem'}}>
                         <IconText text={sRoute.name} textSize={"medium"} icon={sRoute.icon} align={'center'}
                                   textStyle={{paddingLeft: theme.sizes.gutters[2]}}/>
@@ -71,7 +83,7 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
               )
             } else {
               return (
-                <Box key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
+                <Box onClick={()=> dispatchMessage(route.name)} key={idx} padding={`${theme.sizes.gutters[2]} ${theme.sizes.gutters[3]}`} isHover={true}
                      hoverColor={theme.palette.primary.main}
                      style={{
                        borderRadius: `${anchor === 'left' ? '0 9999rem 9999rem 0' : '9999rem 0 0 9999rem'}`
