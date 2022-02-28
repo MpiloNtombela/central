@@ -1,17 +1,21 @@
 import {useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import React from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
+import {Link} from "react-router-dom";
 import logo from "../../../public/logo.png"
 import {useAuth} from "../../hooks/auth";
-import {useDataContext} from "../../hooks/context";
+import {useDataContext, useDataDispatch} from "../../hooks/context";
 import {stringToColor} from "../../utils/colors";
+import {CHANGE_MODE} from "../DataContext";
 import IconText from "../elements/IconText";
 import Image from "../elements/Image";
 import Navbar, {NavbarItem, NavbarItems, NavbarLink} from "../elements/Navbar";
+import Switch from "../elements/Switch";
+import Text from "../elements/Text";
 import Box from "../layouts/Box";
 import Chip from "../layouts/Chip";
 import DropMenu, {Menu} from "../layouts/DropMenu";
@@ -85,12 +89,31 @@ const NavRoute = ({route, isBreak}) => {
 
 const MainNavbar = () => {
   const theme = useTheme()
+  const [isDark, setIsDark] = useState(true)
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
-  const {student: {studentNumber}} = useDataContext();
+  const {student: {studentNumber}, preferences: {mode}} = useDataContext();
   const {removeUser} = useAuth()
 
+  const dispatch = useDataDispatch()
+
+  useLayoutEffect(() => {
+    dispatch({
+      type: CHANGE_MODE,
+      payload: localStorage.getItem('mode') === 'dark' ? 'dark' : 'light'
+    })
+  })
+
+  const handleMode = () => {
+    dispatch({
+      type: CHANGE_MODE,
+      payload: mode === 'dark' ? 'light' : 'dark'
+    })
+    localStorage.setItem('mode', mode === 'dark' ? 'light' : 'dark')
+  }
+
+
   return (
-    <Navbar maxBreak={"sm"} logo={<NavbarLink to={'/'}><MainLogo/></NavbarLink>}
+    <Navbar maxBreak={"sm"} logo={<Link to={'/'}><MainLogo/></Link>}
             elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={studentNumber ? <FaTimes size={28}/> : ''}
             openIcon={studentNumber ? <FaBars size={28}/> : ""}>
       {studentNumber && <NavbarItems>
@@ -108,6 +131,10 @@ const MainNavbar = () => {
                   outlined color={'secondary'}
                   endIcon={<MdArrowDropDown size={'1rem'}/>}/>
             <Menu>
+              <Box display={'flex'} justifyContent={'space-between'} marginY={theme.sizes.gutters[3]}>
+                <Text fWeight={'500'}>Dark Mode</Text>
+                <Switch onSwitch={handleMode} checked={mode === 'dark'} ariaLabel={`switch ${mode}`}/>
+              </Box>
               <Box onClick={removeUser}
                    style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
                 <IconText
