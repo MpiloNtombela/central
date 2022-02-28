@@ -1,7 +1,6 @@
 import {Global, ThemeProvider} from "@emotion/react";
 import PropTypes from "prop-types";
 import React from "react";
-import {useDataContext} from "../hooks/context";
 import {darkTheme, lightTheme} from "../utils/theme"
 
 const styles = (theme) => ({
@@ -57,15 +56,14 @@ const styles = (theme) => ({
   }
 });
 
-const Theme = ({children}) => {
-  const {preferences: {mode}} = useDataContext()
+const Theme = ({children, isDark = true}) => {
 
   const globalStyles = () => ({
-    ...styles(mode === 'dark' ? darkTheme : lightTheme),
+    ...styles(isDark ? darkTheme() : lightTheme()),
   });
 
   return (
-    <ThemeProvider theme={mode === 'dark' ? darkTheme : lightTheme}>
+    <ThemeProvider theme={isDark ? darkTheme() : lightTheme()}>
       <Global styles={globalStyles}/>
       {children}
     </ThemeProvider>
@@ -74,6 +72,7 @@ const Theme = ({children}) => {
 }
 
 Theme.propTypes = {
+  isDark: PropTypes.bool,
   children: PropTypes.node.isRequired
 }
 
