@@ -3,6 +3,7 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import {useAuth} from "../hooks/auth";
 import {useDataContext, useDataDispatch} from "../hooks/context";
 import {useGetSubPath} from "../hooks/routes";
+import {darkTheme, lightTheme} from "../utils/theme";
 import {CLEAR_ALERT, LOADED, LOADING} from "./DataContext";
 import Snackbar from "./layouts/Snackbar";
 import ClassMarks from "./pages/achievement/ClassMarks";
@@ -27,7 +28,7 @@ const App = () => {
   const fMarks = useGetSubPath(achievements, 'Final Marks')
   const regHist = useGetSubPath(admin, 'Reg History')
   const bio = useGetSubPath(admin, 'Biographical')
-  const {alert} = useDataContext()
+  const {alert, preferences: {mode}} = useDataContext()
   const dispatch = useDataDispatch()
   const auth = useAuth()
 
@@ -45,7 +46,7 @@ const App = () => {
   }
 
   return (
-    <Theme>
+    <Theme theme={mode === 'dark' ? darkTheme() : lightTheme()}>
       <HashRouter>
         <MainNavbar/>
         <Routes>
@@ -60,7 +61,8 @@ const App = () => {
           <Route path={bio} element={<PrivateRoute><Bio/></PrivateRoute>}/>
         </Routes>
       </HashRouter>
-      <Snackbar autoHideDuration={3500} open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
+      <Snackbar autoHideDuration={3500}
+                open={alert.message !== '' && alert.message !== null && alert.message !== undefined}
                 text={alert.message}
                 type={alert.status ? alert.status : 'default'} onClose={handleAlertClose}/>
     </Theme>

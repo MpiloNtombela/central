@@ -10,12 +10,46 @@ export const LOADING = "LOADING"
 export const LOADED = "LOADED"
 export const CHANGE_MODE = "CHANGE_MODE"
 export const CHANGE_ANCHOR = "CHANGE_ANCHOR"
+export const CHANGE_THEME = "CHANGE_THEME"
 
 
 export const DataContext = React.createContext();
 export const DispatchContext = React.createContext();
 
 const date = new Date();
+
+export const themeChoices = {
+  red: {
+    main: "hsl(0, 100%, 50%)",
+    light: "hsl(0, 100%, 60%)",
+    dark: "hsl(0, 100%, 30%)",
+    glass: "hsla(0, 100%, 60%, .45)",
+  },
+  black: {
+    main: "hsl(165,100%,50%)",
+    light: "hsl(165, 100%, 60%)",
+    dark: "hsl(165, 100%, 30%)",
+    glass: "hsla(165, 100%, 60%, .45)",
+  },
+  fuchsia: {
+    main: "hsl(300,100%,50%)",
+    light: "hsl(300, 100%, 60%)",
+    dark: "hsl(300, 100%, 30%)",
+    glass: "hsla(300, 100%, 60%, .45)",
+  },
+  yellow: {
+    main: "hsl(60, 100%, 50%)",
+    light: "hsl(60, 100%, 60%)",
+    dark: "hsl(60, 100%, 30%)",
+    glass: "hsla(60, 100%, 60%, .45)",
+  },
+  purple: {
+    main: "hsl(260,100%, 50%)",
+    light: "hsl(260, 100%, 60%)",
+    dark: "hsl(260, 100%, 30%)",
+    glass: "hsla(260, 100%, 60%, .45)",
+  },
+}
 
 const reducer = (draft, action) => {
   switch (action.type) {
@@ -49,6 +83,14 @@ const reducer = (draft, action) => {
     case CHANGE_ANCHOR:
       draft.preferences.anchor = action.payload
       localStorage.setItem("anchor", action.payload)
+      break
+    case CHANGE_THEME:
+      if (action.payload.primary && themeChoices[action.payload.primary] !== undefined) {
+        draft.preferences.theme.primary = action.payload.primary
+      }
+      if (action.payload.secondary && themeChoices[action.payload.secondary] !== undefined) {
+        draft.preferences.theme.secondary = action.payload.secondary
+      }
       break
     default:
       return draft
@@ -451,6 +493,10 @@ const dataState = {
   preferences: {
     mode: 'light',
     anchor: 'left',
+    theme: {
+      primary: 'red',
+      secondary: 'purple'
+    }
   }
 }
 
