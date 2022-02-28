@@ -85,7 +85,7 @@ const SideNav = ({anchor, changeAnchor, fixed}) => {
         )}
       </Box>
       <Box position={'absolute'} bottom={'.25rem'} left={'0'} right={'0'} display={'flex'} justifyContent={'center'}>
-        <Button onClick={changeAnchor} size={'sm'} rounded color='danger'>central log out</Button>
+        <Button onClick={changeAnchor} size={'sm'} rounded color='secondary'>change side</Button>
       </Box>
     </Box>
   )
