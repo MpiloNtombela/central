@@ -161,7 +161,7 @@ export const createTheme = (theme = colors) => {
 
   for (let key of Object.keys(colorx)) {
     if (theme[key] !== undefined) {
-      for (let k of Object.keys(key)) {
+      for (let k of Object.keys(colorx[key])) {
         if (theme[key][k] !== undefined && colorx[key][k] !== theme[key][k]) {
           colorx[key][k] = theme[key][k]
         }
