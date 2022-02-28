@@ -59,11 +59,11 @@ const styles = (theme) => ({
 const Theme = ({children, isDark = true}) => {
 
   const globalStyles = () => ({
-    ...styles(isDark ? darkTheme : lightTheme),
+    ...styles(isDark ? darkTheme() : lightTheme()),
   });
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={isDark ? darkTheme() : lightTheme()}>
       <Global styles={globalStyles}/>
       {children}
     </ThemeProvider>
