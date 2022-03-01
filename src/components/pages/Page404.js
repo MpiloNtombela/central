@@ -4,16 +4,19 @@ import React, {useEffect} from 'react';
 import {FaEarlybirds} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import Button from "../elements/Button";
+import Text from "../elements/Text";
 import Box from "../layouts/Box";
 
 const Styled404Msg = styled.div`
   position: absolute;
   left: 50%;
   top: 30%;
+  color: ${({theme}) => theme.color.secondary};
   transform: translateX(-50%);
-  font-size: xx-large;
-  white-space: nowrap;
-  font-weight: 900;
+
+  p {
+    white-space: nowrap;
+  }
 `
 
 const Styled404 = styled.div`
@@ -100,9 +103,12 @@ const Page404 = () => {
     <Styled404>
       <Styled404Msg>
         <Box display={'flex'} justifyContent={'center'}>
-          <FaEarlybirds size={72}/>
+          <FaEarlybirds size={86}/>
         </Box>
-        404 Not Found
+        <Text tColor={theme.palette.secondary.dark} fSize={'xx-large'} fWeight={'bold'} tAlign={'center'}>
+          Uh Oh... 404 Error</Text>
+        <Text tColor={theme.color.secondary} fSize={'medium'} fWeight={'bold'} tAlign={'center'}>
+          Oops! we forgot this page</Text>
         <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[4]}>
           <Link to={'/'}>
             <Button gradient elevation={2} rounded>take me home</Button>
