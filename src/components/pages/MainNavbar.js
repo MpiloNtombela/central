@@ -151,7 +151,17 @@ const MainNavbar = () => {
   return (
     <Navbar maxBreak={"sm"} logo={<Link to={'/'}><MainLogo/></Link>}
             elevation={4} navPosition="sticky-top" maxWidth={'xl'} closeIcon={studentNumber ? <FaTimes size={28}/> : ''}
-            openIcon={studentNumber ? <FaBars size={28}/> : ""}>
+            openIcon={studentNumber ? <FaBars size={28}/> : ""}
+            extraContentElem={!studentNumber ?
+              <Box height={'100%'}
+                   paddingX={theme.sizes.gutters[2]}
+                   display={'flex'}
+                   justifyContent={'center'}
+                   alignItems={'center'}>
+                <Link to={'about'}>
+                  <Text tColor={theme.palette.info.main} fWeight={'bold'} fSize={'medium'}>ABOUT</Text></Link>
+              </Box> : ''}>
+
       {studentNumber && <NavbarItems>
         <NavRoute isBreak={isSm} route={selfHelp}/>
         <NavRoute isBreak={isSm} route={achievements}/>
