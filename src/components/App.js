@@ -13,6 +13,7 @@ import Registration from "./pages/admin/Registration";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import MainNavbar from "./pages/MainNavbar";
+import Page404 from "./pages/Page404";
 import IEnabler from "./pages/self/IEnabler";
 import {achievements, admin, selfHelp} from "./pages/utils/mainRoutes";
 import PrivateRoute, {AnonRoute} from "./PrivateRoute";
@@ -66,6 +67,7 @@ const App = () => {
           <Route path={fMarks} element={<PrivateRoute><FinalMark/></PrivateRoute>}/>
           <Route path={regHist} element={<PrivateRoute><Registration/></PrivateRoute>}/>
           <Route path={bio} element={<PrivateRoute><Bio/></PrivateRoute>}/>
+          <Route path="*" element={<Page404/>}/>
         </Routes>
       </HashRouter>
       <Snackbar autoHideDuration={3500}
