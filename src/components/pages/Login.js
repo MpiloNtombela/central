@@ -72,7 +72,7 @@ const Login = () => {
               <Box marginTop={theme.sizes.gutters[4]}>
                 <TextField
                   id='studentNumber'
-                  label='student number'
+                  label='Student number'
                   required
                   size='sm'
                   fullWidth
@@ -84,12 +84,13 @@ const Login = () => {
                 <TextField
                   id='studentPassword'
                   type='password'
-                  label='password'
+                  label='Password'
                   name='password'
                   fullWidth
                   onChange={(e) => setPass(e.target.value)}
                   value={pass}
                   required/>
+                <Text fWeight='500' fSize='small' tColor={theme.palette.dark.light}>password: mpilo</Text>
               </Box>
               <Button disabled={stuNum.length < 1 || pass.length < 1} size="sm" type='submit' rounded block
                       style={{margin: "1.75rem auto", boxSizing: "border-box"}}>Log In</Button>
