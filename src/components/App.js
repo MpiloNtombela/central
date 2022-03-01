@@ -6,6 +6,7 @@ import {useGetSubPath} from "../hooks/routes";
 import {createTheme, darkTheme, lightTheme} from "../utils/theme";
 import {CLEAR_ALERT, LOADED, LOADING, themeChoices} from "./DataContext";
 import Snackbar from "./layouts/Snackbar";
+import About from "./pages/About";
 import ClassMarks from "./pages/achievement/ClassMarks";
 import FinalMark from "./pages/achievement/FinalMarks";
 import Bio from "./pages/admin/Bio";
@@ -67,6 +68,7 @@ const App = () => {
           <Route path={fMarks} element={<PrivateRoute><FinalMark/></PrivateRoute>}/>
           <Route path={regHist} element={<PrivateRoute><Registration/></PrivateRoute>}/>
           <Route path={bio} element={<PrivateRoute><Bio/></PrivateRoute>}/>
+          <Route path="/about" element={<About/>}/>
           <Route path="*" element={<Page404/>}/>
         </Routes>
       </HashRouter>
