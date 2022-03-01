@@ -1,7 +1,7 @@
 import {useTheme} from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 import {FaBars, FaSignOutAlt, FaTimes} from "react-icons/fa";
 import {MdArrowDropDown} from "react-icons/md";
 import {useMediaQuery} from "react-responsive";
@@ -90,8 +90,9 @@ const NavRoute = ({route, isBreak}) => {
 const MainNavbar = () => {
   const theme = useTheme()
   const isSm = useMediaQuery({maxWidth: theme.breakpoints.sm})
-  const {student: {studentNumber}, preferences: {mode}} = useDataContext();
+  const {student: {studentNumber}, preferences: {mode, theme: {primary, secondary}}} = useDataContext();
   const {removeUser} = useAuth()
+  const timer = useRef(0)
 
   const dispatch = useDataDispatch()
 
@@ -126,13 +127,25 @@ const MainNavbar = () => {
     })
     localStorage.setItem('mode', mode === 'dark' ? 'light' : 'dark')
   }
-
-  const handleChangePrimary = (color) => {
-    dispatch({
-      type: CHANGE_MODE,
-      payload: {primary: color}
-    })
-    localStorage.setItem('p', color)
+  const handleChangePrimary = (e, color) => {
+    if (e.detail === 1) {
+      timer.current = setTimeout(() => {
+        if (color === primary) return
+        dispatch({
+          type: CHANGE_MODE,
+          payload: {primary: color}
+        })
+        localStorage.setItem('p', color)
+      }, 200)
+    } else if (e.detail === 2) {
+      clearTimeout(timer.current)
+      if (color === secondary) return
+      dispatch({
+        type: CHANGE_MODE,
+        payload: {secondary: color}
+      })
+      localStorage.setItem('s', color)
+    }
   }
 
   return (
@@ -166,7 +179,7 @@ const MainNavbar = () => {
                          isHover
                          height={'2rem'}
                          width={'2rem'}
-                         onClick={() => handleChangePrimary(key)}
+                         onClick={(e) => handleChangePrimary(e, key)}
                          style={{
                            background: themeChoices[key].main,
                            borderRadius: theme.sizes.radius.sm,
@@ -174,8 +187,8 @@ const MainNavbar = () => {
                          }}/>
                   ))}
                 </Box>
-                <Text fSize={'x-small'} tAlign={'center'} tColor={theme.color.secondary}>dbl click to change
-                  secondary</Text>
+                <Text fSize={'x-small'} tAlign={'center'} tColor={theme.color.secondary}>
+                  Tip: dbl click to change secondary</Text>
               </Box>
               <Box onClick={removeUser}
                    style={{background: theme.palette.danger.glass, borderRadius: theme.sizes.radius.sm}}>
