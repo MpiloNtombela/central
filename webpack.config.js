@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
     ],
     output: {
       filename: devMode ? "main.js" : "[contenthash].main.js",
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(__dirname, "build"),
       assetModuleFilename: "assets/[contenthash][ext][query]",
       clean: true,
     },
