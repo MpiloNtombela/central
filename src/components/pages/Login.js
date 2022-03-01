@@ -42,7 +42,7 @@ const Login = () => {
     // check if student number and password are valid
     if (stuNum.length === 0 || pass !== 'mpilo') {
       setErr('Invalid student number or password')
-      setProtip('Please enter student number and password')
+      setProtip('Please enter valid student number and password')
     } else if (isNaN(stuNum) || stuNum.length !== 9 || stuNum.substring(0, 2) !== '21') {
       setErr('Invalid student number')
       setProtip('Student number usually 9 digit number starting with 21')
@@ -55,13 +55,13 @@ const Login = () => {
       })
       setErr('')
       setProtip('')
-      navigate('/', { replace: true })
+      navigate('/', {replace: true})
     }
   }
   return (
-    <Container maxWidth='lg' navPadding >
-      <Grid justifyGrid={ "center" }>
-        <GridCell colsMd={ 7 } colsLg={ 5 }>
+    <Container maxWidth='lg' navPadding>
+      <Grid justifyGrid={"center"}>
+        <GridCell colsMd={7} colsLg={5}>
           <Card maxWidth='sm'>
             <Text fWeight='700' fSize='x-large' tAlign='center'>Central Access</Text>
             <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[3]}>
@@ -69,7 +69,7 @@ const Login = () => {
             </Box>
             {err && <Text fWeight='500' fSize='small' tColor=' #FF5733' tAlign='center'>{err}</Text>}
             <form onSubmit={handleSubmit}>
-              <div style={{marginTop: "1rem"}}>
+              <Box marginTop={theme.sizes.gutters[4]}>
                 <TextField
                   id='studentNumber'
                   label='student number'
@@ -77,23 +77,25 @@ const Login = () => {
                   size='sm'
                   fullWidth
                   value={stuNum}
-                  onChange={e => setStuNum(e.target.value) }
-                  name="number" />
-              </div>
-              <div style={ { marginTop: "1rem" } }>
+                  onChange={e => setStuNum(e.target.value)}
+                  name="number"/>
+              </Box>
+              <Box marginTop={theme.sizes.gutters[4]}>
                 <TextField
                   id='studentPassword'
                   type='password'
                   label='password'
                   name='password'
                   fullWidth
-                  onChange={ (e) => setPass(e.target.value) }
-                  value={ pass }
-                  required />
-              </div>
-              <Button disabled={ stuNum.length < 1 || pass.length < 1 } size="sm" type='submit' rounded block style={ { margin: "1.75rem auto", boxSizing: "border-box" } }>Log In</Button>
+                  onChange={(e) => setPass(e.target.value)}
+                  value={pass}
+                  required/>
+              </Box>
+              <Button disabled={stuNum.length < 1 || pass.length < 1} size="sm" type='submit' rounded block
+                      style={{margin: "1.75rem auto", boxSizing: "border-box"}}>Log In</Button>
             </form>
-            { protip && <Text fWeight='500' fSize='small' tColor='dodgerblue' tAlign='center'>{ protip }</Text> }
+            {protip && <Text fWeight='500' fSize='small' tColor={theme.palette.info.main}
+                             tAlign='center'>Tip: {protip.toLowerCase()}</Text>}
           </Card>
         </GridCell>
       </Grid>
