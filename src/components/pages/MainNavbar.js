@@ -32,12 +32,12 @@ const StyledLogo = styled.div`
 `
 
 const StyledWordMark = styled.span`
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   text-decoration: none;
   display: inline-block;
   margin-left: .25rem;
-  color: red
+  color: ${({theme}) => theme.palette.primary.main}
 `
 
 const MainLogo = () => (
@@ -168,8 +168,8 @@ const MainNavbar = () => {
                   endIcon={<MdArrowDropDown size={'1rem'}/>}/>
             <Menu>
               <Box display={'flex'} justifyContent={'space-between'} marginY={theme.sizes.gutters[3]}>
-                <Text fWeight={'500'}>Dark Mode</Text>
-                <Switch onSwitch={handleMode} checked={mode === 'dark'} ariaLabel={`switch ${mode}`}/>
+                <Text fWeight={'500'}>Lights out</Text>
+                <Switch onSwitch={handleMode} checked={mode === 'dark'} ariaLabel={`switch ${mode} mode`}/>
               </Box>
               <Box marginY={theme.sizes.gutters[3]}>
                 <Text fSize={'small'} fWeight={'500'} tColor={theme.color.secondary}>Change theme</Text>
