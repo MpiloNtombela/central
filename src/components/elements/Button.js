@@ -15,11 +15,11 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
                     : c.main
             : "transparent"
     };
-    padding: ${size === "sm" ? ".25rem 1rem" : ".45rem 1.25rem"};
+    padding: ${size === "sm" ? `${gradient ? 'calc(.25rem + 2px)' : `.25rem`} 1rem` : `${gradient ? 'calc(.45rem + 2px)' : `.45rem`} 1.25rem`};
     text-transform: uppercase;
     font-weight: 500;
     line-height: 1.5;
-    border: 2px solid ${disabled ? '#888' : c.main};
+    border: ${gradient ? 0 : `2px solid ${disabled ? '#888' : gradient ? 'transparent' : c.main}`};
     border-radius: ${rounded ? "9999rem" : theme.sizes.radius.sm};
     font-size: 0.875rem;
     box-sizing: border-box;
@@ -30,15 +30,16 @@ export const ButtonBase = ({theme, color, gradient, size, outlined, rounded, blo
     letter-spacing: 0.02857em;
     box-shadow: 0 0 5px 0 hsla(0, 0%, 0%,.${elevation});
     min-width: ${block ? '100%' : '64px'};
+    outline: none;
 
     &:hover {
-      background: ${(outlined ? c.glass : gradient
+      background: ${(!outlined ? gradient
               ? `linear-gradient(315deg, ${b.primary.main}, ${b.secondary.main})`
-              : c.light)
+              : c.light : c.glass)
       };
       cursor: pointer;
       outline: none;
-      border-color: ${disabled ? '#888' : outlined ? c.main : c.light};
+      border-color: ${disabled ? '#888' : outlined ? c.main : gradient ? 'transparent' : c.light};
     }
   ;
 
