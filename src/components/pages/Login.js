@@ -1,10 +1,13 @@
+import {useTheme} from "@emotion/react";
 import React, {useEffect, useState} from 'react'
+import {FaIdCard} from "react-icons/fa";
 import {useNavigate} from 'react-router-dom'
 import {useDataDispatch} from '../../hooks/context'
 import {SETUP_USER} from '../DataContext'
 import Button from '../elements/Button'
 import Text from '../elements/Text'
 import TextField from '../elements/TextField'
+import Box from "../layouts/Box";
 import Card from "../layouts/Card"
 import Container from '../layouts/Container'
 import Grid, {GridCell} from '../layouts/Grid'
@@ -14,6 +17,7 @@ const Login = () => {
   const [pass, setPass] = useState('')
   const [err, setErr] = useState('')
   const [protip, setProtip] = useState('')
+  const theme = useTheme()
 
   const dispatch = useDataDispatch()
   const navigate = useNavigate()
@@ -36,7 +40,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     // check if student number and password are valid
-    if (stuNum.length === 0 || pass.length === 0) {
+    if (stuNum.length === 0 || pass !== 'mpilo') {
       setErr('Invalid student number or password')
       setProtip('Please enter student number and password')
     } else if (isNaN(stuNum) || stuNum.length !== 9 || stuNum.substring(0, 2) !== '21') {
@@ -60,20 +64,20 @@ const Login = () => {
         <GridCell colsMd={ 7 } colsLg={ 5 }>
           <Card maxWidth='sm'>
             <Text fWeight='700' fSize='x-large' tAlign='center'>Central Access</Text>
-            <div style={ { textAlign: 'center', marginTop: "1rem" } }>
-              <span style={ { fontSize: '48px' } } className='icon-id-badge tcenter' />
-            </div>
-            { err && <Text fWeight='500' fSize='small' tColor=' #FF5733' tAlign='center'>{ err }</Text> }
-            <form onSubmit={ handleSubmit }>
-              <div style={ { marginTop: "1rem" } }>
+            <Box display={'flex'} justifyContent={'center'} marginTop={theme.sizes.gutters[3]}>
+              <FaIdCard size={48}/>
+            </Box>
+            {err && <Text fWeight='500' fSize='small' tColor=' #FF5733' tAlign='center'>{err}</Text>}
+            <form onSubmit={handleSubmit}>
+              <div style={{marginTop: "1rem"}}>
                 <TextField
                   id='studentNumber'
                   label='student number'
                   required
                   size='sm'
                   fullWidth
-                  value={ stuNum }
-                  onChange={ e => setStuNum(e.target.value) }
+                  value={stuNum}
+                  onChange={e => setStuNum(e.target.value) }
                   name="number" />
               </div>
               <div style={ { marginTop: "1rem" } }>
