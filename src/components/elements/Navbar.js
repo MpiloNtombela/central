@@ -183,12 +183,14 @@ const Navbar = ({
           </StyledBrand>
           {children}
         </StyledNavbarContent>
-        <StyledExtraContent>
-          {extraContentElem}
-        </StyledExtraContent>
-        <StyleNavbarIcon onClick={() => setOpen(!open)}>
-          {open ? closeIcon : openIcon}
-        </StyleNavbarIcon>
+        {extraContentElem &&
+          <StyledExtraContent>
+            {extraContentElem}
+          </StyledExtraContent>}
+        {(closeIcon || openIcon) &&
+          <StyleNavbarIcon onClick={() => setOpen(!open)}>
+            {open ? closeIcon : openIcon}
+          </StyleNavbarIcon>}
       </StyledNavbarContainer>
     </StyledNavbar>
   );
